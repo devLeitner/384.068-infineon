@@ -17,7 +17,8 @@ This repository is the starting point for your work and points to various resour
 Each team should create one [Fork](https://github.com/Infineon/micropython-hands-on-course/fork) of this repository to work on the projects. Please share the location of your fork with the course instructors.
 
 Please use the directories below to organize your work:
-- `./project/` - Your project code and documentation.
+- `./project/deepcraft_workspace` - Your DEEPCRAFT™ Studio workspace, containing your project files, data, models.
+- `./project/micropython` - Your documented MicroPython application code and related files (such as custom modules).
 - `./report/` - Your project report & final presentation.
 
 Please actively use git commits to document your progress and regularly push your changes to your forked repository. If you do not want to share your progress with other teams, please make your forked repository private and invite the course instructors as collaborators.
@@ -32,15 +33,24 @@ Please actively use git commits to document your progress and regularly push you
 | **Mandatory** Check-in & Q&A Session    | 13.02.2026 | 16:00 | Online      |
 | **Mandatory** Check-in & Q&A Session    | 17.02.2026 | 16:00 | Online      |
 | **Mandatory** Check-in & Q&A Session    | 19.02.2026 | 16:00 | Online      |
-| **Final Submission**                    | 22.02.2026 | 23:59 | **On-site** |
+| **Final Submission**                    | 22.02.2026 | 23:59 | Online      |
+| **Final Presentations**                 | 24.02.2026 | 23:59 | **On-site** |
 
 Please note that attendance is **mandatory** for all team members in order to successfully complete the course.
 
 ### Submission
 
-As mentioned above, please regularly push your changes to your forked repository. The final submission of your project code, documentation, report, and presentation will also be done via your forked repository. The deadline for the final submission is 22.02.2026 23:59.
+#### Where to submit?
+As mentioned above, please regularly push your changes to your forked repository. The final submission of your project code, documentation, report, and presentation will also be done via your forked repository.
 
-For the final presentation, please prepare a short presentation (max. 10 minutes, followed by 5 minutes Q&A) summarizing your project, results, and learnings. The presentations will be held during the last session of the course on 23.02.2026.
+#### Project
+Use the project folder to track your DEEPCRAFT™ Studio workspace, your MicroPython code, and any documentation you have created for your project. Please make sure to keep your code organized and documented, so that it can be easily understood and reproduced by others. Submission deadline: **22.02.2026 23:59**.
+
+#### Report
+Please prepare a written report summarizing your project idea, approach, results, and steps to reproduce your work. The report can contain code snippets, figures, and references to your code. It can be in PDF or Markdown format. Submission deadline: **22.02.2026 23:59**.
+
+#### Presentation
+For the final presentation, please prepare a short presentation (max. 10 minutes, followed by 5 minutes Q&A) summarizing your project, results, and learnings. The presentations will be held during the last session of the course on **24.02.2026**. Submission deadline: **23.02.2026 23:59**.
 
 ## Resources
 
