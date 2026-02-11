@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ImagimobStudio version="0.9">
+  <Timeline id="f93adbc5-6835-4615-94d4-36f198a64cd5">
+    <Tracks>
+      <Track name="Live Labeling" type="labelcsv">
+        <PayloadFile>Live-Labeling.label</PayloadFile>
+        <Shape />
+      </Track>
+      <Track name="DPS Data" type="datacsv" timecoded="TimestampBegin" isLabelTrack="False" frequency="64">
+        <PayloadFile>DPS-Data.data</PayloadFile>
+        <Offset unit="seconds">7.8125000000E-003</Offset>
+        <Shape>
+          <Axis name="Channel" size="2">
+            <Label index="0">Pressure</Label>
+            <Label index="1">Temp</Label>
+          </Axis>
+        </Shape>
+      </Track>
+      <Track name="Microphone Data" type="audiowav" isLabelTrack="False" frequency="16000">
+        <PayloadFile>Microphone-Data.wav</PayloadFile>
+        <Offset unit="seconds">3.1200000000E-005</Offset>
+        <Shape>
+          <Axis name="Channel" size="1">
+            <Label index="0">Mono</Label>
+          </Axis>
+        </Shape>
+      </Track>
+    </Tracks>
+  </Timeline>
+</ImagimobStudio>

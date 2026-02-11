@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Imaginet version="2.0.0.0">
+  <Compound unit="d419d86b-7b57-41d3-9a74-ab428f13a213">
+    <Nodes>
+      <LabelListNode id="node_5" width="120" height="120" x="404" y="26" enabled="true" profiling="false" name="Predefined Labels">
+        <Label>showering</Label>
+        <Label>brushing-teeth</Label>
+        <Label>hair-drying</Label>
+      </LabelListNode>
+      <DeviceNode id="node_0" x="124" y="174" enabled="true" profiling="false" name="Microphone" board="290de5cb-460b-41bf-1f19-8d0e222baff7" boardName="PSOC 6 AI (CY8CKIT-06S2-AI)" device="1" />
+      <DeviceNode id="node_1" x="174" y="406" enabled="true" profiling="false" name="DPS" board="290de5cb-460b-41bf-1f19-8d0e222baff7" boardName="PSOC 6 AI (CY8CKIT-06S2-AI)" device="4" />
+      <UnitNode id="node_2" x="966" y="178" enabled="true" profiling="false" unit="ImagimobStudio.Modules.DataTrack" />
+      <UnitNode id="node_4" x="528" y="409" enabled="true" profiling="false" name="DPS Data" unit="ImagimobStudio.Modules.DataTrack" />
+      <UnitNode id="node_3" x="517" y="194" enabled="true" profiling="false" name="Microphone Data" unit="ImagimobStudio.Modules.DataTrack" />
+    </Nodes>
+    <Connections>
+      <Connection>
+        <Source node="node_0" param="Audio" />
+        <Target node="node_3" param="data" />
+      </Connection>
+      <Connection>
+        <Source node="node_1" param="Data" />
+        <Target node="node_4" param="data" />
+      </Connection>
+    </Connections>
+  </Compound>
+</Imaginet>
