@@ -6,6 +6,11 @@
   <img src="./img/infineon_logo.png" alt="Infineon Logo" height="50"/>
 </p>
 
+# -- Our space --
+
+- [Smart Bathroom](./planning/idea_1.md)
+- [No failed 3D Prints](./planning/idea_2.md)
+
 # MicroPython & Edge AI Hands-On Course
 
 ## Getting Started

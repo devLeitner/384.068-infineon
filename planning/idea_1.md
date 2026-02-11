@@ -32,3 +32,26 @@ Use the audio sensor to detect bathroom usage and occupancy status. The system s
 3. **Person Identification (Phase 3):**
    - Extend the AI model to perform **person recognition** based on unique acoustic features (patterns like electrical toothbrush vs normal one, showering habits).
    - Allows personalization of Home Assistant automations per person.
+
+## Milestones
+
+### Milestone 1 – Core Setup & Data Collection
+- [ ] Set up PSoC6 development environment (Micropython + DeepCraft Studio)  
+- [ ] Connect and verify microphone input readout  
+- [ ] Record initial audio samples for: *empty*, *showering*, *brushing teeth*  
+- [ ] Prepare labeled dataset for first training run  
+- [ ] Draft the project structure and documentation outline  
+
+### Milestone 2 – Model Training &  first Integration
+- [ ] Train initial sound classification model in DeepCraft Studio  
+- [ ] Deploy and run real-time classification on PSoC6  
+- [ ] Validate classification accuracy with real tests
+- [ ] ~ Integrate REST or serial communication with ESP C6  
+- [ ] ~ Push test notifications into Home Assistant and verify reception  
+
+### Milestone 3 – Integratino & Refinement & Advanced Features
+- [ ] ~ Integrate REST or serial communication with ESP C6  
+- [ ] ~ Push test notifications into Home Assistant and verify reception   
+- [ ] Test end-to-end workflow (sound → classification → notification)  
+- [ ] Prepare optional dataset for person-specific pattern extraction (if time)  
+

@@ -27,3 +27,28 @@ Use the **IMU and audio sensor** to monitor a 3D printer’s operating state and
         C --> D[michael phone]
         C --> E[philip phone]
     ```
+
+## Milestones
+
+### Milestone 1 – Sensor Setup & Baseline
+- [ ] Mount PSoC6 securely under 3D printer  
+- [ ] Validate stable IMU readings during idle and printing states  
+- [ ] Record sample vibration and audio profiles from normal prints  
+- [ ] Segment and label normal/no-fault vibration dataset  
+- [ ] Define basic criteria for future fault detection (e.g., skipped steps, head collision)  
+
+### Milestone 2 – Model Training & Communication Layer
+- [ ] Train basic anomaly detection model using IMU data via DeepCraft Studio  
+- [ ] Deploy model to PSoC6 and test real-time inference during print runs  
+- [ ] ~ Integrate REST or Zigbee communication path to Home Assistant via ESP C6  
+- [ ] ~ Send basic “print normal/fault detected” notifications  
+- [ ] ~ Conduct validation tests by simulating a few known faults  
+
+### Milestone 3 – Refinement & Predictive Loop
+- [ ] ~ Integrate REST or Zigbee communication path to Home Assistant via ESP C6  
+- [ ] ~ Send basic “print normal/fault detected” notifications  
+- [ ] ~ Conduct validation tests by simulating a few known faults  
+- [ ] Improve anomaly thresholding and reduce false positives  
+- [ ] Add logging of detected faults for pattern tracking  
+- [ ] Optionally include audio analysis layer for multi-sensor anomaly detection  
+- [ ] Prepare demonstration of real-time fault detection and Home Assistant integration  
