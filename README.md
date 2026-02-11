@@ -8,8 +8,15 @@
 
 # -- Our space --
 
+## Ideas 
+
 - [Smart Bathroom](./planning/idea_1.md)
 - [No failed 3D Prints](./planning/idea_2.md)
+
+## Implementations
+
+- [Data Collecting and Model Training](./project/deepcraft_workspace/README.md)
+- [Model integration and micropython code](./project/micropython_application/README.md)
 
 # MicroPython & Edge AI Hands-On Course
 
