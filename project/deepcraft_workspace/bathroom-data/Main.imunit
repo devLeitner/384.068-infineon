@@ -4,8 +4,8 @@
     <Nodes>
       <LabelListNode id="node_5" width="120" height="120" x="404" y="26" enabled="true" profiling="false" name="Predefined Labels">
         <Label>showering</Label>
-        <Label>brushing-teeth</Label>
-        <Label>hair-drying</Label>
+        <Label>brushing_teeth</Label>
+        <Label>hair_drying</Label>
       </LabelListNode>
       <DeviceNode id="node_0" x="124" y="174" enabled="true" profiling="false" name="Microphone" board="290de5cb-460b-41bf-1f19-8d0e222baff7" boardName="PSOC 6 AI (CY8CKIT-06S2-AI)" device="1" />
       <DeviceNode id="node_1" x="174" y="406" enabled="true" profiling="false" name="DPS" board="290de5cb-460b-41bf-1f19-8d0e222baff7" boardName="PSOC 6 AI (CY8CKIT-06S2-AI)" device="4" />
