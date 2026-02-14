@@ -1,2 +1,2 @@
 Time(Seconds),Length(Seconds),Label(string),Confidence(double),Comment(string)
-4.875,131.8125,brushing-teeth,1,
+4.875,131.8125,brushing_teeth,1,

@@ -1,25 +1,68 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ImagimobStudio>
-  <ProjectId>2581ccf9-ddbc-429d-a7eb-770e5d8eeef4</ProjectId>
+<ImagimobStudio version="1.1.0">
   <Job id="35da1f89-04e5-44a7-ab32-46d1f0cb92d5" />
   <ProjectType>Classification</ProjectType>
+  <ProjectId>2581ccf9-ddbc-429d-a7eb-770e5d8eeef4</ProjectId>
   <ModelFactory>
     <Epochs>100</Epochs>
-    <BatchSize>128</BatchSize>
+    <BatchSize>16</BatchSize>
+    <SplitCount>16</SplitCount>
+    <Patience>20</Patience>
+    <AppendModels>False</AppendModels>
+    <LossFunction>CategoricalCrossentropy</LossFunction>
+    <HardwareType>Infineon</HardwareType>
     <TrainingEnvironment>
     </TrainingEnvironment>
+    <ModelFamily>Conv1D</ModelFamily>
+    <ModelFlavor>SmallKern</ModelFlavor>
+    <ClassifierType>GlobalAveragePool</ClassifierType>
+    <Optimization>Balanced</Optimization>
+    <Pooling>True</Pooling>
+    <Downscale>False</Downscale>
+    <LearnRate>Mid</LearnRate>
+    <RegularizationFactor>Low</RegularizationFactor>
+    <LastNetworkInputShape>[10]</LastNetworkInputShape>
+    <LastClassCount>1</LastClassCount>
     <Optimizer>
-      <LearningRate>0.05</LearningRate>
-      <WeightDecay>0.005</WeightDecay>
+      <LearningRate>0.001</LearningRate>
+      <WeightDecay>0.0001</WeightDecay>
     </Optimizer>
     <BuildSteps>
       <Training />
       <ConfusionMatrix />
     </BuildSteps>
   </ModelFactory>
-  <Database balance="AnnotatedLength">
-    <DataSet id="train" targetSize="0.6" />
-    <DataSet id="validation" targetSize="0.2" />
-    <DataSet id="test" targetSize="0.2" />
+  <Database balance="AnnotatedLength" redistributionScope="Everything">
+    <SymbolMap>
+      <Symbol name="(unlabeled)" id="0" weight="1" />
+      <Symbol name="brushing_teeth" id="1" weight="1" />
+    </SymbolMap>
+    <DataSet id="unassigned" targetSize="0" labels="Unassigned">
+      <Session name="brushing-teeth-electrical-ml-1" sessionId="d1941b58-365d-4363-ab9e-7e3e60eaf300" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="DPS Data" tags="None">
+        <DataFile shape="[2]" samplerate="64" modified="5250752807777493472" start="0.0078125" length="140.046875">../data_recordings/brushing-teeth-electrical-ml-1/DPS-Data.data</DataFile>
+        <SessionFile>../data_recordings/brushing-teeth-electrical-ml-1/brushing-teeth-electrical-ml-1.imsession</SessionFile>
+        <LabelFile modified="5250752808421012584">../data_recordings/brushing-teeth-electrical-ml-1/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="131.8125">brushing_teeth</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="brushing-teeth-electrical-ml-2" sessionId="c8bfceb9-cf3b-4c8a-ba8d-8849f9f0ad90" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="DPS Data" tags="None">
+        <DataFile shape="[2]" samplerate="64" modified="5250752807777643666" start="0.0078125" length="136.734375">../data_recordings/brushing-teeth-electrical-ml-2/DPS-Data.data</DataFile>
+        <SessionFile>../data_recordings/brushing-teeth-electrical-ml-2/brushing-teeth-electrical-ml-2.imsession</SessionFile>
+        <LabelFile modified="5250752808224268752">../data_recordings/brushing-teeth-electrical-ml-2/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="126.6875">brushing_teeth</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+    </DataSet>
+    <DataSet id="train" targetSize="0.6" labels="Complete" />
+    <DataSet id="validation" targetSize="0.2" labels="Complete" />
+    <DataSet id="test" targetSize="0.2" labels="Complete" />
   </Database>
+  <PredefinedLabels>
+    <Label>brushing_teeth</Label>
+    <Label>Label</Label>
+  </PredefinedLabels>
 </ImagimobStudio>
