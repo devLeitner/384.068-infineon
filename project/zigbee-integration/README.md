@@ -13,5 +13,11 @@ The detected state from the ai-model will be sent to an ESP32-C8 using UART. The
 ## TASKS
 
 - Zigbee Functionality: Working
-- UART Communication: TODO (2. Milestone)
-- Integration Testing: TODO (3. Milestone)
+- UART Communication: TODO
+- Integration Testing: TODO
+
+## Documentation
+
+### Link to ESP32-C8-WROOM-1 Datasheet
+https://www.mouser.at/datasheet/3/1574/1/esp32-s3-wroom-1_wroom-1u_datasheet_en.pdf
+

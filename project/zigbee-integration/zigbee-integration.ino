@@ -17,8 +17,20 @@
  *
  * We have defined three binary switches that will be driven by the data form the ai over a serial connection.
  *
+ * Device Info: 
+ *    This software is deployed on an ESP32-C8-WROOM Module
  */
 
+ 
+/* ================== GPIO DEFINES ================== */
+#define PIN_SHOWER  18
+#define PIN_TOOTH   19
+#define PIN_HAIR    20
+
+#define DEBUG
+
+
+/* ================== ZIGBEE ================== */
 #ifndef ZIGBEE_MODE_ED
 #error "Zigbee end device mode is not selected in Tools->Zigbee mode"
 #endif
@@ -30,73 +42,83 @@
 
 uint8_t button = BOOT_PIN;
 
-ZigbeeBinary zbBinaryShowering = ZigbeeBinary(BINARY_DEVICE_ENDPOINT_NUMBER);
-ZigbeeBinary zbBinaryBrushingTeeth = ZigbeeBinary(BINARY_DEVICE_ENDPOINT_NUMBER + 1);
-ZigbeeBinary zbBinaryHairDrying = ZigbeeBinary(BINARY_DEVICE_ENDPOINT_NUMBER + 2);
+ZigbeeBinary zbBinaryShowering(BINARY_DEVICE_ENDPOINT_NUMBER);
+ZigbeeBinary zbBinaryBrushingTeeth(BINARY_DEVICE_ENDPOINT_NUMBER + 1);
+ZigbeeBinary zbBinaryHairDrying(BINARY_DEVICE_ENDPOINT_NUMBER + 2);
 
-bool BrushingTeethStatus = false;
-
+/* ================== SETUP ================== */
 void setup() {
+
+#ifdef DEBUG
   Serial.begin(115200);
   Serial.println("Starting...");
+#endif
 
-  // Init button switch
+  // Configure GPIO inputs
+  pinMode(PIN_SHOWER, INPUT);
+  pinMode(PIN_TOOTH, INPUT);
+  pinMode(PIN_HAIR, INPUT);
+
   pinMode(button, INPUT_PULLUP);
 
-  // Set analog resolution to 10 bits
-  analogReadResolution(10);
-
-  // Optional: set Zigbee device name and model
+  // Device info
   zbBinaryShowering.setManufacturerAndModel("Leitrocki", "BathroomPro 2000");
 
-  // Set up binary Showering status input + switch output (HVAC)
+  // Binary inputs
   zbBinaryShowering.addBinaryInput();
   zbBinaryShowering.setBinaryInputDescription("Showering Status");
 
   zbBinaryBrushingTeeth.addBinaryInput();
-  zbBinaryBrushingTeeth.setBinaryInputDescription("BrushingTeeth Status");
+  zbBinaryBrushingTeeth.setBinaryInputDescription("Brushing Teeth Status");
 
   zbBinaryHairDrying.addBinaryInput();
-  zbBinaryHairDrying.setBinaryInputDescription("HairDrying Status");
+  zbBinaryHairDrying.setBinaryInputDescription("Hair Drying Status");
 
-  // Add endpoints to Zigbee Core
+  // Register endpoints
   Zigbee.addEndpoint(&zbBinaryShowering);
   Zigbee.addEndpoint(&zbBinaryBrushingTeeth);
   Zigbee.addEndpoint(&zbBinaryHairDrying);
 
+#ifdef DEBUG
   Serial.println("Starting Zigbee...");
-  // When all EPs are registered, start Zigbee in End Device mode
+#endif
+
   if (!Zigbee.begin()) {
-    Serial.println("Zigbee failed to start!");
-    Serial.println("Rebooting...");
+#ifdef DEBUG
+    Serial.println("Zigbee failed to start! Rebooting...");
+#endif
     ESP.restart();
-  } else {
-    Serial.println("Zigbee started successfully!");
   }
-  Serial.println("Connecting to network");
+
   while (!Zigbee.connected()) {
+#ifdef DEBUG
     Serial.print(".");
+#endif
     delay(100);
   }
-  Serial.println("Connected");
+
+#ifdef DEBUG
+  Serial.println("\nZigbee Connected");
+#endif
 }
 
+/* ================== LOOP ================== */
 void loop() {
-  // Checking button for factory reset and reporting
-  if (digitalRead(button) == LOW) {  // Push button pressed
-    // Key debounce handling
-    delay(100);
-    int startTime = millis();
-    while (digitalRead(button) == LOW) {
-      delay(50);
-      if ((millis() - startTime) > 3000) {
-        // If key pressed for more than 3secs, factory reset Zigbee and reboot
-        Serial.println("Resetting Zigbee to factory and rebooting in 1s.");
-        delay(1000);
-        Zigbee.factoryReset();
-      }
-    }
 
-  }
+  bool shower = digitalRead(PIN_SHOWER);
+  bool tooth  = digitalRead(PIN_TOOTH);
+  bool hair   = digitalRead(PIN_HAIR);
+
+  zbBinaryShowering.setBinaryInput(shower);
+  zbBinaryBrushingTeeth.setBinaryInput(tooth);
+  zbBinaryHairDrying.setBinaryInput(hair);
+
+#ifdef DEBUG
+  Serial.printf(
+    "GPIO State → shower:%d tooth:%d hair:%d\n",
+    shower, tooth, hair
+  );
+#endif
+
   delay(100);
 }
