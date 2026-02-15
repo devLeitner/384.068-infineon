@@ -17,8 +17,20 @@
  *
  * We have defined three binary switches that will be driven by the data form the ai over a serial connection.
  *
+ * Device Info: 
+ *    This software is deployed on an ESP32-C8-WROOM Module
  */
 
+
+/* Defines */
+#define UART_BAUDRATE 115200
+#define UART_RX_PIN   16   // change if needed
+#define UART_TX_PIN   17   // change if needed
+
+#define DEBUG
+
+
+/* Zibee Code */
 #ifndef ZIGBEE_MODE_ED
 #error "Zigbee end device mode is not selected in Tools->Zigbee mode"
 #endif
@@ -36,20 +48,52 @@ ZigbeeBinary zbBinaryHairDrying = ZigbeeBinary(BINARY_DEVICE_ENDPOINT_NUMBER + 2
 
 bool BrushingTeethStatus = false;
 
+/* UART Code */
+void setBathroomState(const String &state) {
+  bool shower = false;
+  bool tooth  = false;
+  bool hair   = false;
+
+  if (state == "shower") {
+    shower = true;
+  } else if (state == "tooth") {
+    tooth = true;
+  } else if (state == "hair") {
+    hair = true;
+  } else {
+    Serial.println("Unknown state received");
+    return;
+  }
+
+  zbBinaryShowering.setBinaryInput(shower);
+  zbBinaryBrushingTeeth.setBinaryInput(tooth);
+  zbBinaryHairDrying.setBinaryInput(hair);
+
+  #ifdef DEBUG
+    Serial.printf("State updated → shower:%d tooth:%d hair:%d\n", shower, tooth, hair);
+  #endif
+}
+
+String uartRXBuffer = "";
+
+
 void setup() {
-  Serial.begin(115200);
-  Serial.println("Starting...");
+
+  #ifdef DEBUG
+    Serial.begin(115200);
+    Serial.println("Starting...");
+  #endif
+
+  // Using Serial1 to communicate with the PSOC6
+  Serial1.begin(UART_BAUDRATE, SERIAL_8N1, UART_RX_PIN, UART_TX_PIN);
 
   // Init button switch
   pinMode(button, INPUT_PULLUP);
 
-  // Set analog resolution to 10 bits
-  analogReadResolution(10);
-
-  // Optional: set Zigbee device name and model
+  // Set Zigbee device name and model
   zbBinaryShowering.setManufacturerAndModel("Leitrocki", "BathroomPro 2000");
 
-  // Set up binary Showering status input + switch output (HVAC)
+  // Set up binary status inputs
   zbBinaryShowering.addBinaryInput();
   zbBinaryShowering.setBinaryInputDescription("Showering Status");
 
@@ -59,44 +103,64 @@ void setup() {
   zbBinaryHairDrying.addBinaryInput();
   zbBinaryHairDrying.setBinaryInputDescription("HairDrying Status");
 
-  // Add endpoints to Zigbee Core
+  // Add endpoints to Zigbee
   Zigbee.addEndpoint(&zbBinaryShowering);
   Zigbee.addEndpoint(&zbBinaryBrushingTeeth);
   Zigbee.addEndpoint(&zbBinaryHairDrying);
 
+
   Serial.println("Starting Zigbee...");
-  // When all EPs are registered, start Zigbee in End Device mode
+  
+  /* When all EPs are registered, start Zigbee in End Device mode */
   if (!Zigbee.begin()) {
-    Serial.println("Zigbee failed to start!");
-    Serial.println("Rebooting...");
+    #ifdef debug
+      Serial.println("Zigbee failed to start!");
+      Serial.println("Rebooting...");
+    #endif
     ESP.restart();
   } else {
-    Serial.println("Zigbee started successfully!");
+    #ifdef debug
+      Serial.println("Zigbee started successfully!");
+    #endif
   }
-  Serial.println("Connecting to network");
+  
+  #ifdef debug
+    Serial.println("Connecting to network");
+  #endif
+
   while (!Zigbee.connected()) {
-    Serial.print(".");
+    #ifdef debug
+      Serial.print(".");
+    #endif
     delay(100);
   }
   Serial.println("Connected");
+
 }
 
 void loop() {
-  // Checking button for factory reset and reporting
-  if (digitalRead(button) == LOW) {  // Push button pressed
-    // Key debounce handling
-    delay(100);
-    int startTime = millis();
-    while (digitalRead(button) == LOW) {
-      delay(50);
-      if ((millis() - startTime) > 3000) {
-        // If key pressed for more than 3secs, factory reset Zigbee and reboot
-        Serial.println("Resetting Zigbee to factory and rebooting in 1s.");
-        delay(1000);
-        Zigbee.factoryReset();
-      }
-    }
 
+  /* UART handeling */
+  while (Serial1.available()) {
+    char c = Serial1.read();
+
+    if (c == '\n') {
+      uartRXBuffer.trim();
+
+      if (uartRXBuffer.startsWith("state:")) {
+        String state = uartRXBuffer.substring(6);
+        setBathroomState(state);
+      }
+
+      uartRXBuffer = "";
+
+    } else {
+
+      uartRXBuffer += c;
+
+    }
   }
+
   delay(100);
+
 }
