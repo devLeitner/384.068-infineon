@@ -5,13 +5,16 @@ from machine import UART, Pin
 
 # Defines
 UART_BAUDRATE = 115200
-UART_TX_PIN = "P5_0"
-UART_RX_PIN = "P5_1"
+UART_TX_PIN = "P5_1"
+UART_RX_PIN = "P5_0"
+
 
 def main():
 
-    uart = UART(
-        1,
+    uart = UART(1)
+    uart.deinit()
+    
+    uart.init(
         baudrate=UART_BAUDRATE,
         bits=8,
         parity=None,
