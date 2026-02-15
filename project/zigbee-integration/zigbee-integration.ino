@@ -21,16 +21,16 @@
  *    This software is deployed on an ESP32-C8-WROOM Module
  */
 
-
-/* Defines */
-#define UART_BAUDRATE 115200
-#define UART_RX_PIN   16   // change if needed
-#define UART_TX_PIN   17   // change if needed
+ 
+/* ================== GPIO DEFINES ================== */
+#define PIN_SHOWER  18
+#define PIN_TOOTH   19
+#define PIN_HAIR    20
 
 #define DEBUG
 
 
-/* Zibee Code */
+/* ================== ZIGBEE ================== */
 #ifndef ZIGBEE_MODE_ED
 #error "Zigbee end device mode is not selected in Tools->Zigbee mode"
 #endif
@@ -42,125 +42,83 @@
 
 uint8_t button = BOOT_PIN;
 
-ZigbeeBinary zbBinaryShowering = ZigbeeBinary(BINARY_DEVICE_ENDPOINT_NUMBER);
-ZigbeeBinary zbBinaryBrushingTeeth = ZigbeeBinary(BINARY_DEVICE_ENDPOINT_NUMBER + 1);
-ZigbeeBinary zbBinaryHairDrying = ZigbeeBinary(BINARY_DEVICE_ENDPOINT_NUMBER + 2);
+ZigbeeBinary zbBinaryShowering(BINARY_DEVICE_ENDPOINT_NUMBER);
+ZigbeeBinary zbBinaryBrushingTeeth(BINARY_DEVICE_ENDPOINT_NUMBER + 1);
+ZigbeeBinary zbBinaryHairDrying(BINARY_DEVICE_ENDPOINT_NUMBER + 2);
 
-bool BrushingTeethStatus = false;
+/* ================== SETUP ================== */
+void setup() {
 
-/* UART Code */
-void setBathroomState(const String &state) {
-  bool shower = false;
-  bool tooth  = false;
-  bool hair   = false;
+#ifdef DEBUG
+  Serial.begin(115200);
+  Serial.println("Starting...");
+#endif
 
-  if (state == "shower") {
-    shower = true;
-  } else if (state == "tooth") {
-    tooth = true;
-  } else if (state == "hair") {
-    hair = true;
-  } else {
-    Serial.println("Unknown state received");
-    return;
+  // Configure GPIO inputs
+  pinMode(PIN_SHOWER, INPUT);
+  pinMode(PIN_TOOTH, INPUT);
+  pinMode(PIN_HAIR, INPUT);
+
+  pinMode(button, INPUT_PULLUP);
+
+  // Device info
+  zbBinaryShowering.setManufacturerAndModel("Leitrocki", "BathroomPro 2000");
+
+  // Binary inputs
+  zbBinaryShowering.addBinaryInput();
+  zbBinaryShowering.setBinaryInputDescription("Showering Status");
+
+  zbBinaryBrushingTeeth.addBinaryInput();
+  zbBinaryBrushingTeeth.setBinaryInputDescription("Brushing Teeth Status");
+
+  zbBinaryHairDrying.addBinaryInput();
+  zbBinaryHairDrying.setBinaryInputDescription("Hair Drying Status");
+
+  // Register endpoints
+  Zigbee.addEndpoint(&zbBinaryShowering);
+  Zigbee.addEndpoint(&zbBinaryBrushingTeeth);
+  Zigbee.addEndpoint(&zbBinaryHairDrying);
+
+#ifdef DEBUG
+  Serial.println("Starting Zigbee...");
+#endif
+
+  if (!Zigbee.begin()) {
+#ifdef DEBUG
+    Serial.println("Zigbee failed to start! Rebooting...");
+#endif
+    ESP.restart();
   }
+
+  while (!Zigbee.connected()) {
+#ifdef DEBUG
+    Serial.print(".");
+#endif
+    delay(100);
+  }
+
+#ifdef DEBUG
+  Serial.println("\nZigbee Connected");
+#endif
+}
+
+/* ================== LOOP ================== */
+void loop() {
+
+  bool shower = digitalRead(PIN_SHOWER);
+  bool tooth  = digitalRead(PIN_TOOTH);
+  bool hair   = digitalRead(PIN_HAIR);
 
   zbBinaryShowering.setBinaryInput(shower);
   zbBinaryBrushingTeeth.setBinaryInput(tooth);
   zbBinaryHairDrying.setBinaryInput(hair);
 
-  #ifdef DEBUG
-    Serial.printf("State updated → shower:%d tooth:%d hair:%d\n", shower, tooth, hair);
-  #endif
-}
-
-String uartRXBuffer = "";
-
-
-void setup() {
-
-  #ifdef DEBUG
-    Serial.begin(115200);
-    Serial.println("Starting...");
-  #endif
-
-  // Using Serial1 to communicate with the PSOC6
-  Serial1.begin(UART_BAUDRATE, SERIAL_8N1, UART_RX_PIN, UART_TX_PIN);
-
-  // Init button switch
-  pinMode(button, INPUT_PULLUP);
-
-  // Set Zigbee device name and model
-  zbBinaryShowering.setManufacturerAndModel("Leitrocki", "BathroomPro 2000");
-
-  // Set up binary status inputs
-  zbBinaryShowering.addBinaryInput();
-  zbBinaryShowering.setBinaryInputDescription("Showering Status");
-
-  zbBinaryBrushingTeeth.addBinaryInput();
-  zbBinaryBrushingTeeth.setBinaryInputDescription("BrushingTeeth Status");
-
-  zbBinaryHairDrying.addBinaryInput();
-  zbBinaryHairDrying.setBinaryInputDescription("HairDrying Status");
-
-  // Add endpoints to Zigbee
-  Zigbee.addEndpoint(&zbBinaryShowering);
-  Zigbee.addEndpoint(&zbBinaryBrushingTeeth);
-  Zigbee.addEndpoint(&zbBinaryHairDrying);
-
-
-  Serial.println("Starting Zigbee...");
-  
-  /* When all EPs are registered, start Zigbee in End Device mode */
-  if (!Zigbee.begin()) {
-    #ifdef debug
-      Serial.println("Zigbee failed to start!");
-      Serial.println("Rebooting...");
-    #endif
-    ESP.restart();
-  } else {
-    #ifdef debug
-      Serial.println("Zigbee started successfully!");
-    #endif
-  }
-  
-  #ifdef debug
-    Serial.println("Connecting to network");
-  #endif
-
-  while (!Zigbee.connected()) {
-    #ifdef debug
-      Serial.print(".");
-    #endif
-    delay(100);
-  }
-  Serial.println("Connected");
-
-}
-
-void loop() {
-
-  /* UART handeling */
-  while (Serial1.available()) {
-    char c = Serial1.read();
-
-    if (c == '\n') {
-      uartRXBuffer.trim();
-
-      if (uartRXBuffer.startsWith("state:")) {
-        String state = uartRXBuffer.substring(6);
-        setBathroomState(state);
-      }
-
-      uartRXBuffer = "";
-
-    } else {
-
-      uartRXBuffer += c;
-
-    }
-  }
+#ifdef DEBUG
+  Serial.printf(
+    "GPIO State → shower:%d tooth:%d hair:%d\n",
+    shower, tooth, hair
+  );
+#endif
 
   delay(100);
-
 }

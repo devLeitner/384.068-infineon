@@ -1,41 +1,21 @@
-# Imports
+
+
 import time
 import random
 from machine import UART, Pin
 
-# Defines
-UART_BAUDRATE = 115200
-UART_TX_PIN = "P5_1"
-UART_RX_PIN = "P5_0"
+
+# Communicate over Pins for each state
+shower = Pin("P9_0", Pin.OUT, value=1)
+hair = Pin("P9_1", Pin.OUT, value=0)
+tooth = Pin("P9_2", Pin.OUT, value=1)
 
 
-def main():
-
-    uart = UART(1)
-    uart.deinit()
+while 1:
     
-    uart.init(
-        baudrate=UART_BAUDRATE,
-        bits=8,
-        parity=None,
-        stop=1,
-        tx=Pin(UART_TX_PIN),
-        rx=Pin(UART_RX_PIN)
-    )
+    time.sleep(5)
 
-    start_time = time.time()
-
-    # Run for 120 seconds
-    while time.time() - start_time < 120:
-
-        new_state = random.choice(["shower", "tooth", "hair"])
-        msg = "state:{}\n".format(new_state)
-
-        uart.write(msg)
-        print("Sent:", msg.strip())
-
-        time.sleep(1)
-
-
-if __name__ == "__main__":
-    main()
+    # Genrate random test data
+    shower.value(random.random() > 0.5)
+    hair.value(random.random() > 0.5)
+    tooth.value(random.random() > 0.5)
