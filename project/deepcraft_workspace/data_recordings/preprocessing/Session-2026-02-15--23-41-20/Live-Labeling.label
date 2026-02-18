@@ -1,0 +1,4 @@
+Time(Seconds),Length(Seconds),Label(string),Confidence(double),Comment(string)
+65.5625,110.5625,brushing_teeth,1,
+177.8125,5.1875,brushing_teeth,1,
+217.89182499999998,44.04395000000002,showering,1,
