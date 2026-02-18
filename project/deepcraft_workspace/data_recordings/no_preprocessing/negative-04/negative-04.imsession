@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ImagimobStudio version="0.9">
+  <Timeline id="2ea69714-9e36-4b02-897b-afc7e84502e6">
+    <Tracks>
+      <Track name="Microphone Data" type="audiowav" isLabelTrack="False" frequency="16000">
+        <PayloadFile>Microphone-Data.wav</PayloadFile>
+        <Offset unit="seconds">3.1200000000E-005</Offset>
+        <Shape>
+          <Axis name="Channel" size="1">
+            <Label index="0">Mono</Label>
+          </Axis>
+        </Shape>
+      </Track>
+    </Tracks>
+  </Timeline>
+</ImagimobStudio>

@@ -735,14 +735,30 @@
       <Symbol name="(unlabeled)" id="0" weight="1" />
       <Symbol name="brushing_teeth" id="1" weight="1" />
     </SymbolMap>
-    <DataSet id="unassigned" targetSize="0" labels="Unassigned" />
+    <DataSet id="unassigned" targetSize="0" labels="Unassigned">
+      <Session name="negative-01" sessionId="5c011cca-3829-4fd1-8eb0-06a8c90714e8" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone-Data" tags="LabelsMissing">
+        <DataFile shape="[1]" samplerate="16000" modified="5250756393657668262" start="0" length="300.032">../data_recordings/no_preprocessing/negative-01/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/negative-01/negative-01.imsession</SessionFile>
+        <LabelFile modified="5250756418836822887">../data_recordings/no_preprocessing/negative-01/Live-Labeling.label</LabelFile>
+        <Labels />
+        <CustomColumnValues />
+      </Session>
+      <Session name="negative-02" sessionId="f8fde025-1dcb-4983-b04e-1b246556407f" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" dataTrack="Microphone-Data" tags="LabelTrackMissing">
+        <DataFile shape="[1]" samplerate="16000" modified="5250756408791462764" start="0" length="300.096">../data_recordings/no_preprocessing/negative-02/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/negative-02/negative-02.imsession</SessionFile>
+        <LabelFile>
+        </LabelFile>
+        <Labels />
+        <CustomColumnValues />
+      </Session>
+    </DataSet>
     <DataSet id="train" targetSize="0.6020758163245169" labels="Complete">
       <Session name="brushing-teeth-electrical-ml-1" sessionId="d1941b58-365d-4363-ab9e-7e3e60eaf300" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone-Data" tags="None">
         <DataFile shape="[1]" samplerate="16000" modified="5250752771121629836" start="0" length="139.712">../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-1/Microphone-Data.wav</DataFile>
         <SessionFile>../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-1/brushing-teeth-electrical-ml-1.imsession</SessionFile>
-        <LabelFile modified="5250752808421012584">../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-1/Live-Labeling.label</LabelFile>
+        <LabelFile modified="5250756418285789566">../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-1/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="1" length="131.8125">brushing_teeth</Label>
+          <Label count="1" length="129.4973867">brushing_teeth</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
@@ -752,9 +768,9 @@
       <Session name="brushing-teeth-electrical-ml-2" sessionId="c8bfceb9-cf3b-4c8a-ba8d-8849f9f0ad90" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone-Data" tags="None">
         <DataFile shape="[1]" samplerate="16000" modified="5250752774036792327" start="0" length="136.32">../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-2/Microphone-Data.wav</DataFile>
         <SessionFile>../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-2/brushing-teeth-electrical-ml-2.imsession</SessionFile>
-        <LabelFile modified="5250752808224268752">../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-2/Live-Labeling.label</LabelFile>
+        <LabelFile modified="5250756379451897804">../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-2/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="1" length="126.6875">brushing_teeth</Label>
+          <Label count="1" length="126.2946468">brushing_teeth</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
@@ -762,5 +778,7 @@
   </Database>
   <PredefinedLabels>
     <Label>brushing_teeth</Label>
+    <Label>hair_drying</Label>
+    <Label>showering</Label>
   </PredefinedLabels>
 </ImagimobStudio>
