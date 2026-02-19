@@ -2,47 +2,47 @@
 <Imaginet version="2.0.0.0">
   <Compound unit="d419d86b-7b57-41d3-9a74-ab428f13a213">
     <Nodes>
-      <LabelListNode id="node_5" width="120" height="120" x="1231.415" y="85.52999999999997" enabled="true" profiling="false" name="Predefined Labels">
+      <LabelListNode id="node_5" width="120" height="120" x="986.7033333333333" y="665.855" enabled="true" profiling="false" name="Predefined Labels">
         <Label>showering</Label>
         <Label>brushing_teeth</Label>
         <Label>hair_drying</Label>
       </LabelListNode>
-      <DeviceNode id="node_19" x="344.8373056824862" y="297.6693135719968" enabled="true" profiling="false" name="Microphone" board="290de5cb-460b-41bf-1f19-8d0e2219aff7" boardName="PSOC 6 AI (CY8CKIT-06S2-AI)" device="1" />
-      <UnitNode id="node_20" x="690.5396442899712" y="201.7080166557608" enabled="true" profiling="false" name="Microphone Data" unit="ImagimobStudio.Modules.DataTrack" />
-      <DotNetNode id="node_21" x="668" y="375" enabled="true" profiling="false" name="conv2d-medium-balanced-2 preprocessor">
+      <UnitNode id="node_24" x="886.4766666666666" y="275.625" enabled="true" profiling="false" name="conv2d-medium-balanced-2 model Labels" unit="ImagimobStudio.Modules.LabelTrack" />
+      <DeviceNode id="node_25" x="116.31833333333361" y="91.14500000000004" enabled="true" profiling="false" name="Microphone" board="290de5cb-460b-41bf-1f19-8d0e2219aff7" boardName="PSOC 6 AI (CY8CKIT-06S2-AI)" device="1" />
+      <DotNetNode id="node_28" x="398" y="179" enabled="true" profiling="false" name="conv1dlstm-large-accuracy-0 preprocessor">
         <Interop assembly="Imaginet.Units.KerasModel" class="Imaginet.Units.KerasModel.KerasModel" method="LoadPreprocessor" />
         <Input param="File" type="FileReference">
-          <StringArgument>C:/Users/rock4/GitHub/384.068-infineon/project/deepcraft_workspace/bathroom-proj/conv2d-medium-balanced-2/conv2d-medium-balanced-2.h5</StringArgument>
+          <StringArgument>C:/Users/adam/Documents/384.068-infineon/project/deepcraft_workspace/bathroom-proj/conv1dlstm-large-accuracy-0/conv1dlstm-large-accuracy-0.h5</StringArgument>
         </Input>
         <Input param="input" type="Tensor" />
         <Output param="output" type="Tensor" />
       </DotNetNode>
-      <DotNetNode id="node_22" x="1174" y="357" enabled="true" profiling="false" name="conv2d-medium-balanced-2 model">
+      <DotNetNode id="node_29" x="398" y="321" enabled="true" profiling="false" name="conv1dlstm-large-accuracy-0 model">
         <Interop assembly="Imaginet.Units.KerasModel" class="Imaginet.Units.KerasModel.KerasModel" method="LoadNetwork" />
         <Input param="File" type="FileReference">
-          <StringArgument>C:/Users/rock4/GitHub/384.068-infineon/project/deepcraft_workspace/bathroom-proj/conv2d-medium-balanced-2/conv2d-medium-balanced-2.h5</StringArgument>
+          <StringArgument>C:/Users/adam/Documents/384.068-infineon/project/deepcraft_workspace/bathroom-proj/conv1dlstm-large-accuracy-0/conv1dlstm-large-accuracy-0.h5</StringArgument>
         </Input>
         <Input param="input" type="Tensor" />
         <Output param="output" type="Tensor" />
       </DotNetNode>
-      <UnitNode id="node_24" x="1671" y="357" enabled="true" profiling="false" name="conv2d-medium-balanced-2 model Labels" unit="ImagimobStudio.Modules.LabelTrack" />
+      <UnitNode id="node_30" x="694" y="71" enabled="true" profiling="false" name="Microphone Data" unit="ImagimobStudio.Modules.DataTrack" />
     </Nodes>
     <Connections>
       <Connection>
-        <Source node="node_19" param="Audio" />
-        <Target node="node_20" param="data" />
+        <Source node="node_28" param="output" />
+        <Target node="node_29" param="input" />
       </Connection>
       <Connection>
-        <Source node="node_21" param="output" />
-        <Target node="node_22" param="input" />
+        <Source node="node_25" param="Audio" />
+        <Target node="node_28" param="input" />
       </Connection>
       <Connection>
-        <Source node="node_19" param="Audio" />
-        <Target node="node_21" param="input" />
-      </Connection>
-      <Connection>
-        <Source node="node_22" param="output" />
+        <Source node="node_29" param="output" />
         <Target node="node_24" param="data" />
+      </Connection>
+      <Connection>
+        <Source node="node_25" param="Audio" />
+        <Target node="node_30" param="data" />
       </Connection>
     </Connections>
   </Compound>
