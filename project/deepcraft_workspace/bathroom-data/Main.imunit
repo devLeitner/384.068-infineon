@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Imaginet version="2.0.0.0">
   <Compound unit="d419d86b-7b57-41d3-9a74-ab428f13a213">
@@ -46,4 +47,56 @@
       </Connection>
     </Connections>
   </Compound>
+=======
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Imaginet version="2.0.0.0">
+  <Compound unit="d419d86b-7b57-41d3-9a74-ab428f13a213">
+    <Nodes>
+      <LabelListNode id="node_5" width="120" height="120" x="1231.415" y="85.52999999999997" enabled="true" profiling="false" name="Predefined Labels">
+        <Label>showering</Label>
+        <Label>brushing_teeth</Label>
+        <Label>hair_drying</Label>
+      </LabelListNode>
+      <UnitNode id="node_20" x="690.5396442899712" y="201.7080166557608" enabled="true" profiling="false" name="Microphone Data" unit="ImagimobStudio.Modules.DataTrack" />
+      <UnitNode id="node_24" x="1671" y="357" enabled="true" profiling="false" name="conv2d-medium-balanced-2 model Labels" unit="ImagimobStudio.Modules.LabelTrack" />
+      <DotNetNode id="node_25" x="679.3814531345412" y="472.04682717323374" enabled="true" profiling="false" name="conv2d-small-accuracy-2 preprocessor">
+        <Interop assembly="Imaginet.Units.KerasModel" class="Imaginet.Units.KerasModel.KerasModel" method="LoadPreprocessor" />
+        <Input param="File" type="FileReference">
+          <StringArgument>C:/Users/SE-384_068/Documents/bathroom-proj/384.068-infineon/project/deepcraft_workspace/bathroom-proj/conv2d-small-accuracy-2/conv2d-small-accuracy-2.h5</StringArgument>
+        </Input>
+        <Input param="input" type="Tensor" />
+        <Output param="output" type="Tensor" />
+      </DotNetNode>
+      <DotNetNode id="node_26" x="679.3814531345412" y="614.0468271732337" enabled="true" profiling="false" name="conv2d-small-accuracy-2 model">
+        <Interop assembly="Imaginet.Units.KerasModel" class="Imaginet.Units.KerasModel.KerasModel" method="LoadNetwork" />
+        <Input param="File" type="FileReference">
+          <StringArgument>C:/Users/SE-384_068/Documents/bathroom-proj/384.068-infineon/project/deepcraft_workspace/bathroom-proj/conv2d-small-accuracy-2/conv2d-small-accuracy-2.h5</StringArgument>
+        </Input>
+        <Input param="input" type="Tensor" />
+        <Output param="output" type="Tensor" />
+      </DotNetNode>
+      <DeviceNode id="node_27" x="194.21125801454764" y="288.79909160632974" enabled="true" profiling="false" name="Microphone" board="290de5cb-460b-41bf-1f19-8d0e222baff7" boardName="PSOC 6 AI (CY8CKIT-06S2-AI)" device="1">
+        <BooleanArgument param="float_convert">false</BooleanArgument>
+      </DeviceNode>
+    </Nodes>
+    <Connections>
+      <Connection>
+        <Source node="node_25" param="output" />
+        <Target node="node_26" param="input" />
+      </Connection>
+      <Connection>
+        <Source node="node_27" param="Audio" />
+        <Target node="node_25" param="input" />
+      </Connection>
+      <Connection>
+        <Source node="node_26" param="output" />
+        <Target node="node_24" param="data" />
+      </Connection>
+      <Connection>
+        <Source node="node_27" param="Audio" />
+        <Target node="node_20" param="data" />
+      </Connection>
+    </Connections>
+  </Compound>
+>>>>>>> 93aeb9a987ded1cb1ce578226346cb54e903a8ef
 </Imaginet>
