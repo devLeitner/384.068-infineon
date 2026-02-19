@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ImagimobStudio version="0.9">
+  <Timeline id="8a6381f1-eca5-454e-b02e-1e901dbee803">
+    <Tracks>
+      <Track name="Microphone" type="audiowav" isLabelTrack="False" frequency="0">
+        <PayloadFile>Microphone.wav</PayloadFile>
+        <Shape />
+      </Track>
+      <Track name="Live Labeling" type="labelcsv">
+        <PayloadFile>Live-Labeling.label</PayloadFile>
+        <Shape />
+      </Track>
+      <Track name="Preprocessor" type="datacsv" timecoded="TimestampBeginDuration" isLabelTrack="False">
+        <PayloadFile>..\..\PreprocessorTrack\Wood_6\Microphone_Preprocessor.data</PayloadFile>
+        <Shape />
+      </Track>
+      <Track name="conv1d-medium-accuracy-00" type="datacsv" timecoded="TimestampBeginDuration" isLabelTrack="False">
+        <PayloadFile>..\..\Models\conv1d-medium-accuracy-0\Predictions\sessions\Wood_6\conv1d-medium-accuracy-00.data</PayloadFile>
+        <Offset unit="seconds">1.0219380000E+000</Offset>
+        <Shape />
+      </Track>
+      <Track name="preprocessed_label" type="datacsv" isLabelTrack="False">
+        <PayloadFile>..\..\Models\conv1d-medium-accuracy-0\Predictions\sessions\Wood_6\preprocessed_label.data</PayloadFile>
+        <Offset unit="seconds">1.0219380000E+000</Offset>
+        <Shape />
+      </Track>
+    </Tracks>
+  </Timeline>
+</ImagimobStudio>
