@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ImagimobStudio version="1.1.0">
-  <Job id="e63440f1-0cf6-11f1-b53c-fd8842c4d513" />
+  <Job id="6bd382fe-0d87-11f1-a80b-1dfe44d35351" />
   <ProjectType>Classification</ProjectType>
   <ProjectId>2581ccf9-ddbc-429d-a7eb-770e5d8eeef4</ProjectId>
   <Preprocessor inshape="[1]" intype="Float32" infreq="16000" outshape="[60,20]" outtype="Float32">
@@ -61,7 +61,7 @@
   </Preprocessor>
   <ModelFactory>
     <Epochs>100</Epochs>
-    <BatchSize>64</BatchSize>
+    <BatchSize>16</BatchSize>
     <SplitCount>16</SplitCount>
     <Patience>20</Patience>
     <AppendModels>False</AppendModels>
@@ -69,7 +69,7 @@
     <HardwareType>Infineon</HardwareType>
     <TrainingEnvironment>
     </TrainingEnvironment>
-    <ModelFamily>Conv1D</ModelFamily>
+    <ModelFamily>Conv2D</ModelFamily>
     <ModelFlavor>SmallKern</ModelFlavor>
     <ClassifierType>GlobalAveragePool</ClassifierType>
     <Optimization>Balanced</Optimization>
@@ -78,7 +78,7 @@
     <LearnRate>Mid</LearnRate>
     <RegularizationFactor>Low</RegularizationFactor>
     <LastNetworkInputShape>[60,20]</LastNetworkInputShape>
-    <LastClassCount>2</LastClassCount>
+    <LastClassCount>4</LastClassCount>
     <Optimizer>
       <LearningRate>0.001</LearningRate>
       <WeightDecay>0.0001</WeightDecay>
@@ -89,10 +89,10 @@
     </BuildSteps>
   </ModelFactory>
   <Models>
-    <Model name="conv1d-medium-balanced-0" id="1f01e4e6-0c24-4c86-a2c8-a603d0d3cb0b">
+    <Model name="conv2d-medium-balanced-0" id="4ca41389-789e-4d5d-adf7-12b958c73fbb">
       <LossFunction>CategoricalCrossentropy</LossFunction>
       <Epochs>100</Epochs>
-      <BatchSize>64</BatchSize>
+      <BatchSize>16</BatchSize>
       <SplitCount>16</SplitCount>
       <Patience>20</Patience>
       <TrainingEnvironment>
@@ -101,11 +101,14 @@
         <LearningRate>0.004</LearningRate>
         <WeightDecay>0.0001</WeightDecay>
       </Optimizer>
-      <Network inshape="[60,20]" intype="Float32" infreq="0" outshape="[2]" outtype="Float32">
-        <Unit id="Core.Layers.Convolution1D">
+      <Network inshape="[60,20]" intype="Float32" infreq="0" outshape="[4]" outtype="Float32">
+        <Unit id="Core.Layers.Reshape">
+          <Argument param="shape" type="Shape">[60,20,1]</Argument>
+        </Unit>
+        <Unit id="Core.Layers.Convolution2D">
           <Argument param="filters" type="Int32">12</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">2</Argument>
+          <Argument param="kernel_size" type="Shape">[3,3]</Argument>
+          <Argument param="strides" type="Shape">[2,2]</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
@@ -117,18 +120,18 @@
         <Unit id="Core.Layers.Activation">
           <Argument param="activation" type="String">relu</Argument>
         </Unit>
-        <Unit id="Core.Layers.Convolution1D">
+        <Unit id="Core.Layers.Convolution2D">
           <Argument param="filters" type="Int32">24</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="kernel_size" type="Shape">[3,3]</Argument>
+          <Argument param="strides" type="Shape">[1,1]</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
         </Unit>
-        <Unit id="Core.Layers.Convolution1D">
+        <Unit id="Core.Layers.Convolution2D">
           <Argument param="filters" type="Int32">24</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="kernel_size" type="Shape">[3,3]</Argument>
+          <Argument param="strides" type="Shape">[1,1]</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
@@ -140,23 +143,23 @@
         <Unit id="Core.Layers.Activation">
           <Argument param="activation" type="String">relu</Argument>
         </Unit>
-        <Unit id="Core.Layers.MaxPool1D">
-          <Argument param="pool_size" type="Int32">2</Argument>
-          <Argument param="strides" type="Int32">2</Argument>
+        <Unit id="Core.Layers.MaxPool2D">
+          <Argument param="pool_size" type="Shape">[2,2]</Argument>
+          <Argument param="strides" type="Shape">[2,2]</Argument>
           <Argument param="padding" type="String">valid</Argument>
         </Unit>
-        <Unit id="Core.Layers.Convolution1D">
+        <Unit id="Core.Layers.Convolution2D">
           <Argument param="filters" type="Int32">32</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="kernel_size" type="Shape">[3,3]</Argument>
+          <Argument param="strides" type="Shape">[1,1]</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
         </Unit>
-        <Unit id="Core.Layers.Convolution1D">
+        <Unit id="Core.Layers.Convolution2D">
           <Argument param="filters" type="Int32">32</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="kernel_size" type="Shape">[3,3]</Argument>
+          <Argument param="strides" type="Shape">[1,1]</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
@@ -168,14 +171,9 @@
         <Unit id="Core.Layers.Activation">
           <Argument param="activation" type="String">relu</Argument>
         </Unit>
-        <Unit id="Core.Layers.MaxPool1D">
-          <Argument param="pool_size" type="Int32">2</Argument>
-          <Argument param="strides" type="Int32">2</Argument>
-          <Argument param="padding" type="String">valid</Argument>
-        </Unit>
-        <Unit id="Core.Layers.GlobalAveragePool1D" />
+        <Unit id="Core.Layers.GlobalAveragePool2D" />
         <Unit id="Core.Layers.Dense">
-          <Argument param="units" type="Int32">2</Argument>
+          <Argument param="units" type="Int32">4</Argument>
           <Argument param="use_bias" type="Boolean">True</Argument>
           <Argument param="activation" type="String">linear</Argument>
         </Unit>
@@ -190,6 +188,8 @@
       <SymbolWeights override="False">
         <SymbolWeight symbol="(unlabeled)" weight="1" />
         <SymbolWeight symbol="brushing_teeth" weight="1" />
+        <SymbolWeight symbol="hair_drying" weight="1" />
+        <SymbolWeight symbol="showering" weight="1" />
       </SymbolWeights>
       <Preprocessor override="False" inshape="[1]" intype="Float32" infreq="16000" outshape="[60,20]" outtype="Float32">
         <Unit id="Core.Queues.SlidingWindow">
@@ -249,10 +249,10 @@
       </Preprocessor>
       <Postprocessor override="False" inshape="[128,3]" intype="Float32" infreq="1" outshape="[128,3]" outtype="Float32" />
     </Model>
-    <Model name="conv1d-medium-balanced-1" id="f045bb4e-6a92-4b5a-922b-added8939a6a">
+    <Model name="conv2d-medium-balanced-1" id="5b7436d6-a040-41ec-b95f-bc7e99266927">
       <LossFunction>CategoricalCrossentropy</LossFunction>
       <Epochs>100</Epochs>
-      <BatchSize>64</BatchSize>
+      <BatchSize>16</BatchSize>
       <SplitCount>16</SplitCount>
       <Patience>20</Patience>
       <TrainingEnvironment>
@@ -261,11 +261,14 @@
         <LearningRate>0.004</LearningRate>
         <WeightDecay>0.0001</WeightDecay>
       </Optimizer>
-      <Network inshape="[60,20]" intype="Float32" infreq="0" outshape="[2]" outtype="Float32">
-        <Unit id="Core.Layers.Convolution1D">
+      <Network inshape="[60,20]" intype="Float32" infreq="0" outshape="[4]" outtype="Float32">
+        <Unit id="Core.Layers.Reshape">
+          <Argument param="shape" type="Shape">[60,20,1]</Argument>
+        </Unit>
+        <Unit id="Core.Layers.Convolution2D">
           <Argument param="filters" type="Int32">16</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">2</Argument>
+          <Argument param="kernel_size" type="Shape">[3,3]</Argument>
+          <Argument param="strides" type="Shape">[2,2]</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
@@ -277,18 +280,18 @@
         <Unit id="Core.Layers.Activation">
           <Argument param="activation" type="String">relu</Argument>
         </Unit>
-        <Unit id="Core.Layers.Convolution1D">
+        <Unit id="Core.Layers.Convolution2D">
           <Argument param="filters" type="Int32">16</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="kernel_size" type="Shape">[3,3]</Argument>
+          <Argument param="strides" type="Shape">[1,1]</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
         </Unit>
-        <Unit id="Core.Layers.Convolution1D">
+        <Unit id="Core.Layers.Convolution2D">
           <Argument param="filters" type="Int32">16</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="kernel_size" type="Shape">[3,3]</Argument>
+          <Argument param="strides" type="Shape">[1,1]</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
@@ -300,23 +303,23 @@
         <Unit id="Core.Layers.Activation">
           <Argument param="activation" type="String">relu</Argument>
         </Unit>
-        <Unit id="Core.Layers.MaxPool1D">
-          <Argument param="pool_size" type="Int32">2</Argument>
-          <Argument param="strides" type="Int32">2</Argument>
+        <Unit id="Core.Layers.MaxPool2D">
+          <Argument param="pool_size" type="Shape">[2,2]</Argument>
+          <Argument param="strides" type="Shape">[2,2]</Argument>
           <Argument param="padding" type="String">valid</Argument>
         </Unit>
-        <Unit id="Core.Layers.Convolution1D">
+        <Unit id="Core.Layers.Convolution2D">
           <Argument param="filters" type="Int32">32</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="kernel_size" type="Shape">[3,3]</Argument>
+          <Argument param="strides" type="Shape">[1,1]</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
         </Unit>
-        <Unit id="Core.Layers.Convolution1D">
+        <Unit id="Core.Layers.Convolution2D">
           <Argument param="filters" type="Int32">32</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="kernel_size" type="Shape">[3,3]</Argument>
+          <Argument param="strides" type="Shape">[1,1]</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
@@ -328,14 +331,9 @@
         <Unit id="Core.Layers.Activation">
           <Argument param="activation" type="String">relu</Argument>
         </Unit>
-        <Unit id="Core.Layers.MaxPool1D">
-          <Argument param="pool_size" type="Int32">2</Argument>
-          <Argument param="strides" type="Int32">2</Argument>
-          <Argument param="padding" type="String">valid</Argument>
-        </Unit>
-        <Unit id="Core.Layers.GlobalAveragePool1D" />
+        <Unit id="Core.Layers.GlobalAveragePool2D" />
         <Unit id="Core.Layers.Dense">
-          <Argument param="units" type="Int32">2</Argument>
+          <Argument param="units" type="Int32">4</Argument>
           <Argument param="use_bias" type="Boolean">True</Argument>
           <Argument param="activation" type="String">linear</Argument>
         </Unit>
@@ -350,6 +348,8 @@
       <SymbolWeights override="False">
         <SymbolWeight symbol="(unlabeled)" weight="1" />
         <SymbolWeight symbol="brushing_teeth" weight="1" />
+        <SymbolWeight symbol="hair_drying" weight="1" />
+        <SymbolWeight symbol="showering" weight="1" />
       </SymbolWeights>
       <Preprocessor override="False" inshape="[1]" intype="Float32" infreq="16000" outshape="[60,20]" outtype="Float32">
         <Unit id="Core.Queues.SlidingWindow">
@@ -409,10 +409,10 @@
       </Preprocessor>
       <Postprocessor override="False" inshape="[128,3]" intype="Float32" infreq="1" outshape="[128,3]" outtype="Float32" />
     </Model>
-    <Model name="conv1d-medium-balanced-2" id="a56a8428-b22a-474a-8382-93980b1c25fe">
+    <Model name="conv2d-medium-balanced-2" id="637e1baa-9f33-4283-b135-b0586fbde36d">
       <LossFunction>CategoricalCrossentropy</LossFunction>
       <Epochs>100</Epochs>
-      <BatchSize>64</BatchSize>
+      <BatchSize>16</BatchSize>
       <SplitCount>16</SplitCount>
       <Patience>20</Patience>
       <TrainingEnvironment>
@@ -421,11 +421,14 @@
         <LearningRate>0.004</LearningRate>
         <WeightDecay>0.0001</WeightDecay>
       </Optimizer>
-      <Network inshape="[60,20]" intype="Float32" infreq="0" outshape="[2]" outtype="Float32">
-        <Unit id="Core.Layers.Convolution1D">
+      <Network inshape="[60,20]" intype="Float32" infreq="0" outshape="[4]" outtype="Float32">
+        <Unit id="Core.Layers.Reshape">
+          <Argument param="shape" type="Shape">[60,20,1]</Argument>
+        </Unit>
+        <Unit id="Core.Layers.Convolution2D">
           <Argument param="filters" type="Int32">16</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">2</Argument>
+          <Argument param="kernel_size" type="Shape">[3,3]</Argument>
+          <Argument param="strides" type="Shape">[2,2]</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
@@ -437,18 +440,18 @@
         <Unit id="Core.Layers.Activation">
           <Argument param="activation" type="String">relu</Argument>
         </Unit>
-        <Unit id="Core.Layers.Convolution1D">
+        <Unit id="Core.Layers.Convolution2D">
           <Argument param="filters" type="Int32">32</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="kernel_size" type="Shape">[3,3]</Argument>
+          <Argument param="strides" type="Shape">[1,1]</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
         </Unit>
-        <Unit id="Core.Layers.Convolution1D">
+        <Unit id="Core.Layers.Convolution2D">
           <Argument param="filters" type="Int32">32</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="kernel_size" type="Shape">[3,3]</Argument>
+          <Argument param="strides" type="Shape">[1,1]</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
@@ -460,23 +463,23 @@
         <Unit id="Core.Layers.Activation">
           <Argument param="activation" type="String">relu</Argument>
         </Unit>
-        <Unit id="Core.Layers.MaxPool1D">
-          <Argument param="pool_size" type="Int32">2</Argument>
-          <Argument param="strides" type="Int32">2</Argument>
+        <Unit id="Core.Layers.MaxPool2D">
+          <Argument param="pool_size" type="Shape">[2,2]</Argument>
+          <Argument param="strides" type="Shape">[2,2]</Argument>
           <Argument param="padding" type="String">valid</Argument>
         </Unit>
-        <Unit id="Core.Layers.Convolution1D">
+        <Unit id="Core.Layers.Convolution2D">
           <Argument param="filters" type="Int32">32</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="kernel_size" type="Shape">[3,3]</Argument>
+          <Argument param="strides" type="Shape">[1,1]</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
         </Unit>
-        <Unit id="Core.Layers.Convolution1D">
+        <Unit id="Core.Layers.Convolution2D">
           <Argument param="filters" type="Int32">32</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="kernel_size" type="Shape">[3,3]</Argument>
+          <Argument param="strides" type="Shape">[1,1]</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
@@ -488,14 +491,9 @@
         <Unit id="Core.Layers.Activation">
           <Argument param="activation" type="String">relu</Argument>
         </Unit>
-        <Unit id="Core.Layers.MaxPool1D">
-          <Argument param="pool_size" type="Int32">2</Argument>
-          <Argument param="strides" type="Int32">2</Argument>
-          <Argument param="padding" type="String">valid</Argument>
-        </Unit>
-        <Unit id="Core.Layers.GlobalAveragePool1D" />
+        <Unit id="Core.Layers.GlobalAveragePool2D" />
         <Unit id="Core.Layers.Dense">
-          <Argument param="units" type="Int32">2</Argument>
+          <Argument param="units" type="Int32">4</Argument>
           <Argument param="use_bias" type="Boolean">True</Argument>
           <Argument param="activation" type="String">linear</Argument>
         </Unit>
@@ -510,6 +508,8 @@
       <SymbolWeights override="False">
         <SymbolWeight symbol="(unlabeled)" weight="1" />
         <SymbolWeight symbol="brushing_teeth" weight="1" />
+        <SymbolWeight symbol="hair_drying" weight="1" />
+        <SymbolWeight symbol="showering" weight="1" />
       </SymbolWeights>
       <Preprocessor override="False" inshape="[1]" intype="Float32" infreq="16000" outshape="[60,20]" outtype="Float32">
         <Unit id="Core.Queues.SlidingWindow">
@@ -569,10 +569,10 @@
       </Preprocessor>
       <Postprocessor override="False" inshape="[128,3]" intype="Float32" infreq="1" outshape="[128,3]" outtype="Float32" />
     </Model>
-    <Model name="conv1d-medium-balanced-3" id="3661175a-db62-46f8-8379-af6762a86511">
+    <Model name="conv2d-medium-balanced-3" id="8bd12e13-8540-4023-96f6-7da855d73f1b">
       <LossFunction>CategoricalCrossentropy</LossFunction>
       <Epochs>100</Epochs>
-      <BatchSize>64</BatchSize>
+      <BatchSize>16</BatchSize>
       <SplitCount>16</SplitCount>
       <Patience>20</Patience>
       <TrainingEnvironment>
@@ -581,11 +581,14 @@
         <LearningRate>0.004</LearningRate>
         <WeightDecay>0.0001</WeightDecay>
       </Optimizer>
-      <Network inshape="[60,20]" intype="Float32" infreq="0" outshape="[2]" outtype="Float32">
-        <Unit id="Core.Layers.Convolution1D">
+      <Network inshape="[60,20]" intype="Float32" infreq="0" outshape="[4]" outtype="Float32">
+        <Unit id="Core.Layers.Reshape">
+          <Argument param="shape" type="Shape">[60,20,1]</Argument>
+        </Unit>
+        <Unit id="Core.Layers.Convolution2D">
           <Argument param="filters" type="Int32">16</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">2</Argument>
+          <Argument param="kernel_size" type="Shape">[3,3]</Argument>
+          <Argument param="strides" type="Shape">[2,2]</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
@@ -597,18 +600,18 @@
         <Unit id="Core.Layers.Activation">
           <Argument param="activation" type="String">relu</Argument>
         </Unit>
-        <Unit id="Core.Layers.Convolution1D">
+        <Unit id="Core.Layers.Convolution2D">
           <Argument param="filters" type="Int32">32</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="kernel_size" type="Shape">[3,3]</Argument>
+          <Argument param="strides" type="Shape">[1,1]</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
         </Unit>
-        <Unit id="Core.Layers.Convolution1D">
+        <Unit id="Core.Layers.Convolution2D">
           <Argument param="filters" type="Int32">32</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="kernel_size" type="Shape">[3,3]</Argument>
+          <Argument param="strides" type="Shape">[1,1]</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
@@ -620,23 +623,23 @@
         <Unit id="Core.Layers.Activation">
           <Argument param="activation" type="String">relu</Argument>
         </Unit>
-        <Unit id="Core.Layers.MaxPool1D">
-          <Argument param="pool_size" type="Int32">2</Argument>
-          <Argument param="strides" type="Int32">2</Argument>
+        <Unit id="Core.Layers.MaxPool2D">
+          <Argument param="pool_size" type="Shape">[2,2]</Argument>
+          <Argument param="strides" type="Shape">[2,2]</Argument>
           <Argument param="padding" type="String">valid</Argument>
         </Unit>
-        <Unit id="Core.Layers.Convolution1D">
+        <Unit id="Core.Layers.Convolution2D">
           <Argument param="filters" type="Int32">64</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="kernel_size" type="Shape">[3,3]</Argument>
+          <Argument param="strides" type="Shape">[1,1]</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
         </Unit>
-        <Unit id="Core.Layers.Convolution1D">
+        <Unit id="Core.Layers.Convolution2D">
           <Argument param="filters" type="Int32">64</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="kernel_size" type="Shape">[3,3]</Argument>
+          <Argument param="strides" type="Shape">[1,1]</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
@@ -648,14 +651,9 @@
         <Unit id="Core.Layers.Activation">
           <Argument param="activation" type="String">relu</Argument>
         </Unit>
-        <Unit id="Core.Layers.MaxPool1D">
-          <Argument param="pool_size" type="Int32">2</Argument>
-          <Argument param="strides" type="Int32">2</Argument>
-          <Argument param="padding" type="String">valid</Argument>
-        </Unit>
-        <Unit id="Core.Layers.GlobalAveragePool1D" />
+        <Unit id="Core.Layers.GlobalAveragePool2D" />
         <Unit id="Core.Layers.Dense">
-          <Argument param="units" type="Int32">2</Argument>
+          <Argument param="units" type="Int32">4</Argument>
           <Argument param="use_bias" type="Boolean">True</Argument>
           <Argument param="activation" type="String">linear</Argument>
         </Unit>
@@ -670,6 +668,8 @@
       <SymbolWeights override="False">
         <SymbolWeight symbol="(unlabeled)" weight="1" />
         <SymbolWeight symbol="brushing_teeth" weight="1" />
+        <SymbolWeight symbol="hair_drying" weight="1" />
+        <SymbolWeight symbol="showering" weight="1" />
       </SymbolWeights>
       <Preprocessor override="False" inshape="[1]" intype="Float32" infreq="16000" outshape="[60,20]" outtype="Float32">
         <Unit id="Core.Queues.SlidingWindow">
@@ -734,43 +734,140 @@
     <SymbolMap>
       <Symbol name="(unlabeled)" id="0" weight="1" />
       <Symbol name="brushing_teeth" id="1" weight="1" />
+      <Symbol name="hair_drying" id="2" weight="1" />
+      <Symbol name="showering" id="3" weight="1" />
     </SymbolMap>
-    <DataSet id="unassigned" targetSize="0" labels="Unassigned">
-      <Session name="negative-01" sessionId="5c011cca-3829-4fd1-8eb0-06a8c90714e8" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone-Data" tags="LabelsMissing">
-        <DataFile shape="[1]" samplerate="16000" modified="5250756393657668262" start="0" length="300.032">../data_recordings/no_preprocessing/negative-01/Microphone-Data.wav</DataFile>
-        <SessionFile>../data_recordings/no_preprocessing/negative-01/negative-01.imsession</SessionFile>
-        <LabelFile modified="5250756418836822887">../data_recordings/no_preprocessing/negative-01/Live-Labeling.label</LabelFile>
-        <Labels />
+    <DataSet id="unassigned" targetSize="0" labels="Unassigned" />
+    <DataSet id="train" targetSize="0.6" labels="Complete">
+      <Session name="Session-2026-02-19--11-11-06-HairDryer" sessionId="7d2e859b-2d32-4776-b825-607d9a950d7e" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250756945180550858" start="0" length="64.704">../data_recordings/no_preprocessing/Session-2026-02-19--11-11-06-HairDryer/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/Session-2026-02-19--11-11-06-HairDryer/Session-2026-02-19--11-11-06-HairDryer.imsession</SessionFile>
+        <LabelFile modified="5250756949959471388">../data_recordings/no_preprocessing/Session-2026-02-19--11-11-06-HairDryer/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="61.181">hair_drying</Label>
+        </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="negative-02" sessionId="f8fde025-1dcb-4983-b04e-1b246556407f" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" dataTrack="Microphone-Data" tags="LabelTrackMissing">
-        <DataFile shape="[1]" samplerate="16000" modified="5250756408791462764" start="0" length="300.096">../data_recordings/no_preprocessing/negative-02/Microphone-Data.wav</DataFile>
-        <SessionFile>../data_recordings/no_preprocessing/negative-02/negative-02.imsession</SessionFile>
-        <LabelFile>
-        </LabelFile>
-        <Labels />
+      <Session name="Session-2026-02-19--11-15-36-Hairdrying" sessionId="5bcf1995-512e-4120-b23e-21225f7d9505" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250756947889665880" start="0" length="109.12">../data_recordings/no_preprocessing/Session-2026-02-19--11-15-36-Hairdrying/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/Session-2026-02-19--11-15-36-Hairdrying/Session-2026-02-19--11-15-36-Hairdrying.imsession</SessionFile>
+        <LabelFile modified="5250756951337518067">../data_recordings/no_preprocessing/Session-2026-02-19--11-15-36-Hairdrying/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="100.4596825">hair_drying</Label>
+        </Labels>
         <CustomColumnValues />
       </Session>
-    </DataSet>
-    <DataSet id="train" targetSize="0.6020758163245169" labels="Complete">
-      <Session name="brushing-teeth-electrical-ml-1" sessionId="d1941b58-365d-4363-ab9e-7e3e60eaf300" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone-Data" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250752771121629836" start="0" length="139.712">../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-1/Microphone-Data.wav</DataFile>
+      <Session name="brushing-teeth-electrical-ml-1" sessionId="d1941b58-365d-4363-ab9e-7e3e60eaf300" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250756862462353367" start="0" length="139.712">../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-1/Microphone-Data.wav</DataFile>
         <SessionFile>../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-1/brushing-teeth-electrical-ml-1.imsession</SessionFile>
-        <LabelFile modified="5250756418285789566">../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-1/Live-Labeling.label</LabelFile>
+        <LabelFile modified="5250756862462097550">../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-1/Live-Labeling.label</LabelFile>
         <Labels>
           <Label count="1" length="129.4973867">brushing_teeth</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-    </DataSet>
-    <DataSet id="validation" targetSize="0.1969683589204412" labels="Complete" />
-    <DataSet id="test" targetSize="0.20095582475504192" labels="Complete">
-      <Session name="brushing-teeth-electrical-ml-2" sessionId="c8bfceb9-cf3b-4c8a-ba8d-8849f9f0ad90" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone-Data" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250752774036792327" start="0" length="136.32">../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-2/Microphone-Data.wav</DataFile>
-        <SessionFile>../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-2/brushing-teeth-electrical-ml-2.imsession</SessionFile>
-        <LabelFile modified="5250756379451897804">../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-2/Live-Labeling.label</LabelFile>
+      <Session name="negative-04" sessionId="2ea69714-9e36-4b02-897b-afc7e84502e6" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="LabelsMissing">
+        <DataFile shape="[1]" samplerate="16000" modified="5250756862464243807" start="0" length="300.032">../data_recordings/no_preprocessing/negative-04/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/negative-04/negative-04.imsession</SessionFile>
+        <LabelFile modified="5250756862462643817">../data_recordings/no_preprocessing/negative-04/Live-Labeling.label</LabelFile>
+        <Labels />
+        <CustomColumnValues />
+      </Session>
+      <Session name="negative-02" sessionId="f8fde025-1dcb-4983-b04e-1b246556407f" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="LabelsMissing">
+        <DataFile shape="[1]" samplerate="16000" modified="5250756862463443809" start="0" length="300.096">../data_recordings/no_preprocessing/negative-02/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/negative-02/negative-02.imsession</SessionFile>
+        <LabelFile modified="5250756862462643817">../data_recordings/no_preprocessing/negative-02/Live-Labeling.label</LabelFile>
+        <Labels />
+        <CustomColumnValues />
+      </Session>
+      <Session name="showering_ml-1" sessionId="a42e2fe0-44a1-4eab-a6c9-71553e54b59c" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250756862464792928" start="0" length="300.096">../data_recordings/no_preprocessing/showering_ml-1/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/showering_ml-1/showering_ml-1.imsession</SessionFile>
+        <LabelFile modified="5250756939564974721">../data_recordings/no_preprocessing/showering_ml-1/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="1" length="126.2946468">brushing_teeth</Label>
+          <Label count="1" length="286.161">showering</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="showering_ml-2" sessionId="668ca7df-6263-47f2-b99f-82be36a19b39" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250756862465308900" start="0" length="300.032">../data_recordings/no_preprocessing/showering_ml-2/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/showering_ml-2/showering_ml-2.imsession</SessionFile>
+        <LabelFile modified="5250756877597692604">../data_recordings/no_preprocessing/showering_ml-2/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="221.929">showering</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="negative-03" sessionId="4bfe0613-55cc-44f9-9c5f-fee212027089" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="LabelsMissing">
+        <DataFile shape="[1]" samplerate="16000" modified="5250756862463843810" start="0" length="300.032">../data_recordings/no_preprocessing/negative-03/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/negative-03/negative-03.imsession</SessionFile>
+        <LabelFile modified="5250756862462643817">../data_recordings/no_preprocessing/negative-03/Live-Labeling.label</LabelFile>
+        <Labels />
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-17--21-54-47-shower" sessionId="d1b4b6af-bcb3-4089-a0a7-9a9c1205054b" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250756862462087550" start="0" length="28.928">../data_recordings/no_preprocessing/Session-2026-02-17--21-54-47-shower/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/Session-2026-02-17--21-54-47-shower/Session-2026-02-17--21-54-47-shower.imsession</SessionFile>
+        <LabelFile modified="5250756874386039358">../data_recordings/no_preprocessing/Session-2026-02-17--21-54-47-shower/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="28">showering</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+    </DataSet>
+    <DataSet id="validation" targetSize="0.2" labels="Complete">
+      <Session name="brushing-teeth-electrical-ml-2" sessionId="c8bfceb9-cf3b-4c8a-ba8d-8849f9f0ad90" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250756862462623812" start="0" length="136.32">../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-2/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-2/brushing-teeth-electrical-ml-2.imsession</SessionFile>
+        <LabelFile modified="5250756878253926559">../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-2/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="125.0896703">brushing_teeth</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="negative-01" sessionId="5c011cca-3829-4fd1-8eb0-06a8c90714e8" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="LabelsMissing">
+        <DataFile shape="[1]" samplerate="16000" modified="5250756862463033806" start="0" length="300.032">../data_recordings/no_preprocessing/negative-01/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/negative-01/negative-01.imsession</SessionFile>
+        <LabelFile modified="5250756862462643817">../data_recordings/no_preprocessing/negative-01/Live-Labeling.label</LabelFile>
+        <Labels />
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-17--21-42-46-Hair-Drying" sessionId="6b0c3d48-7f89-4d44-bbf1-2bcc9eaf7b27" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250756862461129346" start="0" length="102.464">../data_recordings/no_preprocessing/Session-2026-02-17--21-42-46-Hair-Drying/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/Session-2026-02-17--21-42-46-Hair-Drying/Session-2026-02-17--21-42-46-Hair-Drying.imsession</SessionFile>
+        <LabelFile modified="5250756874744991307">../data_recordings/no_preprocessing/Session-2026-02-17--21-42-46-Hair-Drying/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="2" length="28.7799821">hair_drying</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-17--21-53-09-Hair" sessionId="d6c73329-a1f3-4d58-8bd4-fe704c5dda28" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250756862462011722" start="0" length="44.672">../data_recordings/no_preprocessing/Session-2026-02-17--21-53-09-Hair/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/Session-2026-02-17--21-53-09-Hair/Session-2026-02-17--21-53-09-Hair.imsession</SessionFile>
+        <LabelFile modified="5250756875522212098">../data_recordings/no_preprocessing/Session-2026-02-17--21-53-09-Hair/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="12.1961981">hair_drying</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-17--21-48-47-Shower" sessionId="6947855c-51b8-4d1c-a192-b013383bd121" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250756862461629347" start="0" length="300.032">../data_recordings/no_preprocessing/Session-2026-02-17--21-48-47-Shower/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/Session-2026-02-17--21-48-47-Shower/Session-2026-02-17--21-48-47-Shower.imsession</SessionFile>
+        <LabelFile modified="5250756873531946793">../data_recordings/no_preprocessing/Session-2026-02-17--21-48-47-Shower/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="218.155">showering</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+    </DataSet>
+    <DataSet id="test" targetSize="0.2" labels="Complete">
+      <Session name="Session-2026-02-17--21-52-06-Tooth" sessionId="95900dcc-b9a8-461a-93e0-05202ab332fa" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250756862461911738" start="0" length="176.448">../data_recordings/no_preprocessing/Session-2026-02-17--21-52-06-Tooth/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/Session-2026-02-17--21-52-06-Tooth/Session-2026-02-17--21-52-06-Tooth.imsession</SessionFile>
+        <LabelFile modified="5250756875211621451">../data_recordings/no_preprocessing/Session-2026-02-17--21-52-06-Tooth/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="53.7436729">hair_drying</Label>
+          <Label count="2" length="43.4559998">brushing_teeth</Label>
         </Labels>
         <CustomColumnValues />
       </Session>

@@ -1,3 +1,3 @@
 Time(Seconds),Length(Seconds),Label(string),Confidence(double),Comment(string)
-52.2360625,15.0919375,hair_drying,1,
-81.2159999,14.847999999999999,hair_drying,1,
+52.2360625,13.7889739,hair_drying,1,
+81.2159999,14.9910082,hair_drying,1,
