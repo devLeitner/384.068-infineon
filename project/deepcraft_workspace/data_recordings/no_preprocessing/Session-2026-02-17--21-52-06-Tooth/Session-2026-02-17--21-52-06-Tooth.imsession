@@ -2,7 +2,7 @@
 <ImagimobStudio version="0.9">
   <Timeline id="95900dcc-b9a8-461a-93e0-05202ab332fa">
     <Tracks>
-      <Track name="Microphone Data" type="audiowav" isLabelTrack="False">
+      <Track name="Microphone Data" type="audiowav" isLabelTrack="False" frequency="16000">
         <PayloadFile>Microphone-Data.wav</PayloadFile>
         <Shape>
           <Axis name="Audio" size="1">
@@ -13,9 +13,8 @@
       <Track name="Live Labeling" type="labelcsv">
         <PayloadFile>Live-Labeling.label</PayloadFile>
         <Shape>
-          <Axis name="Labels" size="2">
+          <Axis name="Labels" size="1">
             <Label index="0">hair_drying</Label>
-            <Label index="1">brushing_teeth</Label>
           </Axis>
         </Shape>
       </Track>

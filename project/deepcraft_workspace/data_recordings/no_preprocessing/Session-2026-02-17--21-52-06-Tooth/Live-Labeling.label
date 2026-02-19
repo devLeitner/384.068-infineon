@@ -1,4 +1,2 @@
 Time(Seconds),Length(Seconds),Label(string),Confidence(double),Comment(string)
 38.464,53.7436729,hair_drying,1,
-122.048,26.879999999999995,brushing_teeth,1,
-155.84,16.575999999999993,brushing_teeth,1,
