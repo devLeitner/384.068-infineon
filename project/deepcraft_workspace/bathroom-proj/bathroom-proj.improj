@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ImagimobStudio version="1.1.0">
+<<<<<<< HEAD
   <Job id="977e56a4-0dd7-11f1-8437-1d197e01f677" />
+=======
+  <Job id="481863c7-0dd7-11f1-98a7-676292740576" />
+>>>>>>> 726893c3ac3444e753ec7e0378da392fc15ae1e4
   <ProjectType>Classification</ProjectType>
   <ProjectId>2581ccf9-ddbc-429d-a7eb-770e5d8eeef4</ProjectId>
   <Preprocessor inshape="[1]" intype="Float32" infreq="16000" outshape="[60,20]" outtype="Float32">
@@ -71,12 +75,20 @@
     </TrainingEnvironment>
     <ModelFamily>Conv1D</ModelFamily>
     <ModelFlavor>SmallKern</ModelFlavor>
+<<<<<<< HEAD
     <ClassifierType>Hybrid</ClassifierType>
+=======
+    <ClassifierType>GlobalAveragePool</ClassifierType>
+>>>>>>> 726893c3ac3444e753ec7e0378da392fc15ae1e4
     <Optimization>Balanced</Optimization>
     <Pooling>True</Pooling>
     <Downscale>False</Downscale>
     <LearnRate>Mid</LearnRate>
+<<<<<<< HEAD
     <RegularizationFactor>Mid</RegularizationFactor>
+=======
+    <RegularizationFactor>Low</RegularizationFactor>
+>>>>>>> 726893c3ac3444e753ec7e0378da392fc15ae1e4
     <LastNetworkInputShape>[60,20]</LastNetworkInputShape>
     <LastClassCount>4</LastClassCount>
     <Optimizer>
@@ -89,7 +101,11 @@
     </BuildSteps>
   </ModelFactory>
   <Models>
+<<<<<<< HEAD
     <Model name="conv1d-large-balanced-0" id="8af8a37d-6563-4fad-b404-5b3394ad591e">
+=======
+    <Model name="conv1d-large-balanced-0" id="8b9eceb6-47aa-4cd9-b321-73e1fd97da18">
+>>>>>>> 726893c3ac3444e753ec7e0378da392fc15ae1e4
       <LossFunction>CategoricalCrossentropy</LossFunction>
       <Epochs>100</Epochs>
       <BatchSize>16</BatchSize>
@@ -99,7 +115,11 @@
       </TrainingEnvironment>
       <Optimizer>
         <LearningRate>0.004</LearningRate>
+<<<<<<< HEAD
         <WeightDecay>0.001</WeightDecay>
+=======
+        <WeightDecay>0.0001</WeightDecay>
+>>>>>>> 726893c3ac3444e753ec7e0378da392fc15ae1e4
       </Optimizer>
       <Network inshape="[60,20]" intype="Float32" infreq="0" outshape="[4]" outtype="Float32">
         <Unit id="Core.Layers.Convolution1D">
@@ -134,6 +154,7 @@
           <Argument param="use_bias" type="Boolean">False</Argument>
         </Unit>
         <Unit id="Core.Layers.Convolution1D">
+<<<<<<< HEAD
           <Argument param="filters" type="Int32">32</Argument>
           <Argument param="kernel_size" type="Int32">3</Argument>
           <Argument param="strides" type="Int32">1</Argument>
@@ -165,6 +186,8 @@
           <Argument param="rate" type="Double">0.05</Argument>
         </Unit>
         <Unit id="Core.Layers.Convolution1D">
+=======
+>>>>>>> 726893c3ac3444e753ec7e0378da392fc15ae1e4
           <Argument param="filters" type="Int32">32</Argument>
           <Argument param="kernel_size" type="Int32">3</Argument>
           <Argument param="strides" type="Int32">1</Argument>
@@ -192,8 +215,33 @@
           <Argument param="strides" type="Int32">2</Argument>
           <Argument param="padding" type="String">valid</Argument>
         </Unit>
-        <Unit id="Core.Layers.Dropout">
-          <Argument param="rate" type="Double">0.05</Argument>
+        <Unit id="Core.Layers.Convolution1D">
+          <Argument param="filters" type="Int32">32</Argument>
+          <Argument param="kernel_size" type="Int32">3</Argument>
+          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="padding" type="String">same</Argument>
+          <Argument param="activation" type="String">linear</Argument>
+          <Argument param="use_bias" type="Boolean">False</Argument>
+        </Unit>
+        <Unit id="Core.Layers.Convolution1D">
+          <Argument param="filters" type="Int32">32</Argument>
+          <Argument param="kernel_size" type="Int32">3</Argument>
+          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="padding" type="String">same</Argument>
+          <Argument param="activation" type="String">linear</Argument>
+          <Argument param="use_bias" type="Boolean">False</Argument>
+        </Unit>
+        <Unit id="Core.Layers.BatchNormalization">
+          <Argument param="epsilon" type="Double">0.001</Argument>
+          <Argument param="axis" type="Int32">-1</Argument>
+        </Unit>
+        <Unit id="Core.Layers.Activation">
+          <Argument param="activation" type="String">relu</Argument>
+        </Unit>
+        <Unit id="Core.Layers.MaxPool1D">
+          <Argument param="pool_size" type="Int32">2</Argument>
+          <Argument param="strides" type="Int32">2</Argument>
+          <Argument param="padding" type="String">valid</Argument>
         </Unit>
         <Unit id="Core.Layers.GlobalAveragePool1D" />
         <Unit id="Core.Layers.Dense">
@@ -288,7 +336,11 @@
       </Preprocessor>
       <Postprocessor override="False" inshape="[128,3]" intype="Float32" infreq="1" outshape="[128,3]" outtype="Float32" />
     </Model>
+<<<<<<< HEAD
     <Model name="conv1d-large-balanced-1" id="75a32abd-b4e2-472a-a83d-21c403bd6ec0">
+=======
+    <Model name="conv1d-large-balanced-1" id="2650a328-8a78-4a56-9f30-1edc9595a073">
+>>>>>>> 726893c3ac3444e753ec7e0378da392fc15ae1e4
       <LossFunction>CategoricalCrossentropy</LossFunction>
       <Epochs>100</Epochs>
       <BatchSize>16</BatchSize>
@@ -298,7 +350,11 @@
       </TrainingEnvironment>
       <Optimizer>
         <LearningRate>0.004</LearningRate>
+<<<<<<< HEAD
         <WeightDecay>0.001</WeightDecay>
+=======
+        <WeightDecay>0.0001</WeightDecay>
+>>>>>>> 726893c3ac3444e753ec7e0378da392fc15ae1e4
       </Optimizer>
       <Network inshape="[60,20]" intype="Float32" infreq="0" outshape="[4]" outtype="Float32">
         <Unit id="Core.Layers.Convolution1D">
@@ -342,6 +398,7 @@
         </Unit>
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">48</Argument>
+<<<<<<< HEAD
           <Argument param="kernel_size" type="Int32">3</Argument>
           <Argument param="strides" type="Int32">1</Argument>
           <Argument param="padding" type="String">same</Argument>
@@ -373,6 +430,8 @@
         </Unit>
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">48</Argument>
+=======
+>>>>>>> 726893c3ac3444e753ec7e0378da392fc15ae1e4
           <Argument param="kernel_size" type="Int32">3</Argument>
           <Argument param="strides" type="Int32">1</Argument>
           <Argument param="padding" type="String">same</Argument>
@@ -391,8 +450,33 @@
           <Argument param="strides" type="Int32">2</Argument>
           <Argument param="padding" type="String">valid</Argument>
         </Unit>
-        <Unit id="Core.Layers.Dropout">
-          <Argument param="rate" type="Double">0.05</Argument>
+        <Unit id="Core.Layers.Convolution1D">
+          <Argument param="filters" type="Int32">48</Argument>
+          <Argument param="kernel_size" type="Int32">3</Argument>
+          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="padding" type="String">same</Argument>
+          <Argument param="activation" type="String">linear</Argument>
+          <Argument param="use_bias" type="Boolean">False</Argument>
+        </Unit>
+        <Unit id="Core.Layers.Convolution1D">
+          <Argument param="filters" type="Int32">48</Argument>
+          <Argument param="kernel_size" type="Int32">3</Argument>
+          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="padding" type="String">same</Argument>
+          <Argument param="activation" type="String">linear</Argument>
+          <Argument param="use_bias" type="Boolean">False</Argument>
+        </Unit>
+        <Unit id="Core.Layers.BatchNormalization">
+          <Argument param="epsilon" type="Double">0.001</Argument>
+          <Argument param="axis" type="Int32">-1</Argument>
+        </Unit>
+        <Unit id="Core.Layers.Activation">
+          <Argument param="activation" type="String">relu</Argument>
+        </Unit>
+        <Unit id="Core.Layers.MaxPool1D">
+          <Argument param="pool_size" type="Int32">2</Argument>
+          <Argument param="strides" type="Int32">2</Argument>
+          <Argument param="padding" type="String">valid</Argument>
         </Unit>
         <Unit id="Core.Layers.GlobalAveragePool1D" />
         <Unit id="Core.Layers.Dense">
@@ -487,7 +571,11 @@
       </Preprocessor>
       <Postprocessor override="False" inshape="[128,3]" intype="Float32" infreq="1" outshape="[128,3]" outtype="Float32" />
     </Model>
+<<<<<<< HEAD
     <Model name="conv1d-large-balanced-2" id="502e9448-21d0-4e98-9e20-45d2ef2fd46f">
+=======
+    <Model name="conv1d-large-balanced-2" id="14b2000e-c24c-4139-bc94-cff10eda771b">
+>>>>>>> 726893c3ac3444e753ec7e0378da392fc15ae1e4
       <LossFunction>CategoricalCrossentropy</LossFunction>
       <Epochs>100</Epochs>
       <BatchSize>16</BatchSize>
@@ -497,7 +585,11 @@
       </TrainingEnvironment>
       <Optimizer>
         <LearningRate>0.004</LearningRate>
+<<<<<<< HEAD
         <WeightDecay>0.001</WeightDecay>
+=======
+        <WeightDecay>0.0001</WeightDecay>
+>>>>>>> 726893c3ac3444e753ec7e0378da392fc15ae1e4
       </Optimizer>
       <Network inshape="[60,20]" intype="Float32" infreq="0" outshape="[4]" outtype="Float32">
         <Unit id="Core.Layers.Convolution1D">
@@ -535,6 +627,7 @@
           <Argument param="pool_size" type="Int32">2</Argument>
           <Argument param="strides" type="Int32">2</Argument>
           <Argument param="padding" type="String">valid</Argument>
+<<<<<<< HEAD
         </Unit>
         <Unit id="Core.Layers.Dropout">
           <Argument param="rate" type="Double">0.05</Argument>
@@ -561,6 +654,8 @@
         </Unit>
         <Unit id="Core.Layers.Activation">
           <Argument param="activation" type="String">relu</Argument>
+=======
+>>>>>>> 726893c3ac3444e753ec7e0378da392fc15ae1e4
         </Unit>
         <Unit id="Core.Layers.MaxPool1D">
           <Argument param="pool_size" type="Int32">2</Argument>
@@ -598,8 +693,33 @@
           <Argument param="strides" type="Int32">2</Argument>
           <Argument param="padding" type="String">valid</Argument>
         </Unit>
-        <Unit id="Core.Layers.Dropout">
-          <Argument param="rate" type="Double">0.05</Argument>
+        <Unit id="Core.Layers.Convolution1D">
+          <Argument param="filters" type="Int32">32</Argument>
+          <Argument param="kernel_size" type="Int32">3</Argument>
+          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="padding" type="String">same</Argument>
+          <Argument param="activation" type="String">linear</Argument>
+          <Argument param="use_bias" type="Boolean">False</Argument>
+        </Unit>
+        <Unit id="Core.Layers.Convolution1D">
+          <Argument param="filters" type="Int32">32</Argument>
+          <Argument param="kernel_size" type="Int32">3</Argument>
+          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="padding" type="String">same</Argument>
+          <Argument param="activation" type="String">linear</Argument>
+          <Argument param="use_bias" type="Boolean">False</Argument>
+        </Unit>
+        <Unit id="Core.Layers.BatchNormalization">
+          <Argument param="epsilon" type="Double">0.001</Argument>
+          <Argument param="axis" type="Int32">-1</Argument>
+        </Unit>
+        <Unit id="Core.Layers.Activation">
+          <Argument param="activation" type="String">relu</Argument>
+        </Unit>
+        <Unit id="Core.Layers.MaxPool1D">
+          <Argument param="pool_size" type="Int32">2</Argument>
+          <Argument param="strides" type="Int32">2</Argument>
+          <Argument param="padding" type="String">valid</Argument>
         </Unit>
         <Unit id="Core.Layers.GlobalAveragePool1D" />
         <Unit id="Core.Layers.Dense">
@@ -694,7 +814,11 @@
       </Preprocessor>
       <Postprocessor override="False" inshape="[128,3]" intype="Float32" infreq="1" outshape="[128,3]" outtype="Float32" />
     </Model>
+<<<<<<< HEAD
     <Model name="conv1d-large-balanced-3" id="93105c29-32c9-45e7-b270-624d4416942c">
+=======
+    <Model name="conv1d-large-balanced-3" id="dfa339d9-26f1-4c93-be0c-312936829f29">
+>>>>>>> 726893c3ac3444e753ec7e0378da392fc15ae1e4
       <LossFunction>CategoricalCrossentropy</LossFunction>
       <Epochs>100</Epochs>
       <BatchSize>16</BatchSize>
@@ -704,7 +828,11 @@
       </TrainingEnvironment>
       <Optimizer>
         <LearningRate>0.004</LearningRate>
+<<<<<<< HEAD
         <WeightDecay>0.001</WeightDecay>
+=======
+        <WeightDecay>0.0001</WeightDecay>
+>>>>>>> 726893c3ac3444e753ec7e0378da392fc15ae1e4
       </Optimizer>
       <Network inshape="[60,20]" intype="Float32" infreq="0" outshape="[4]" outtype="Float32">
         <Unit id="Core.Layers.Convolution1D">
@@ -725,6 +853,7 @@
         </Unit>
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">32</Argument>
+<<<<<<< HEAD
           <Argument param="kernel_size" type="Int32">3</Argument>
           <Argument param="strides" type="Int32">1</Argument>
           <Argument param="padding" type="String">same</Argument>
@@ -787,6 +916,8 @@
         </Unit>
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">48</Argument>
+=======
+>>>>>>> 726893c3ac3444e753ec7e0378da392fc15ae1e4
           <Argument param="kernel_size" type="Int32">3</Argument>
           <Argument param="strides" type="Int32">1</Argument>
           <Argument param="padding" type="String">same</Argument>
@@ -805,8 +936,61 @@
           <Argument param="strides" type="Int32">2</Argument>
           <Argument param="padding" type="String">valid</Argument>
         </Unit>
-        <Unit id="Core.Layers.Dropout">
-          <Argument param="rate" type="Double">0.05</Argument>
+        <Unit id="Core.Layers.Convolution1D">
+          <Argument param="filters" type="Int32">48</Argument>
+          <Argument param="kernel_size" type="Int32">3</Argument>
+          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="padding" type="String">same</Argument>
+          <Argument param="activation" type="String">linear</Argument>
+          <Argument param="use_bias" type="Boolean">False</Argument>
+        </Unit>
+        <Unit id="Core.Layers.Convolution1D">
+          <Argument param="filters" type="Int32">48</Argument>
+          <Argument param="kernel_size" type="Int32">3</Argument>
+          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="padding" type="String">same</Argument>
+          <Argument param="activation" type="String">linear</Argument>
+          <Argument param="use_bias" type="Boolean">False</Argument>
+        </Unit>
+        <Unit id="Core.Layers.BatchNormalization">
+          <Argument param="epsilon" type="Double">0.001</Argument>
+          <Argument param="axis" type="Int32">-1</Argument>
+        </Unit>
+        <Unit id="Core.Layers.Activation">
+          <Argument param="activation" type="String">relu</Argument>
+        </Unit>
+        <Unit id="Core.Layers.MaxPool1D">
+          <Argument param="pool_size" type="Int32">2</Argument>
+          <Argument param="strides" type="Int32">2</Argument>
+          <Argument param="padding" type="String">valid</Argument>
+        </Unit>
+        <Unit id="Core.Layers.Convolution1D">
+          <Argument param="filters" type="Int32">48</Argument>
+          <Argument param="kernel_size" type="Int32">3</Argument>
+          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="padding" type="String">same</Argument>
+          <Argument param="activation" type="String">linear</Argument>
+          <Argument param="use_bias" type="Boolean">False</Argument>
+        </Unit>
+        <Unit id="Core.Layers.Convolution1D">
+          <Argument param="filters" type="Int32">48</Argument>
+          <Argument param="kernel_size" type="Int32">3</Argument>
+          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="padding" type="String">same</Argument>
+          <Argument param="activation" type="String">linear</Argument>
+          <Argument param="use_bias" type="Boolean">False</Argument>
+        </Unit>
+        <Unit id="Core.Layers.BatchNormalization">
+          <Argument param="epsilon" type="Double">0.001</Argument>
+          <Argument param="axis" type="Int32">-1</Argument>
+        </Unit>
+        <Unit id="Core.Layers.Activation">
+          <Argument param="activation" type="String">relu</Argument>
+        </Unit>
+        <Unit id="Core.Layers.MaxPool1D">
+          <Argument param="pool_size" type="Int32">2</Argument>
+          <Argument param="strides" type="Int32">2</Argument>
+          <Argument param="padding" type="String">valid</Argument>
         </Unit>
         <Unit id="Core.Layers.GlobalAveragePool1D" />
         <Unit id="Core.Layers.Dense">
