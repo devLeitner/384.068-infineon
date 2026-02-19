@@ -14,7 +14,7 @@ import machine
 model = m.DEEPCRAFT()
 
 SAMPLE_RATE_HZ = 16000  # Desired sample rate in Hz
-AUDIO_BUFFER_SIZE = 256  # Size of the audio buffer
+AUDIO_BUFFER_SIZE = 1024  # Size of the audio buffer
 AUDIO_BITS_PER_SAMPLE = 16  # Dynamic range in bits
 MICROPHONE_GAIN = 10 # Microphone gain setting(best prediction observed at 12)
 DIGITAL_BOOST_FACTOR = 1.0  # Digital boost factor for input signal
@@ -68,10 +68,12 @@ def main():
 
         sample_max = 0.0
         audio_count = num // 2
+        
+        print("recieved", num)
 
-        for i in range(audio_count):
+        for i in range(0, audio_count):
             # Get sample from rx_buf
-            raw_sample = rx_buf[i] * DIGITAL_BOOST_FACTOR
+            raw_sample = rx_buf[i]
 
             # Normalize the sample to range [-1, 1]
             # normalized_sample = sample_normalize(raw_sample)
@@ -79,27 +81,29 @@ def main():
             # Apply digital boost factor
             # boosted_sample = normalized_sample 
 
-            # Pass the boosted sample to the model
             result = model.enqueue([raw_sample])
 
+            # Pass the boosted sample to the model#
             sample_abs = abs(raw_sample)
             if sample_abs > sample_max:
                 sample_max = sample_abs
 
-        # Check if there is any model output to process
-        output_status = model.dequeue(data_out)
-        if output_status == 0:
-            print("data out is", data_out)
-            max_score = -math.inf
-            best_label = 0
-            for idx, score in enumerate(data_out):
-                print(f"Label: {label_text[idx]:<10} Score(%): {score*100:.4f}")
-                if score > max_score:
-                    max_score = score
-                    best_label = idx
+            # Check if there is any model output to process
+            output_status = model.dequeue(data_out)
+            if output_status == 0:
+                print("data out is", data_out)
+                max_score = -math.inf
+                best_label = 0
+                for idx, score in enumerate(data_out):
+                    print(f"Label: {label_text[idx]:<10} Score(%): {score*100:.4f}")
+                    if score > max_score:
+                        max_score = score
+                        best_label = idx
 
-                print("\r\n")
-                print(f"Output: {label_text[best_label]:<30}\r\n")
+                    print("\r\n")
+                    print(f"Output: {label_text[best_label]:<30}\r\n")
+        
+        time.sleep(0.2)
 
 
 if __name__ == "__main__":
