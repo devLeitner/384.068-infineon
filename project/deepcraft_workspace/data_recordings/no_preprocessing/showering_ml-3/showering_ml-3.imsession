@@ -2,18 +2,17 @@
 <ImagimobStudio version="0.9">
   <Timeline id="330ceab7-5b5a-43f7-81cc-3f032da04770">
     <Tracks>
-      <Track name="Live Labeling" type="labelcsv">
-        <PayloadFile>Live-Labeling.label</PayloadFile>
-        <Shape />
-      </Track>
-      <Track name="Microphone Data" type="audiowav" isLabelTrack="False" frequency="16000">
+      <Track name="Microphone Data" type="audiowav" isLabelTrack="False">
         <PayloadFile>Microphone-Data.wav</PayloadFile>
-        <Offset unit="seconds">3.1200000000E-005</Offset>
         <Shape>
           <Axis name="Channel" size="1">
             <Label index="0">Mono</Label>
           </Axis>
         </Shape>
+      </Track>
+      <Track name="Live Labeling" type="labelcsv">
+        <PayloadFile>Live-Labeling.label</PayloadFile>
+        <Shape />
       </Track>
     </Tracks>
   </Timeline>
