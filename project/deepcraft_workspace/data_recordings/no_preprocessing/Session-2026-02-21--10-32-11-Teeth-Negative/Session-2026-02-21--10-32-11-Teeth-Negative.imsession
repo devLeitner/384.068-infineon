@@ -2,7 +2,7 @@
 <ImagimobStudio version="0.9">
   <Timeline id="ac10061f-f054-4625-87c8-05b33d1132e5">
     <Tracks>
-      <Track name="Microphone Data" type="audiowav" isLabelTrack="False" frequency="16000">
+      <Track name="Microphone Data" type="audiowav" isLabelTrack="False">
         <PayloadFile>Microphone-Data.wav</PayloadFile>
         <Shape>
           <Axis name="Audio" size="1">
