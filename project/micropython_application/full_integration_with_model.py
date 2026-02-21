@@ -1,4 +1,4 @@
-import deepcraft_model_saved as m
+import deepcraft_model as m
 import array
 from machine import PDM_PCM, Pin
 import machine, time
@@ -12,7 +12,7 @@ import machine, time
 SAMPLE_RATE_HZ = 16000 # Desired sample rate in Hz
 AUDIO_BUFFER_SIZE = 512 # Size of the audio buffer (in samples)
 AUDIO_BITS_PER_SAMPLE = 16 # Dynamic range in bits
-MICROPHONE_GAIN = 1 # Microphone gain setting (best prediction observed at 12)
+MICROPHONE_GAIN = 12 # Microphone gain setting (best prediction observed at 12)
 
 # PDM_PCM configuration
 clk_pin = "P10_4"
@@ -50,6 +50,7 @@ print("Communication with ESP C8 setup finished")
 ### SETUP AI MODEL ###
 
 IMAI_DATA_OUT_SYMBOLS = ["unlabelled", "brushing_teeth", "hair_drying", "showering"]
+# IMAI_DATA_OUT_SYMBOLS = ["unlabelled", "air", "plastic", "plastic_out", "wood", "wood_out"]
 
 # Initialize label scores and labels
 label_scores = [0.0] * len(IMAI_DATA_OUT_SYMBOLS)
@@ -72,15 +73,21 @@ while True:
     num_bytes = pdm_pcm.readinto(receive_buffer) # Read audio samples into buffer.
     num_samples = num_bytes // 2  # Each sample is 2 bytes
 
+    start_time = time.time_ns()
     for i in range(num_samples):
         # Get sample from buffer and amplify it
-        raw_sample = receive_buffer[i]
+        raw_sample = receive_buffer[i] * 10
 
         # Normalize the sample to range [-1, 1]
         normalized_sample = sample_normalize(raw_sample)
+        
+        # print(model.get_model_input_dim())
 
         # Pass the sample to the model
-        enq_status = model.enqueue([normalized_sample])
+        enq_status = model.enqueue([raw_sample])
+        if enq_status != 0:
+            print("Could not enqueue")
+            quit()
 
         # Check if there is any model output to process
         if model.dequeue(output_buffer) == 0:
@@ -102,4 +109,6 @@ while True:
                 # set other values low
                 for statuspin in [x for x in ZIGBEE_COMMUNICATION if x != ZIGBEE_COMMUNICATION[best_label]]:
                     statuspin.value(False)
-            
+
+    end_time = time.time_ns()
+    print((end_time - start_time) // 10**9, "ms")
