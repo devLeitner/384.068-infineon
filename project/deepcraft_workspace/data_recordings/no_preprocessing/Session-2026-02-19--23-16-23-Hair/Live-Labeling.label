@@ -1,0 +1,3 @@
+Time(Seconds),Length(Seconds),Label(string),Confidence(double),Comment(string)
+4.992,146.88000000000002,hair_drying,1,
+151.936,1.5999999999999943,hair_drying,1,
