@@ -1,6 +1,6 @@
-import deepcraft_model as m
+import deepcraft_model_saved as m
 import array
-from machine import PDM_PCM
+from machine import PDM_PCM, Pin
 import machine, time
 
 
@@ -13,7 +13,6 @@ SAMPLE_RATE_HZ = 16000 # Desired sample rate in Hz
 AUDIO_BUFFER_SIZE = 512 # Size of the audio buffer (in samples)
 AUDIO_BITS_PER_SAMPLE = 16 # Dynamic range in bits
 MICROPHONE_GAIN = 1 # Microphone gain setting (best prediction observed at 12)
-SOFTWARE_GAIN = 1.0 # Digital boost factor for input signal
 
 # PDM_PCM configuration
 clk_pin = "P10_4"
@@ -37,6 +36,17 @@ right_gain=MICROPHONE_GAIN,
 )
 pdm_pcm.init()
 
+print("Microphone setup finished")
+
+### SETUP ESP C8 communication
+
+shower = Pin("P9_0", Pin.OUT, value=0)
+hair = Pin("P9_1", Pin.OUT, value=0)
+tooth = Pin("P9_2", Pin.OUT, value=0)
+ZIGBEE_COMMUNICATION = [tooth, hair, shower]
+
+print("Communication with ESP C8 setup finished")
+
 ### SETUP AI MODEL ###
 
 IMAI_DATA_OUT_SYMBOLS = ["unlabelled", "brushing_teeth", "hair_drying", "showering"]
@@ -50,6 +60,8 @@ output_buffer = array.array('f', [0.0] * len(IMAI_DATA_OUT_SYMBOLS))
 model = m.DEEPCRAFT()
 model.init()
 
+print("Model setup finished")
+
 # Function to normalize sample into range [-1, 1]
 def sample_normalize(sample):
     return sample / float(1 << (AUDIO_BITS_PER_SAMPLE - 1))
@@ -62,7 +74,7 @@ while True:
 
     for i in range(num_samples):
         # Get sample from buffer and amplify it
-        raw_sample = receive_buffer[i] * SOFTWARE_GAIN
+        raw_sample = receive_buffer[i]
 
         # Normalize the sample to range [-1, 1]
         normalized_sample = sample_normalize(raw_sample)
@@ -71,9 +83,23 @@ while True:
         enq_status = model.enqueue([normalized_sample])
 
         # Check if there is any model output to process
-        if model.dequeue(output_buffer) == 0:  # IMAI_RET_SUCCESS
-            # We have valid data, display it
+        if model.dequeue(output_buffer) == 0:
+            max_score = -math.inf
+            best_label = 0
             for idx, score in enumerate(output_buffer):
                 print(f"Label: {label_text[idx]:<10} Score(%): {score*100:.4f}")
+                if score > max_score:
+                    max_score = score
+                    best_label = idx
+                    
+            if (best_label == 0):
+                # If unlabeled set all false
+                for statuspin in ZIGBEE_COMMUNICATION:
+                    statuspin.value(False)
+            else:
+                # set best value high
+                ZIGBEE_COMMUNICATION[best_label].value(True)
+                # set other values low
+                for statuspin in [x for x in ZIGBEE_COMMUNICATION if x != ZIGBEE_COMMUNICATION[best_label]]:
+                    statuspin.value(False)
             
-            # Have a look at the score for the baby cry label
