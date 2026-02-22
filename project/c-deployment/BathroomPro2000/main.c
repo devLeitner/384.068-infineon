@@ -65,7 +65,7 @@
 
 /* Microphone sensitivity
  * PGA in 0.5 dB increment, for example a value of 5 would mean +2.5 dB. */
-#define MICROPHONE_GAIN             20
+#define MICROPHONE_GAIN             10
 
 /* Multiplication factor of the input signal.
  * This should ideally be 1. Higher values will have a negative impact on
@@ -74,7 +74,7 @@
  * with data at a higher amplitude than the microphone captures.
  * Note: If you use the same board for recording training data and 
  * deployment of your own ML model set this to 1.0. */
-#define DIGITAL_BOOST_FACTOR            10.0f
+#define DIGITAL_BOOST_FACTOR            2
 
 /* Specifies the dynamic range in bits.
  * PCM word length, see the A/D specific documentation for valid ranges. */
@@ -218,10 +218,6 @@ int main(void)
             switch(IMAI_dequeue(label_scores))
             {
                 case IMAI_RET_SUCCESS:      /* We have data, display it */
-                
-	                cyhal_gpio_write(PIN_BRUSHING_TEETH, best_label == 1);
-					cyhal_gpio_write(PIN_HAIRDRYING,     best_label == 2);
-					cyhal_gpio_write(PIN_SHOWERING,      best_label == 3);
 
                     for(int i = 0; i < IMAI_DATA_OUT_COUNT; i++)
                     {
@@ -233,6 +229,10 @@ int main(void)
                         }
                     }
                     printf("\r\n");
+                    
+	                cyhal_gpio_write(PIN_BRUSHING_TEETH, best_label == 1);
+					cyhal_gpio_write(PIN_HAIRDRYING,     best_label == 2);
+					cyhal_gpio_write(PIN_SHOWERING,      best_label == 3);
 
                     /* Post processing
                      * If the previous best label still has a confidence score above > 0.05

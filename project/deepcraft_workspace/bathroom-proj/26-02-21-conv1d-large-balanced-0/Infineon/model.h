@@ -2,14 +2,14 @@
 * ImagiNet Compiler 5.9.4563.0+34bdb7f4372a1120ca38a0cb02e62db5b4b78270
 * Copyright © 2023- Imagimob AB, All Rights Reserved.
 * 
-* Generated at 02/22/2026 14:30:25 UTC. Any changes will be lost.
+* Generated at 02/22/2026 16:06:56 UTC. Any changes will be lost.
 * 
-* Model ID  1b31b04b-bc0a-4c47-8a0c-fb19b3383cc5
+* Model ID  56c46545-b359-4cc3-b0be-0a4536cc1022
 * 
 * Memory    Size                      Efficiency
-* Buffers   14360 bytes (RAM)         86 %
-* State     23712 bytes (RAM)         100 %
-* Readonly  78008 bytes (Flash)       100 %
+* Buffers   10256 bytes (RAM)         80 %
+* State     24792 bytes (RAM)         100 %
+* Readonly  76076 bytes (Flash)       100 %
 * 
 * Exported functions:
 * 
@@ -61,7 +61,7 @@ typedef int64_t q63_t;       // 64-bit fractional data type in Q1.63 format.
 typedef float timestamp_t;
 
 // Model GUID (16 bytes)
-#define IMAI_MODEL_ID {0x4b, 0xb0, 0x31, 0x1b, 0x0a, 0xbc, 0x47, 0x4c, 0x8a, 0x0c, 0xfb, 0x19, 0xb3, 0x38, 0x3c, 0xc5}
+#define IMAI_MODEL_ID {0x45, 0x65, 0xc4, 0x56, 0x59, 0xb3, 0xc3, 0x4c, 0xb0, 0xbe, 0x0a, 0x45, 0x36, 0xcc, 0x10, 0x22}
 
 
 // First nibble is bit encoding, second nibble is number of bytes

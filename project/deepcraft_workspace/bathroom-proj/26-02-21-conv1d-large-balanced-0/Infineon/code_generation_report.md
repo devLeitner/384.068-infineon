@@ -1,6 +1,6 @@
 # Model performance and validation report
-**Source model:** C:/Users/adam/Documents/384.068-infineon/project/deepcraft_workspace/bathroom-proj/26-02-21-conv1d-large-balanced-0/conv1d-large-balanced-0.h5  
-**Generated:** 2026-02-22 15:30:25
+**Source model:** C:/Users/rock4/GitHub/384.068-infineon/project/deepcraft_workspace/bathroom-proj/26-02-21-conv1d-large-balanced-0/conv1d-large-balanced-0.h5  
+**Generated:** 2026-02-22 17:06:56
 
 ### Memory usage
 | Model | Model memory (Bytes) | Scratch memory (Bytes) |

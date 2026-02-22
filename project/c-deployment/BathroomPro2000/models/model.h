@@ -2,14 +2,14 @@
 * ImagiNet Compiler 5.9.4563.0+34bdb7f4372a1120ca38a0cb02e62db5b4b78270
 * Copyright © 2023- Imagimob AB, All Rights Reserved.
 * 
-* Generated at 02/22/2026 14:30:25 UTC. Any changes will be lost.
+* Generated at 02/22/2026 16:44:25 UTC. Any changes will be lost.
 * 
-* Model ID  1b31b04b-bc0a-4c47-8a0c-fb19b3383cc5
+* Model ID  e0569882-71fa-4b53-aa8f-8701a7faf267
 * 
 * Memory    Size                      Efficiency
-* Buffers   14360 bytes (RAM)         86 %
-* State     23712 bytes (RAM)         100 %
-* Readonly  78008 bytes (Flash)       100 %
+* Buffers   16000 bytes (RAM)         100 %
+* State     59488 bytes (RAM)         100 %
+* Readonly  77424 bytes (Flash)       100 %
 * 
 * Exported functions:
 * 
@@ -61,7 +61,7 @@ typedef int64_t q63_t;       // 64-bit fractional data type in Q1.63 format.
 typedef float timestamp_t;
 
 // Model GUID (16 bytes)
-#define IMAI_MODEL_ID {0x4b, 0xb0, 0x31, 0x1b, 0x0a, 0xbc, 0x47, 0x4c, 0x8a, 0x0c, 0xfb, 0x19, 0xb3, 0x38, 0x3c, 0xc5}
+#define IMAI_MODEL_ID {0x82, 0x98, 0x56, 0xe0, 0xfa, 0x71, 0x53, 0x4b, 0xaa, 0x8f, 0x87, 0x01, 0xa7, 0xfa, 0xf2, 0x67}
 
 
 // First nibble is bit encoding, second nibble is number of bytes
@@ -108,7 +108,7 @@ typedef float timestamp_t;
 #define IMAI_DATA_IN_SCALE 1
 #define IMAI_DATA_IN_SYMBOLS { }
 
-#define IMAI_KEY_MAX (28)
+#define IMAI_KEY_MAX (29)
 
 // Return codes
 #define IMAI_RET_SUCCESS 0

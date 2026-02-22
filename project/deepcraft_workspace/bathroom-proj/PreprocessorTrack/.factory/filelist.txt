@@ -1,0 +1,15 @@
+..\..\..\data_recordings\no_preprocessing\Session-2026-02-19--11-11-06-HairDryer\Microphone-Data.wav; ..\Session-2026-02-19--11-11-06-HairDryer\Microphone-Data_Preprocessor.npy
+..\..\..\data_recordings\no_preprocessing\Session-2026-02-19--11-15-36-Hairdrying\Microphone-Data.wav; ..\Session-2026-02-19--11-15-36-Hairdrying\Microphone-Data_Preprocessor.npy
+..\..\..\data_recordings\no_preprocessing\brushing-teeth-electrical-ml-1\Microphone-Data.wav; ..\brushing-teeth-electrical-ml-1\Microphone-Data_Preprocessor.npy
+..\..\..\data_recordings\no_preprocessing\negative-04\Microphone-Data.wav; ..\negative-04\Microphone-Data_Preprocessor.npy
+..\..\..\data_recordings\no_preprocessing\negative-02\Microphone-Data.wav; ..\negative-02\Microphone-Data_Preprocessor.npy
+..\..\..\data_recordings\no_preprocessing\showering_ml-1\Microphone-Data.wav; ..\showering_ml-1\Microphone-Data_Preprocessor.npy
+..\..\..\data_recordings\no_preprocessing\showering_ml-2\Microphone-Data.wav; ..\showering_ml-2\Microphone-Data_Preprocessor.npy
+..\..\..\data_recordings\no_preprocessing\negative-03\Microphone-Data.wav; ..\negative-03\Microphone-Data_Preprocessor.npy
+..\..\..\data_recordings\no_preprocessing\Session-2026-02-17--21-54-47-shower\Microphone-Data.wav; ..\Session-2026-02-17--21-54-47-shower\Microphone-Data_Preprocessor.npy
+..\..\..\data_recordings\no_preprocessing\brushing-teeth-electrical-ml-2\Microphone-Data.wav; ..\brushing-teeth-electrical-ml-2\Microphone-Data_Preprocessor.npy
+..\..\..\data_recordings\no_preprocessing\negative-01\Microphone-Data.wav; ..\negative-01\Microphone-Data_Preprocessor.npy
+..\..\..\data_recordings\no_preprocessing\Session-2026-02-17--21-42-46-Hair-Drying\Microphone-Data.wav; ..\Session-2026-02-17--21-42-46-Hair-Drying\Microphone-Data_Preprocessor.npy
+..\..\..\data_recordings\no_preprocessing\Session-2026-02-17--21-53-09-Hair\Microphone-Data.wav; ..\Session-2026-02-17--21-53-09-Hair\Microphone-Data_Preprocessor.npy
+..\..\..\data_recordings\no_preprocessing\Session-2026-02-17--21-48-47-Shower\Microphone-Data.wav; ..\Session-2026-02-17--21-48-47-Shower\Microphone-Data_Preprocessor.npy
+..\..\..\data_recordings\no_preprocessing\Session-2026-02-17--21-52-06-Tooth\Microphone-Data.wav; ..\Session-2026-02-17--21-52-06-Tooth\Microphone-Data_Preprocessor.npy
