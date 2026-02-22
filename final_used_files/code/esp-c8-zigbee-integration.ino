@@ -29,6 +29,76 @@
 
 #define DEBUG
 
+/* ================== DEBOUNCE / RATE LIMIT ================== */
+#define STATE_UPDATE_INTERVAL_MS 30000UL  // 30 seconds
+
+unsigned long lastShowerUpdate = 0;
+unsigned long lastToothUpdate  = 0;
+unsigned long lastHairUpdate   = 0;
+
+bool lastShowerState = false;
+bool lastToothState  = false;
+bool lastHairState   = false;
+
+enum BathroomState {
+  STATE_NONE = 0,
+  STATE_SHOWER,
+  STATE_TOOTH,
+  STATE_HAIR
+};
+
+/* ================== SLIDING WINDOW CONFIG ================== */
+#define SAMPLE_INTERVAL_MS   100
+#define WINDOW_DURATION_MS   5000
+#define WINDOW_SIZE          (WINDOW_DURATION_MS / SAMPLE_INTERVAL_MS)
+
+BathroomState window[WINDOW_SIZE];
+uint16_t windowIndex = 0;
+
+int16_t countNone   = WINDOW_SIZE;
+int16_t countShower = 0;
+int16_t countTooth  = 0;
+int16_t countHair   = 0;
+
+BathroomState lastReportedState = STATE_NONE;
+
+unsigned long lastSampleTime = 0;
+
+BathroomState readBathroomState() {
+  if (digitalRead(PIN_SHOWER)) return STATE_SHOWER;
+  if (digitalRead(PIN_TOOTH))  return STATE_TOOTH;
+  if (digitalRead(PIN_HAIR))   return STATE_HAIR;
+  return STATE_NONE;
+}
+
+void removeFromCount(BathroomState s) {
+  switch (s) {
+    case STATE_SHOWER: countShower--; break;
+    case STATE_TOOTH:  countTooth--;  break;
+    case STATE_HAIR:   countHair--;   break;
+    default:           countNone--;   break;
+  }
+}
+
+void addToCount(BathroomState s) {
+  switch (s) {
+    case STATE_SHOWER: countShower++; break;
+    case STATE_TOOTH:  countTooth++;  break;
+    case STATE_HAIR:   countHair++;   break;
+    default:           countNone++;   break;
+  }
+}
+
+BathroomState dominantState() {
+  BathroomState result = STATE_NONE;
+  uint16_t maxCount = countNone;
+
+  if (countShower > maxCount) { maxCount = countShower; result = STATE_SHOWER; }
+  if (countTooth  > maxCount) { maxCount = countTooth;  result = STATE_TOOTH;  }
+  if (countHair   > maxCount) { result = STATE_HAIR; }
+
+  return result;
+}
 
 /* ================== ZIGBEE ================== */
 #ifndef ZIGBEE_MODE_ED
@@ -105,20 +175,43 @@ void setup() {
 /* ================== LOOP ================== */
 void loop() {
 
-  bool shower = digitalRead(PIN_SHOWER);
-  bool tooth  = digitalRead(PIN_TOOTH);
-  bool hair   = digitalRead(PIN_HAIR);
+  unsigned long now = millis();
+  if (now - lastSampleTime < SAMPLE_INTERVAL_MS and lastSampleTime != 0) {
+    return;
+  }
+  
+  lastSampleTime = now;
 
-  zbBinaryShowering.setBinaryInput(shower);
-  zbBinaryBrushingTeeth.setBinaryInput(tooth);
-  zbBinaryHairDrying.setBinaryInput(hair);
+  BathroomState current = readBathroomState();
+
+  // Remove old sample
+  removeFromCount(window[windowIndex]);
+
+  // Store new sample
+  window[windowIndex] = current;
+  addToCount(current);
+
+  windowIndex = (windowIndex + 1) % WINDOW_SIZE;
+
+  BathroomState majority = dominantState();
+
+  Serial.printf("Dominant state changed → %d\n", majority);
+  Serial.printf("Counts %d %d %d %d\n", countShower, countHair, countTooth, countNone);
+
+  if (majority != lastReportedState) {
+
+    zbBinaryShowering.setBinaryInput(majority == STATE_SHOWER);
+    zbBinaryBrushingTeeth.setBinaryInput(majority == STATE_TOOTH);
+    zbBinaryHairDrying.setBinaryInput(majority == STATE_HAIR);
+
+    zbBinaryShowering.reportBinaryInput();
+    zbBinaryBrushingTeeth.reportBinaryInput();
+    zbBinaryHairDrying.reportBinaryInput();
+
+    lastReportedState = majority;
 
 #ifdef DEBUG
-  Serial.printf(
-    "GPIO State → shower:%d tooth:%d hair:%d\n",
-    shower, tooth, hair
-  );
+    Serial.printf("Dominant state changed → %d\n", majority);
 #endif
-
-  delay(100);
+  }
 }
