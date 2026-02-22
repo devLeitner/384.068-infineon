@@ -44,6 +44,7 @@
 #include "cybsp.h"
 #include "cy_retarget_io.h"
 #include <float.h>
+#include <string.h>
 
 /* Model to use */
 #include <models/model.h>
@@ -102,6 +103,12 @@
 #ifndef IMAI_DATA_OUT_SYMBOLS
 #define IMAI_DATA_OUT_SYMBOLS IMAI_SYMBOL_MAP
 #endif
+
+/* Output pins */
+#define PIN_BRUSHING_TEETH   P9_0
+#define PIN_HAIRDRYING       P9_1
+#define PIN_SHOWERING        P9_2
+
 /* End DEEPCFRAT compatibility defines */
 
 /*******************************************************************************
@@ -148,6 +155,13 @@ int main(void)
 
     /* Basic board setup */
     init_board();
+    
+    cyhal_gpio_init(PIN_BRUSHING_TEETH, CYHAL_GPIO_DIR_OUTPUT,
+                CYHAL_GPIO_DRIVE_STRONG, false);
+	cyhal_gpio_init(PIN_HAIRDRYING, CYHAL_GPIO_DIR_OUTPUT,
+	                CYHAL_GPIO_DRIVE_STRONG, false);
+	cyhal_gpio_init(PIN_SHOWERING, CYHAL_GPIO_DIR_OUTPUT,
+	                CYHAL_GPIO_DRIVE_STRONG, false);
 
     /* Initialize model */
     result = IMAI_init();
@@ -204,6 +218,10 @@ int main(void)
             switch(IMAI_dequeue(label_scores))
             {
                 case IMAI_RET_SUCCESS:      /* We have data, display it */
+                
+	                cyhal_gpio_write(PIN_BRUSHING_TEETH, best_label == 1);
+					cyhal_gpio_write(PIN_HAIRDRYING,     best_label == 2);
+					cyhal_gpio_write(PIN_SHOWERING,      best_label == 3);
 
                     for(int i = 0; i < IMAI_DATA_OUT_COUNT; i++)
                     {
