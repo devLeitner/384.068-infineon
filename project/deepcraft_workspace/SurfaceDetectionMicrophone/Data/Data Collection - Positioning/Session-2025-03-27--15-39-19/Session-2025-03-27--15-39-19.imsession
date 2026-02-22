@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ImagimobStudio version="0.9">
+  <Timeline id="dce775a9-25b6-4818-add6-e3da6268073d">
+    <Tracks>
+      <Track name="Microphone-Data" type="audiowav" isLabelTrack="False" frequency="0">
+        <PayloadFile>Microphone-Data.wav</PayloadFile>
+        <Shape/>
+      </Track>
+      <Track name="Live-Labeling" type="labelcsv">
+        <PayloadFile>Live-Labeling.label</PayloadFile>
+        <Shape/>
+      </Track>
+      <Track name="Local Camera Video" type="videomp4">
+        <PayloadFile>Local Camera Video.mp4</PayloadFile>
+      </Track>
+    </Tracks>
+  </Timeline>
+</ImagimobStudio>

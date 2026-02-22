@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ImagimobStudio version="1.1.0">
+  <Job id="00700f88-0f6b-11f1-9974-c9575992ea0a" />
+  <ProjectType>Classification</ProjectType>
   <ProjectId>64ad74c3-3deb-452d-af07-d275c165d758</ProjectId>
-  <Job id="b2f454c3-dfae-11ef-a440-b7a221d59385" />
   <Preprocessor inshape="[1]" intype="Float32" infreq="16000" outshape="[100,40]" outtype="Float32">
     <Unit id="Core.Packages.SpeechAudio">
       <Argument param="output_freq" type="Double">100</Argument>
@@ -29,12 +30,11 @@
     <Patience>20</Patience>
     <AppendModels>False</AppendModels>
     <LossFunction>CategoricalCrossentropy</LossFunction>
-    <FactoryOptions>None</FactoryOptions>
-    <HardwareType>Default</HardwareType>
+    <HardwareType>Generic</HardwareType>
     <TrainingEnvironment>
     </TrainingEnvironment>
     <ModelFamily>Conv1D</ModelFamily>
-    <ModelFlavor>SmallKern</ModelFlavor>
+    <ModelFlavor>LargeKern</ModelFlavor>
     <ClassifierType>GlobalAveragePool</ClassifierType>
     <Optimization>Accuracy</Optimization>
     <Pooling>True</Pooling>
@@ -42,6 +42,7 @@
     <LearnRate>Mid</LearnRate>
     <RegularizationFactor>Low</RegularizationFactor>
     <LastNetworkInputShape>[100,40]</LastNetworkInputShape>
+    <LastClassCount>9</LastClassCount>
     <Optimizer>
       <LearningRate>0.001</LearningRate>
       <WeightDecay>0.0001</WeightDecay>
@@ -52,7 +53,7 @@
     </BuildSteps>
   </ModelFactory>
   <Models>
-    <Model name="conv1d-medium-accuracy-0" id="28b0b7ba-caaf-42b5-9ced-5f564c397c2d">
+    <Model name="conv1d-medium-accuracy-0" id="7d6de3d0-9cd4-458f-b04a-118e78210018">
       <LossFunction>CategoricalCrossentropy</LossFunction>
       <Epochs>100</Epochs>
       <BatchSize>16</BatchSize>
@@ -64,10 +65,10 @@
         <LearningRate>0.004</LearningRate>
         <WeightDecay>0.0001</WeightDecay>
       </Optimizer>
-      <Network inshape="[100,40]" intype="Float32" infreq="0" outshape="[6]" outtype="Float32">
+      <Network inshape="[100,40]" intype="Float32" infreq="0" outshape="[9]" outtype="Float32">
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">12</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
+          <Argument param="kernel_size" type="Int32">5</Argument>
           <Argument param="strides" type="Int32">2</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
@@ -82,8 +83,8 @@
         </Unit>
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">24</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="kernel_size" type="Int32">5</Argument>
+          <Argument param="strides" type="Int32">2</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
@@ -97,8 +98,8 @@
         </Unit>
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">24</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="kernel_size" type="Int32">5</Argument>
+          <Argument param="strides" type="Int32">2</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
@@ -109,11 +110,6 @@
         </Unit>
         <Unit id="Core.Layers.Activation">
           <Argument param="activation" type="String">relu</Argument>
-        </Unit>
-        <Unit id="Core.Layers.MaxPool1D">
-          <Argument param="pool_size" type="Int32">2</Argument>
-          <Argument param="strides" type="Int32">2</Argument>
-          <Argument param="padding" type="String">valid</Argument>
         </Unit>
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">32</Argument>
@@ -152,7 +148,7 @@
         </Unit>
         <Unit id="Core.Layers.GlobalAveragePool1D" />
         <Unit id="Core.Layers.Dense">
-          <Argument param="units" type="Int32">6</Argument>
+          <Argument param="units" type="Int32">9</Argument>
           <Argument param="use_bias" type="Boolean">True</Argument>
           <Argument param="activation" type="String">linear</Argument>
         </Unit>
@@ -165,13 +161,17 @@
         <ConfusionMatrix />
       </BuildSteps>
       <SymbolWeights override="False">
-        <SymbolWeight symbol="air" weight="3" />
-        <SymbolWeight symbol="plastic" weight="8" />
+        <SymbolWeight symbol="(unlabeled)" weight="1" />
+        <SymbolWeight symbol="brushing_teeth" weight="1" />
+        <SymbolWeight symbol="hair_drying" weight="1" />
+        <SymbolWeight symbol="showering" weight="1" />
+        <SymbolWeight symbol="air" weight="1" />
+        <SymbolWeight symbol="plastic" weight="1" />
         <SymbolWeight symbol="plastic_out" weight="1" />
-        <SymbolWeight symbol="wood" weight="8" />
+        <SymbolWeight symbol="wood" weight="1" />
         <SymbolWeight symbol="wood_out" weight="1" />
       </SymbolWeights>
-      <Preprocessor override="False" inshape="[1]" intype="Float32" infreq="0" outshape="[100,40]" outtype="Float32">
+      <Preprocessor override="False" inshape="[1]" intype="Float32" infreq="16000" outshape="[100,40]" outtype="Float32">
         <Unit id="Core.Packages.SpeechAudio">
           <Argument param="output_freq" type="Double">100</Argument>
           <Argument param="output_features" type="Int32">40</Argument>
@@ -191,9 +191,9 @@
           <Argument param="time_output" type="String">time</Argument>
         </Unit>
       </Preprocessor>
-      <Postprocessor override="False" inshape="[128,3]" intype="Float32" infreq="0" outshape="[10]" outtype="Float32" />
+      <Postprocessor override="False" inshape="[128,3]" intype="Float32" infreq="1" outshape="[128,3]" outtype="Float32" />
     </Model>
-    <Model name="conv1d-medium-accuracy-1" id="60be2a3a-7fc0-418d-9ded-0fd1b64e74d6">
+    <Model name="conv1d-medium-accuracy-1" id="3c962bd6-ad17-4c98-a3c8-2a39f4532ff0">
       <LossFunction>CategoricalCrossentropy</LossFunction>
       <Epochs>100</Epochs>
       <BatchSize>16</BatchSize>
@@ -205,10 +205,10 @@
         <LearningRate>0.004</LearningRate>
         <WeightDecay>0.0001</WeightDecay>
       </Optimizer>
-      <Network inshape="[100,40]" intype="Float32" infreq="0" outshape="[6]" outtype="Float32">
+      <Network inshape="[100,40]" intype="Float32" infreq="0" outshape="[9]" outtype="Float32">
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">16</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
+          <Argument param="kernel_size" type="Int32">5</Argument>
           <Argument param="strides" type="Int32">2</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
@@ -223,8 +223,8 @@
         </Unit>
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">16</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="kernel_size" type="Int32">5</Argument>
+          <Argument param="strides" type="Int32">2</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
@@ -238,8 +238,8 @@
         </Unit>
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">16</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="kernel_size" type="Int32">5</Argument>
+          <Argument param="strides" type="Int32">2</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
@@ -250,11 +250,6 @@
         </Unit>
         <Unit id="Core.Layers.Activation">
           <Argument param="activation" type="String">relu</Argument>
-        </Unit>
-        <Unit id="Core.Layers.MaxPool1D">
-          <Argument param="pool_size" type="Int32">2</Argument>
-          <Argument param="strides" type="Int32">2</Argument>
-          <Argument param="padding" type="String">valid</Argument>
         </Unit>
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">32</Argument>
@@ -293,7 +288,7 @@
         </Unit>
         <Unit id="Core.Layers.GlobalAveragePool1D" />
         <Unit id="Core.Layers.Dense">
-          <Argument param="units" type="Int32">6</Argument>
+          <Argument param="units" type="Int32">9</Argument>
           <Argument param="use_bias" type="Boolean">True</Argument>
           <Argument param="activation" type="String">linear</Argument>
         </Unit>
@@ -306,13 +301,17 @@
         <ConfusionMatrix />
       </BuildSteps>
       <SymbolWeights override="False">
-        <SymbolWeight symbol="air" weight="3" />
-        <SymbolWeight symbol="plastic" weight="8" />
+        <SymbolWeight symbol="(unlabeled)" weight="1" />
+        <SymbolWeight symbol="brushing_teeth" weight="1" />
+        <SymbolWeight symbol="hair_drying" weight="1" />
+        <SymbolWeight symbol="showering" weight="1" />
+        <SymbolWeight symbol="air" weight="1" />
+        <SymbolWeight symbol="plastic" weight="1" />
         <SymbolWeight symbol="plastic_out" weight="1" />
-        <SymbolWeight symbol="wood" weight="8" />
+        <SymbolWeight symbol="wood" weight="1" />
         <SymbolWeight symbol="wood_out" weight="1" />
       </SymbolWeights>
-      <Preprocessor override="False" inshape="[1]" intype="Float32" infreq="0" outshape="[100,40]" outtype="Float32">
+      <Preprocessor override="False" inshape="[1]" intype="Float32" infreq="16000" outshape="[100,40]" outtype="Float32">
         <Unit id="Core.Packages.SpeechAudio">
           <Argument param="output_freq" type="Double">100</Argument>
           <Argument param="output_features" type="Int32">40</Argument>
@@ -332,9 +331,9 @@
           <Argument param="time_output" type="String">time</Argument>
         </Unit>
       </Preprocessor>
-      <Postprocessor override="False" inshape="[128,3]" intype="Float32" infreq="0" outshape="[10]" outtype="Float32" />
+      <Postprocessor override="False" inshape="[128,3]" intype="Float32" infreq="1" outshape="[128,3]" outtype="Float32" />
     </Model>
-    <Model name="conv1d-medium-accuracy-2" id="da06ea8b-b307-4b41-a116-2a9aff3d06ba">
+    <Model name="conv1d-medium-accuracy-2" id="499785ee-a60b-4b72-aac7-41ac92f618f4">
       <LossFunction>CategoricalCrossentropy</LossFunction>
       <Epochs>100</Epochs>
       <BatchSize>16</BatchSize>
@@ -346,10 +345,10 @@
         <LearningRate>0.004</LearningRate>
         <WeightDecay>0.0001</WeightDecay>
       </Optimizer>
-      <Network inshape="[100,40]" intype="Float32" infreq="0" outshape="[6]" outtype="Float32">
+      <Network inshape="[100,40]" intype="Float32" infreq="0" outshape="[9]" outtype="Float32">
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">16</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
+          <Argument param="kernel_size" type="Int32">5</Argument>
           <Argument param="strides" type="Int32">2</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
@@ -364,8 +363,8 @@
         </Unit>
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">32</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="kernel_size" type="Int32">5</Argument>
+          <Argument param="strides" type="Int32">2</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
@@ -379,8 +378,8 @@
         </Unit>
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">32</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="kernel_size" type="Int32">5</Argument>
+          <Argument param="strides" type="Int32">2</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
@@ -391,11 +390,6 @@
         </Unit>
         <Unit id="Core.Layers.Activation">
           <Argument param="activation" type="String">relu</Argument>
-        </Unit>
-        <Unit id="Core.Layers.MaxPool1D">
-          <Argument param="pool_size" type="Int32">2</Argument>
-          <Argument param="strides" type="Int32">2</Argument>
-          <Argument param="padding" type="String">valid</Argument>
         </Unit>
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">32</Argument>
@@ -434,7 +428,7 @@
         </Unit>
         <Unit id="Core.Layers.GlobalAveragePool1D" />
         <Unit id="Core.Layers.Dense">
-          <Argument param="units" type="Int32">6</Argument>
+          <Argument param="units" type="Int32">9</Argument>
           <Argument param="use_bias" type="Boolean">True</Argument>
           <Argument param="activation" type="String">linear</Argument>
         </Unit>
@@ -447,13 +441,17 @@
         <ConfusionMatrix />
       </BuildSteps>
       <SymbolWeights override="False">
-        <SymbolWeight symbol="air" weight="3" />
-        <SymbolWeight symbol="plastic" weight="8" />
+        <SymbolWeight symbol="(unlabeled)" weight="1" />
+        <SymbolWeight symbol="brushing_teeth" weight="1" />
+        <SymbolWeight symbol="hair_drying" weight="1" />
+        <SymbolWeight symbol="showering" weight="1" />
+        <SymbolWeight symbol="air" weight="1" />
+        <SymbolWeight symbol="plastic" weight="1" />
         <SymbolWeight symbol="plastic_out" weight="1" />
-        <SymbolWeight symbol="wood" weight="8" />
+        <SymbolWeight symbol="wood" weight="1" />
         <SymbolWeight symbol="wood_out" weight="1" />
       </SymbolWeights>
-      <Preprocessor override="False" inshape="[1]" intype="Float32" infreq="0" outshape="[100,40]" outtype="Float32">
+      <Preprocessor override="False" inshape="[1]" intype="Float32" infreq="16000" outshape="[100,40]" outtype="Float32">
         <Unit id="Core.Packages.SpeechAudio">
           <Argument param="output_freq" type="Double">100</Argument>
           <Argument param="output_features" type="Int32">40</Argument>
@@ -473,9 +471,9 @@
           <Argument param="time_output" type="String">time</Argument>
         </Unit>
       </Preprocessor>
-      <Postprocessor override="False" inshape="[128,3]" intype="Float32" infreq="0" outshape="[10]" outtype="Float32" />
+      <Postprocessor override="False" inshape="[128,3]" intype="Float32" infreq="1" outshape="[128,3]" outtype="Float32" />
     </Model>
-    <Model name="conv1d-medium-accuracy-3" id="e3e6ca2d-5e49-4f08-8098-36a5c7097e7b">
+    <Model name="conv1d-medium-accuracy-3" id="ecca5260-01f3-4cd4-9466-20bd0f1c56be">
       <LossFunction>CategoricalCrossentropy</LossFunction>
       <Epochs>100</Epochs>
       <BatchSize>16</BatchSize>
@@ -487,10 +485,10 @@
         <LearningRate>0.004</LearningRate>
         <WeightDecay>0.0001</WeightDecay>
       </Optimizer>
-      <Network inshape="[100,40]" intype="Float32" infreq="0" outshape="[6]" outtype="Float32">
+      <Network inshape="[100,40]" intype="Float32" infreq="0" outshape="[9]" outtype="Float32">
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">16</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
+          <Argument param="kernel_size" type="Int32">5</Argument>
           <Argument param="strides" type="Int32">2</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
@@ -505,8 +503,8 @@
         </Unit>
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">32</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="kernel_size" type="Int32">5</Argument>
+          <Argument param="strides" type="Int32">2</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
@@ -520,8 +518,8 @@
         </Unit>
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">32</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
-          <Argument param="strides" type="Int32">1</Argument>
+          <Argument param="kernel_size" type="Int32">5</Argument>
+          <Argument param="strides" type="Int32">2</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
@@ -532,11 +530,6 @@
         </Unit>
         <Unit id="Core.Layers.Activation">
           <Argument param="activation" type="String">relu</Argument>
-        </Unit>
-        <Unit id="Core.Layers.MaxPool1D">
-          <Argument param="pool_size" type="Int32">2</Argument>
-          <Argument param="strides" type="Int32">2</Argument>
-          <Argument param="padding" type="String">valid</Argument>
         </Unit>
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">64</Argument>
@@ -575,7 +568,7 @@
         </Unit>
         <Unit id="Core.Layers.GlobalAveragePool1D" />
         <Unit id="Core.Layers.Dense">
-          <Argument param="units" type="Int32">6</Argument>
+          <Argument param="units" type="Int32">9</Argument>
           <Argument param="use_bias" type="Boolean">True</Argument>
           <Argument param="activation" type="String">linear</Argument>
         </Unit>
@@ -588,13 +581,17 @@
         <ConfusionMatrix />
       </BuildSteps>
       <SymbolWeights override="False">
-        <SymbolWeight symbol="air" weight="3" />
-        <SymbolWeight symbol="plastic" weight="8" />
+        <SymbolWeight symbol="(unlabeled)" weight="1" />
+        <SymbolWeight symbol="brushing_teeth" weight="1" />
+        <SymbolWeight symbol="hair_drying" weight="1" />
+        <SymbolWeight symbol="showering" weight="1" />
+        <SymbolWeight symbol="air" weight="1" />
+        <SymbolWeight symbol="plastic" weight="1" />
         <SymbolWeight symbol="plastic_out" weight="1" />
-        <SymbolWeight symbol="wood" weight="8" />
+        <SymbolWeight symbol="wood" weight="1" />
         <SymbolWeight symbol="wood_out" weight="1" />
       </SymbolWeights>
-      <Preprocessor override="False" inshape="[1]" intype="Float32" infreq="0" outshape="[100,40]" outtype="Float32">
+      <Preprocessor override="False" inshape="[1]" intype="Float32" infreq="16000" outshape="[100,40]" outtype="Float32">
         <Unit id="Core.Packages.SpeechAudio">
           <Argument param="output_freq" type="Double">100</Argument>
           <Argument param="output_features" type="Int32">40</Argument>
@@ -614,392 +611,788 @@
           <Argument param="time_output" type="String">time</Argument>
         </Unit>
       </Preprocessor>
-      <Postprocessor override="False" inshape="[128,3]" intype="Float32" infreq="0" outshape="[10]" outtype="Float32" />
+      <Postprocessor override="False" inshape="[128,3]" intype="Float32" infreq="1" outshape="[128,3]" outtype="Float32" />
     </Model>
   </Models>
   <Database balance="AnnotatedLength" redistributionScope="Everything">
     <SymbolMap>
-      <Symbol name="air" id="1" weight="3" />
-      <Symbol name="plastic" id="2" weight="8" />
-      <Symbol name="plastic_out" id="3" weight="1" />
-      <Symbol name="wood" id="4" weight="8" />
-      <Symbol name="wood_out" id="5" weight="1" />
+      <Symbol name="(unlabeled)" id="0" weight="1" />
+      <Symbol name="brushing_teeth" id="1" weight="1" />
+      <Symbol name="hair_drying" id="2" weight="1" />
+      <Symbol name="showering" id="3" weight="1" />
+      <Symbol name="air" id="4" weight="1" />
+      <Symbol name="plastic" id="5" weight="1" />
+      <Symbol name="plastic_out" id="6" weight="1" />
+      <Symbol name="wood" id="7" weight="1" />
+      <Symbol name="wood_out" id="8" weight="1" />
     </SymbolMap>
     <DataSet id="unassigned" targetSize="0" labels="Unassigned" />
     <DataSet id="train" targetSize="0.5996715940940939" labels="Complete">
-      <Session name="Air_1" sessionId="a36a0563-9986-4397-8d2f-84fda845efba" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388095647387904" start="0" length="206.976">/Data/Air_1/Microphone.wav</DataFile>
-        <SessionFile>/Data/Air_1/Air_1.imsession</SessionFile>
-        <LabelFile modified="5250388099107387904">/Data/Air_1/Live-Labeling.label</LabelFile>
+      <Session name="Session-2026-02-19--23-13-08-Showering" sessionId="e2d1d741-4285-453d-8ab5-40d86ded31aa" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801294829119" start="0" length="148.864">../data_recordings/no_preprocessing/Session-2026-02-19--23-13-08-Showering/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/Session-2026-02-19--23-13-08-Showering/Session-2026-02-19--23-13-08-Showering.imsession</SessionFile>
+        <LabelFile modified="5250758801294625777">../data_recordings/no_preprocessing/Session-2026-02-19--23-13-08-Showering/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="25" length="74.0372985">air</Label>
+          <Label count="1" length="144.832">showering</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="NoneAir3" sessionId="a2dfe788-393c-47c8-9efe-3c6b9030493c" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250401036447387904" start="0" length="50.304">/Data/NoneAir3/Microphone.wav</DataFile>
-        <SessionFile>/Data/NoneAir3/NoneAir3.imsession</SessionFile>
-        <LabelFile modified="5250401036447387904">/Data/NoneAir3/Live-Labeling.label</LabelFile>
+      <Session name="Session-2026-02-19--23-05-53-Showering" sessionId="9bff20af-5f02-410f-a67d-6dd924112339" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801294246362" start="0" length="30.4">../data_recordings/no_preprocessing/Session-2026-02-19--23-05-53-Showering/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/Session-2026-02-19--23-05-53-Showering/Session-2026-02-19--23-05-53-Showering.imsession</SessionFile>
+        <LabelFile modified="5250758801294205665">../data_recordings/no_preprocessing/Session-2026-02-19--23-05-53-Showering/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="6" length="11.358991">air</Label>
+          <Label count="1" length="30.016">showering</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="Plastic_19" sessionId="b53143c0-f8dc-4894-b8f4-0efe47a5ffa5" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400281287387904" start="0" length="24.832">/Data/Plastic_19/Microphone.wav</DataFile>
-        <SessionFile>/Data/Plastic_19/Plastic_19.imsession</SessionFile>
-        <LabelFile modified="5250400290147387904">/Data/Plastic_19/Live-Labeling.label</LabelFile>
+      <Session name="Mixed_4" sessionId="877ccfb7-09de-4998-bcf3-8a402b21e77f" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834093435232" start="0" length="47.104">/Data/Mixed_4/Microphone.wav</DataFile>
+        <SessionFile>/Data/Mixed_4/Mixed_4.imsession</SessionFile>
+        <LabelFile modified="5250758834093005085">/Data/Mixed_4/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="4" length="13.1560075">plastic</Label>
-          <Label count="3" length="1.5959726">plastic_out</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Wood_10" sessionId="81b34eee-bc60-4b20-abbe-a7e1d4d9e321" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388835407387904" start="0" length="69.504">/Data/Wood_10/Microphone.wav</DataFile>
-        <SessionFile>/Data/Wood_10/Wood_10.imsession</SessionFile>
-        <LabelFile modified="5250400195667387904">/Data/Wood_10/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="9" length="41.6179407">wood</Label>
-          <Label count="4" length="2.816692">wood_out</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Wood_19" sessionId="0289be78-c98d-4b31-a2c6-4f0e287f98ca" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400253727387904" start="0" length="21.504">/Data/Wood_19/Microphone.wav</DataFile>
-        <SessionFile>/Data/Wood_19/Wood_19.imsession</SessionFile>
-        <LabelFile modified="5250400288647387904">/Data/Wood_19/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="3" length="11.2666375">wood</Label>
-          <Label count="1" length="0.8228443">wood_out</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Plastic_14" sessionId="f7d0e576-35c7-48f2-8300-afc82d773276" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400260127387904" start="0" length="33.728">/Data/Plastic_14/Microphone.wav</DataFile>
-        <SessionFile>/Data/Plastic_14/Plastic_14.imsession</SessionFile>
-        <LabelFile modified="5250400290807387904">/Data/Plastic_14/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="4" length="23.8398541">plastic</Label>
-          <Label count="2" length="0.9355756">plastic_out</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Plastic_16" sessionId="0d1db1b3-9b11-42cf-bdfc-c9aa0825c00c" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400262407387904" start="0" length="29.312">/Data/Plastic_16/Microphone.wav</DataFile>
-        <SessionFile>/Data/Plastic_16/Plastic_16.imsession</SessionFile>
-        <LabelFile modified="5250400290507387904">/Data/Plastic_16/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="3" length="19.5082506">plastic</Label>
-          <Label count="2" length="1.7305706">plastic_out</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="None_1" sessionId="582ab100-0c29-4497-9796-cf4beb664804" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="LabelsMissing">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388107747387904" start="0" length="126.016">/Data/None_1/Microphone.wav</DataFile>
-        <SessionFile>/Data/None_1/None_1.imsession</SessionFile>
-        <LabelFile modified="5250388107747387904">/Data/None_1/Live-Labeling.label</LabelFile>
-        <Labels />
-        <CustomColumnValues />
-      </Session>
-      <Session name="Plastic_12" sessionId="c5a31379-499a-4202-93d8-711bc8042164" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400258367387904" start="0" length="38.464">/Data/Plastic_12/Microphone.wav</DataFile>
-        <SessionFile>/Data/Plastic_12/Plastic_12.imsession</SessionFile>
-        <LabelFile modified="5250400291167387904">/Data/Plastic_12/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="3" length="27.3461133">plastic</Label>
-          <Label count="3" length="3.4745863">plastic_out</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Mixed_2" sessionId="34fb167b-84c6-41ab-a926-66d662f6997c" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388842607387904" start="0" length="33.536">/Data/Mixed_2/Microphone.wav</DataFile>
-        <SessionFile>/Data/Mixed_2/Mixed_2.imsession</SessionFile>
-        <LabelFile modified="5250388842607387904">/Data/Mixed_2/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="5" length="3.6827703">air</Label>
-          <Label count="3" length="8.1630407">wood</Label>
-          <Label count="1" length="6.2662809">plastic</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Wood_21" sessionId="2ecf25de-22d8-42c6-afc1-8a143e519feb" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400267587387904" start="0" length="43.136">/Data/Wood_21/Microphone.wav</DataFile>
-        <SessionFile>/Data/Wood_21/Wood_21.imsession</SessionFile>
-        <LabelFile modified="5250400288987387904">/Data/Wood_21/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="8" length="33.512821">wood</Label>
-          <Label count="1" length="0.3761573">wood_out</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Air_10" sessionId="bdf79600-5876-4cd6-805d-55584fdfc00d" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400278227387904" start="0" length="28.352">/Data/Air_10/Microphone.wav</DataFile>
-        <SessionFile>/Data/Air_10/Air_10.imsession</SessionFile>
-        <LabelFile modified="5250400278227387904">/Data/Air_10/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="11" length="15.2478702">air</Label>
+          <Label count="2" length="1.3850512">air</Label>
+          <Label count="5" length="16.5828949">wood</Label>
+          <Label count="2" length="11.5166949">plastic</Label>
+          <Label count="1" length="0.116522">plastic_out</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
       <Session name="Wood_13" sessionId="e1bef40d-d545-4c8e-bd5b-af54c73c22ce" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400245167387904" start="0" length="26.688">/Data/Wood_13/Microphone.wav</DataFile>
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834109537618" start="0" length="26.688">/Data/Wood_13/Microphone.wav</DataFile>
         <SessionFile>/Data/Wood_13/Wood_13.imsession</SessionFile>
-        <LabelFile modified="5250400245167387904">/Data/Wood_13/Live-Labeling.label</LabelFile>
+        <LabelFile modified="5250758834109337581">/Data/Wood_13/Live-Labeling.label</LabelFile>
         <Labels>
           <Label count="5" length="15.2618631">wood</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="Wood_2" sessionId="67d5714c-adae-4cfd-ba18-bf2acb359b0e" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388125867387904" start="0" length="81.216">/Data/Wood_2/Microphone.wav</DataFile>
-        <SessionFile>/Data/Wood_2/Wood_2.imsession</SessionFile>
-        <LabelFile modified="5250400197027387904">/Data/Wood_2/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="6" length="4.9126934">wood_out</Label>
-          <Label count="9" length="34.6223526">wood</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Wood_8" sessionId="f3200f6d-a362-4cdb-bb4a-c56c3356f5d6" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388820507387904" start="0" length="40.704">/Data/Wood_8/Microphone.wav</DataFile>
-        <SessionFile>/Data/Wood_8/Wood_8.imsession</SessionFile>
-        <LabelFile modified="5250400199807387904">/Data/Wood_8/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="5" length="2.6374639">wood_out</Label>
-          <Label count="9" length="18.3817148">wood</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Air_5" sessionId="6faa870b-7419-40dd-b5df-241d7e212c8d" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388868367387904" start="0" length="32.448">/Data/Air_5/Microphone.wav</DataFile>
-        <SessionFile>/Data/Air_5/Air_5.imsession</SessionFile>
-        <LabelFile modified="5250388868367387904">/Data/Air_5/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="11" length="21.2329884">air</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="NoneAir2" sessionId="bf475c07-99ae-45ee-9371-dd37d20ae017" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250401034987387904" start="0" length="43.328">/Data/NoneAir2/Microphone.wav</DataFile>
-        <SessionFile>/Data/NoneAir2/NoneAir2.imsession</SessionFile>
-        <LabelFile modified="5250401034987387904">/Data/NoneAir2/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="3" length="8.7840992">air</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Air_8" sessionId="5654cf87-7e7f-419a-8c70-b922163cc001" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400276747387904" start="0" length="28.672">/Data/Air_8/Microphone.wav</DataFile>
-        <SessionFile>/Data/Air_8/Air_8.imsession</SessionFile>
-        <LabelFile modified="5250400276747387904">/Data/Air_8/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="10" length="12.9071239">air</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Plastic_2" sessionId="c68121a1-b85d-4455-a43a-dc362ba20e43" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388806467387904" start="0" length="25.344">/Data/Plastic_2/Microphone.wav</DataFile>
-        <SessionFile>/Data/Plastic_2/Plastic_2.imsession</SessionFile>
-        <LabelFile modified="5250400192107387904">/Data/Plastic_2/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="2" length="13.6801959">plastic</Label>
-          <Label count="3" length="1.9467459">plastic_out</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Plastic_7" sessionId="94c23c32-02c3-483c-8829-18481316c34a" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388815167387904" start="0" length="18.88">/Data/Plastic_7/Microphone.wav</DataFile>
-        <SessionFile>/Data/Plastic_7/Plastic_7.imsession</SessionFile>
-        <LabelFile modified="5250388815167387904">/Data/Plastic_7/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="3" length="7.0005955">plastic</Label>
-          <Label count="1" length="2.5703812">air</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="None_2" sessionId="f59c6db2-64e4-402a-a4db-ad254f3867b1" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="LabelsMissing">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388109047387904" start="0" length="103.424">/Data/None_2/Microphone.wav</DataFile>
-        <SessionFile>/Data/None_2/None_2.imsession</SessionFile>
-        <LabelFile modified="5250388109047387904">/Data/None_2/Live-Labeling.label</LabelFile>
-        <Labels />
-        <CustomColumnValues />
-      </Session>
-      <Session name="Wood_22" sessionId="6aae9145-0b11-4b12-9a5a-3df7fe1eed31" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400270527387904" start="0" length="22.08">/Data/Wood_22/Microphone.wav</DataFile>
-        <SessionFile>/Data/Wood_22/Wood_22.imsession</SessionFile>
-        <LabelFile modified="5250400289107387904">/Data/Wood_22/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="5" length="13.9702686">wood</Label>
-          <Label count="1" length="0.1808449">wood_out</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Plastic_6" sessionId="591f37d2-0c36-488b-b8dc-28bae90a9b86" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388813627387904" start="0" length="13.12">/Data/Plastic_6/Microphone.wav</DataFile>
-        <SessionFile>/Data/Plastic_6/Plastic_6.imsession</SessionFile>
-        <LabelFile modified="5250400193867387904">/Data/Plastic_6/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="2" length="4.9280412">plastic</Label>
-          <Label count="2" length="0.7386152">plastic_out</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Wood_15" sessionId="beba0c3a-806b-46a6-8356-829616c2877e" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400249007387904" start="0" length="25.92">/Data/Wood_15/Microphone.wav</DataFile>
-        <SessionFile>/Data/Wood_15/Wood_15.imsession</SessionFile>
-        <LabelFile modified="5250400288007387904">/Data/Wood_15/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="5" length="18.1025746">wood</Label>
-          <Label count="1" length="0.3414351">wood_out</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Plastic_3" sessionId="20faa353-92aa-4c12-994c-1b4679514073" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388808307387904" start="0" length="31.168">/Data/Plastic_3/Microphone.wav</DataFile>
-        <SessionFile>/Data/Plastic_3/Plastic_3.imsession</SessionFile>
-        <LabelFile modified="5250400192727387904">/Data/Plastic_3/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="3" length="11.4150747">plastic</Label>
-          <Label count="2" length="1.9076252">plastic_out</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Air_7" sessionId="31e7d0b1-3ad8-4890-97ec-d1665e23ea36" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400275947387904" start="0" length="22.592">/Data/Air_7/Microphone.wav</DataFile>
-        <SessionFile>/Data/Air_7/Air_7.imsession</SessionFile>
-        <LabelFile modified="5250400275927387904">/Data/Air_7/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="8" length="12.9261534">air</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Plastic_21" sessionId="c263edbb-beb7-43fc-bd89-017c740d1b64" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400282687387904" start="0" length="16.576">/Data/Plastic_21/Microphone.wav</DataFile>
-        <SessionFile>/Data/Plastic_21/Plastic_21.imsession</SessionFile>
-        <LabelFile modified="5250400289347387904">/Data/Plastic_21/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="3" length="6.9326808">plastic</Label>
-          <Label count="2" length="2.4425487">plastic_out</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Wood_3" sessionId="fc7e1a04-4f3a-4c9a-b17a-f409c5d4c43f" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388128767387904" start="0" length="37.632">/Data/Wood_3/Microphone.wav</DataFile>
-        <SessionFile>/Data/Wood_3/Wood_3.imsession</SessionFile>
-        <LabelFile modified="5250400197607387904">/Data/Wood_3/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="1" length="0.6941615">air</Label>
-          <Label count="5" length="17.709257">wood</Label>
-          <Label count="3" length="3.3845516">wood_out</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="NoneAir" sessionId="9eb3db1f-c798-4df3-81bb-fe088b05b037" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250401034207387904" start="0" length="48.384">/Data/NoneAir/Microphone.wav</DataFile>
-        <SessionFile>/Data/NoneAir/NoneAir.imsession</SessionFile>
-        <LabelFile modified="5250401034207387904">/Data/NoneAir/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="3" length="3.9581282">air</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Wood_17" sessionId="dee878f3-69e5-4b74-b51f-615789d97d51" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400251887387904" start="0" length="30.72">/Data/Wood_17/Microphone.wav</DataFile>
-        <SessionFile>/Data/Wood_17/Wood_17.imsession</SessionFile>
-        <LabelFile modified="5250400288267387904">/Data/Wood_17/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="5" length="21.3314112">wood</Label>
-          <Label count="1" length="0.476524">wood_out</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Plastic_8" sessionId="72803bfa-ba46-4470-9d41-f1fc541055fd" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388838427387904" start="0" length="49.408">/Data/Plastic_8/Microphone.wav</DataFile>
-        <SessionFile>/Data/Plastic_8/Plastic_8.imsession</SessionFile>
-        <LabelFile modified="5250400194527387904">/Data/Plastic_8/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="7" length="24.8334819">plastic</Label>
-          <Label count="6" length="1.9418183">plastic_out</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Mixed_5" sessionId="5a866ca7-30cd-43f1-a2f8-c2dd0fe9adb8" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400240987387904" start="0" length="15.488">/Data/Mixed_5/Microphone.wav</DataFile>
-        <SessionFile>/Data/Mixed_5/Mixed_5.imsession</SessionFile>
-        <LabelFile modified="5250400240987387904">/Data/Mixed_5/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="1" length="2.8664283">air</Label>
-          <Label count="1" length="4.52698">wood</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Wood_18" sessionId="5c5bccb6-9a21-42bd-a0b7-6a4d4373cd66" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400252687387904" start="0" length="34.304">/Data/Wood_18/Microphone.wav</DataFile>
-        <SessionFile>/Data/Wood_18/Wood_18.imsession</SessionFile>
-        <LabelFile modified="5250400288387387904">/Data/Wood_18/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="5" length="22.0269094">wood</Label>
-          <Label count="1" length="0.3530092">wood_out</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Air_6" sessionId="aff67a10-824a-4d29-afce-03f8d5931806" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400273047387904" start="0" length="28.352">/Data/Air_6/Microphone.wav</DataFile>
-        <SessionFile>/Data/Air_6/Air_6.imsession</SessionFile>
-        <LabelFile modified="5250400273047387904">/Data/Air_6/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="10" length="15.0895875">air</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
       <Session name="Wood_12" sessionId="c0e15ec3-c96f-41d3-b21d-362c07ebef09" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400243547387904" start="0" length="25.728">/Data/Wood_12/Microphone.wav</DataFile>
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834109257657" start="0" length="25.728">/Data/Wood_12/Microphone.wav</DataFile>
         <SessionFile>/Data/Wood_12/Wood_12.imsession</SessionFile>
-        <LabelFile modified="5250400287567387904">/Data/Wood_12/Live-Labeling.label</LabelFile>
+        <LabelFile modified="5250758834109037695">/Data/Wood_12/Live-Labeling.label</LabelFile>
         <Labels>
           <Label count="4" length="14.1486497">wood</Label>
           <Label count="1" length="1.3787405">wood_out</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="Mixed_4" sessionId="877ccfb7-09de-4998-bcf3-8a402b21e77f" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388871227387904" start="0" length="47.104">/Data/Mixed_4/Microphone.wav</DataFile>
-        <SessionFile>/Data/Mixed_4/Mixed_4.imsession</SessionFile>
-        <LabelFile modified="5250400190447387904">/Data/Mixed_4/Live-Labeling.label</LabelFile>
+      <Session name="Wood_10" sessionId="81b34eee-bc60-4b20-abbe-a7e1d4d9e321" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834108140831" start="0" length="69.504">/Data/Wood_10/Microphone.wav</DataFile>
+        <SessionFile>/Data/Wood_10/Wood_10.imsession</SessionFile>
+        <LabelFile modified="5250758834107285009">/Data/Wood_10/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="2" length="1.3850512">air</Label>
-          <Label count="5" length="16.5828949">wood</Label>
-          <Label count="2" length="11.5166948">plastic</Label>
-          <Label count="1" length="0.116522">plastic_out</Label>
+          <Label count="9" length="41.6179407">wood</Label>
+          <Label count="4" length="2.816692">wood_out</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="Wood_6" sessionId="8a6381f1-eca5-454e-b02e-1e901dbee803" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388142707387904" start="0" length="45.76">/Data/Wood_6/Microphone.wav</DataFile>
-        <SessionFile>/Data/Wood_6/Wood_6.imsession</SessionFile>
-        <LabelFile modified="5250400198607387904">/Data/Wood_6/Live-Labeling.label</LabelFile>
+      <Session name="Plastic_3" sessionId="20faa353-92aa-4c12-994c-1b4679514073" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834104666810" start="0" length="31.168">/Data/Plastic_3/Microphone.wav</DataFile>
+        <SessionFile>/Data/Plastic_3/Plastic_3.imsession</SessionFile>
+        <LabelFile modified="5250758834104386080">/Data/Plastic_3/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="1" length="0.7702987">air</Label>
+          <Label count="3" length="11.4150747">plastic</Label>
+          <Label count="2" length="1.9076252">plastic_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Plastic_18" sessionId="93933507-2ee3-4e92-a92d-2ac130ef98d5" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834103249801" start="0" length="14.528">/Data/Plastic_18/Microphone.wav</DataFile>
+        <SessionFile>/Data/Plastic_18/Plastic_18.imsession</SessionFile>
+        <LabelFile modified="5250758834103109865">/Data/Plastic_18/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="2" length="6.1655297">plastic</Label>
+          <Label count="2" length="1.5262762">plastic_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-19--23-05-12-Showering" sessionId="8f5e3575-2e1f-4a41-908a-fbdf144f1ab4" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801294185376" start="0" length="34.112">../data_recordings/no_preprocessing/Session-2026-02-19--23-05-12-Showering/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/Session-2026-02-19--23-05-12-Showering/Session-2026-02-19--23-05-12-Showering.imsession</SessionFile>
+        <LabelFile modified="5250758801294144190">../data_recordings/no_preprocessing/Session-2026-02-19--23-05-12-Showering/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="31.2960001">showering</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="negative-01" sessionId="5c011cca-3829-4fd1-8eb0-06a8c90714e8" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="LabelsMissing">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801300404315" start="0" length="300.032">../data_recordings/no_preprocessing/negative-01/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/negative-01/negative-01.imsession</SessionFile>
+        <LabelFile modified="5250758801300114085">../data_recordings/no_preprocessing/negative-01/Live-Labeling.label</LabelFile>
+        <Labels />
+        <CustomColumnValues />
+      </Session>
+      <Session name="Plastic_9" sessionId="36acdca0-9102-4ad7-a71e-2afdbca4aa54" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834106794244" start="0" length="37.824">/Data/Plastic_9/Microphone.wav</DataFile>
+        <SessionFile>/Data/Plastic_9/Plastic_9.imsession</SessionFile>
+        <LabelFile modified="5250758834106468327">/Data/Plastic_9/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="7" length="18.3650305">plastic</Label>
+          <Label count="6" length="2.3939093">plastic_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="negative-03" sessionId="4bfe0613-55cc-44f9-9c5f-fee212027089" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="LabelsMissing">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801301053529" start="0" length="300.032">../data_recordings/no_preprocessing/negative-03/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/negative-03/negative-03.imsession</SessionFile>
+        <LabelFile modified="5250758801300767502">../data_recordings/no_preprocessing/negative-03/Live-Labeling.label</LabelFile>
+        <Labels />
+        <CustomColumnValues />
+      </Session>
+      <Session name="Wood_7" sessionId="b5e270c1-e1fe-4fa6-954e-c4fd6033c7d5" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834116322030" start="0" length="70.208">/Data/Wood_7/Microphone.wav</DataFile>
+        <SessionFile>/Data/Wood_7/Wood_7.imsession</SessionFile>
+        <LabelFile modified="5250758834115696045">/Data/Wood_7/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="18" length="36.5457344">wood</Label>
+          <Label count="6" length="4.3651459">wood_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-19--23-02-33-Hair-Teeth" sessionId="8b7a859b-1fec-4e8d-b81e-4f361161d4dc" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801294123768" start="0" length="61.76">../data_recordings/no_preprocessing/Session-2026-02-19--23-02-33-Hair-Teeth/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/Session-2026-02-19--23-02-33-Hair-Teeth/Session-2026-02-19--23-02-33-Hair-Teeth.imsession</SessionFile>
+        <LabelFile modified="5250758801294043938">../data_recordings/no_preprocessing/Session-2026-02-19--23-02-33-Hair-Teeth/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="9.216">hair_drying</Label>
+          <Label count="1" length="22.2079999">brushing_teeth</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Wood_1" sessionId="302f023a-6d85-4c5e-9635-1704f544e044" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834107204210" start="0" length="37.568">/Data/Wood_1/Microphone.wav</DataFile>
+        <SessionFile>/Data/Wood_1/Wood_1.imsession</SessionFile>
+        <LabelFile modified="5250758834106844410">/Data/Wood_1/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="5" length="23.3939218">wood</Label>
+          <Label count="2" length="1.2857615">wood_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Wood_21" sessionId="2ecf25de-22d8-42c6-afc1-8a143e519feb" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834113303214" start="0" length="43.136">/Data/Wood_21/Microphone.wav</DataFile>
+        <SessionFile>/Data/Wood_21/Wood_21.imsession</SessionFile>
+        <LabelFile modified="5250758834112716413">/Data/Wood_21/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="8" length="33.5128211">wood</Label>
+          <Label count="1" length="0.3761573">wood_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Plastic_8" sessionId="72803bfa-ba46-4470-9d41-f1fc541055fd" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834106408389" start="0" length="49.408">/Data/Plastic_8/Microphone.wav</DataFile>
+        <SessionFile>/Data/Plastic_8/Plastic_8.imsession</SessionFile>
+        <LabelFile modified="5250758834105828409">/Data/Plastic_8/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="7" length="24.8334819">plastic</Label>
+          <Label count="6" length="1.9418183">plastic_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Wood_17" sessionId="dee878f3-69e5-4b74-b51f-615789d97d51" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834110910627" start="0" length="30.72">/Data/Wood_17/Microphone.wav</DataFile>
+        <SessionFile>/Data/Wood_17/Wood_17.imsession</SessionFile>
+        <LabelFile modified="5250758834110583847">/Data/Wood_17/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="5" length="21.3314112">wood</Label>
+          <Label count="1" length="0.476524">wood_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Air_1" sessionId="a36a0563-9986-4397-8d2f-84fda845efba" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834087757565" start="0" length="206.976">/Data/Air_1/Microphone.wav</DataFile>
+        <SessionFile>/Data/Air_1/Air_1.imsession</SessionFile>
+        <LabelFile modified="5250758834085049030">/Data/Air_1/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="25" length="74.0372985">air</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Wood_8" sessionId="f3200f6d-a362-4cdb-bb4a-c56c3356f5d6" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834116822489" start="0" length="40.704">/Data/Wood_8/Microphone.wav</DataFile>
+        <SessionFile>/Data/Wood_8/Wood_8.imsession</SessionFile>
+        <LabelFile modified="5250758834116391963">/Data/Wood_8/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="5" length="2.6374639">wood_out</Label>
+          <Label count="9" length="18.3817148">wood</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Plastic_20" sessionId="48cb84c5-1938-4e41-8415-5dca8cb3bf82" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834104146426" start="0" length="27.264">/Data/Plastic_20/Microphone.wav</DataFile>
+        <SessionFile>/Data/Plastic_20/Plastic_20.imsession</SessionFile>
+        <LabelFile modified="5250758834103906136">/Data/Plastic_20/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="5" length="12.7012535">plastic</Label>
+          <Label count="5" length="2.951846">plastic_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Plastic_17" sessionId="beb76655-95e7-4165-88f5-7ae1ddb46e81" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834103049811" start="0" length="23.168">/Data/Plastic_17/Microphone.wav</DataFile>
+        <SessionFile>/Data/Plastic_17/Plastic_17.imsession</SessionFile>
+        <LabelFile modified="5250758834102712986">/Data/Plastic_17/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="7" length="14.3229163">plastic</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Wood_15" sessionId="beba0c3a-806b-46a6-8356-829616c2877e" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834110303863" start="0" length="25.92">/Data/Wood_15/Microphone.wav</DataFile>
+        <SessionFile>/Data/Wood_15/Wood_15.imsession</SessionFile>
+        <LabelFile modified="5250758834110073949">/Data/Wood_15/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="5" length="18.1025746">wood</Label>
+          <Label count="1" length="0.3414351">wood_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="brushing-teeth-electrical-ml-5" sessionId="b8fdc9cf-670f-4177-aaaa-62f436480ace" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801298212108" start="0" length="612.8">../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-5/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-5/brushing-teeth-electrical-ml-5.imsession</SessionFile>
+        <LabelFile modified="5250758801297360170">../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-5/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="410.56">brushing_teeth</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="brushing-teeth-electrical-ml-4" sessionId="855d2d37-9212-4065-ada6-db14e2b1fb8e" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801297339873" start="0" length="170.624">../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-4/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-4/brushing-teeth-electrical-ml-4.imsession</SessionFile>
+        <LabelFile modified="5250758801297088798">../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-4/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="140.672">brushing_teeth</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Air_3" sessionId="3761aee1-1e9c-4b94-840b-6b3357960bf4" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834089353258" start="0" length="50.432">/Data/Air_3/Microphone.wav</DataFile>
+        <SessionFile>/Data/Air_3/Air_3.imsession</SessionFile>
+        <LabelFile modified="5250758834088753283">/Data/Air_3/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="44.8724179">air</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Wood_20" sessionId="1f04f2bf-ab5a-4d0c-bc64-c09c46f458a0" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834112656226" start="0" length="22.208">/Data/Wood_20/Microphone.wav</DataFile>
+        <SessionFile>/Data/Wood_20/Wood_20.imsession</SessionFile>
+        <LabelFile modified="5250758834112456236">/Data/Wood_20/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="3" length="14.4223812">wood</Label>
+          <Label count="2" length="1.2537524">wood_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Plastic_10" sessionId="2520e949-a93b-4811-a1a2-d284b5cab0eb" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834099870606" start="0" length="36.736">/Data/Plastic_10/Microphone.wav</DataFile>
+        <SessionFile>/Data/Plastic_10/Plastic_10.imsession</SessionFile>
+        <LabelFile modified="5250758834099443725">/Data/Plastic_10/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="4" length="24.180287">plastic</Label>
+          <Label count="3" length="0.9908416">plastic_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="negative-07" sessionId="8c743b5f-662f-4b0f-b23b-41da99872739" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="LabelsMissing">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801303426499" start="0" length="600.832">../data_recordings/no_preprocessing/negative-07/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/negative-07/negative-07.imsession</SessionFile>
+        <LabelFile modified="5250758801302831674">../data_recordings/no_preprocessing/negative-07/Live-Labeling.label</LabelFile>
+        <Labels />
+        <CustomColumnValues />
+      </Session>
+      <Session name="Wood_6" sessionId="8a6381f1-eca5-454e-b02e-1e901dbee803" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834115616077" start="0" length="45.76">/Data/Wood_6/Microphone.wav</DataFile>
+        <SessionFile>/Data/Wood_6/Wood_6.imsession</SessionFile>
+        <LabelFile modified="5250758834115256081">/Data/Wood_6/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="0.7702988">air</Label>
           <Label count="2" length="9.6143365">wood</Label>
           <Label count="1" length="1.2499193">wood_out</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
+      <Session name="Plastic_2" sessionId="c68121a1-b85d-4455-a43a-dc362ba20e43" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834103846107" start="0" length="25.344">/Data/Plastic_2/Microphone.wav</DataFile>
+        <SessionFile>/Data/Plastic_2/Plastic_2.imsession</SessionFile>
+        <LabelFile modified="5250758834103549779">/Data/Plastic_2/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="2" length="13.6801959">plastic</Label>
+          <Label count="3" length="1.9467459">plastic_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Plastic_4" sessionId="8fcdbdf9-1cf4-4f61-bcc9-b7e0ebdc23da" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834105012460" start="0" length="28.672">/Data/Plastic_4/Microphone.wav</DataFile>
+        <SessionFile>/Data/Plastic_4/Plastic_4.imsession</SessionFile>
+        <LabelFile modified="5250758834104716799">/Data/Plastic_4/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="4" length="10.6980867">plastic</Label>
+          <Label count="3" length="2.3426303">plastic_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Wood_22" sessionId="6aae9145-0b11-4b12-9a5a-3df7fe1eed31" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834113642153" start="0" length="22.08">/Data/Wood_22/Microphone.wav</DataFile>
+        <SessionFile>/Data/Wood_22/Wood_22.imsession</SessionFile>
+        <LabelFile modified="5250758834113362149">/Data/Wood_22/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="5" length="13.9702686">wood</Label>
+          <Label count="1" length="0.1808449">wood_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="showering_ml-1" sessionId="a42e2fe0-44a1-4eab-a6c9-71553e54b59c" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801303866154" start="0" length="300.096">../data_recordings/no_preprocessing/showering_ml-1/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/showering_ml-1/showering_ml-1.imsession</SessionFile>
+        <LabelFile modified="5250758801303446671">../data_recordings/no_preprocessing/showering_ml-1/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="270.9509856">showering</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="negative-02" sessionId="f8fde025-1dcb-4983-b04e-1b246556407f" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="LabelsMissing">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801300726813" start="0" length="300.096">../data_recordings/no_preprocessing/negative-02/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/negative-02/negative-02.imsession</SessionFile>
+        <LabelFile modified="5250758801300424505">../data_recordings/no_preprocessing/negative-02/Live-Labeling.label</LabelFile>
+        <Labels />
+        <CustomColumnValues />
+      </Session>
+      <Session name="Plastic_5" sessionId="9841d65b-d66f-44df-85ef-7a3269beb08d" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834105412463" start="0" length="26.112">/Data/Plastic_5/Microphone.wav</DataFile>
+        <SessionFile>/Data/Plastic_5/Plastic_5.imsession</SessionFile>
+        <LabelFile modified="5250758834105072502">/Data/Plastic_5/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="5" length="11.2664711">plastic</Label>
+          <Label count="2" length="2.3426061">plastic_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Air_7" sessionId="31e7d0b1-3ad8-4890-97ec-d1665e23ea36" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834090735256" start="0" length="22.592">/Data/Air_7/Microphone.wav</DataFile>
+        <SessionFile>/Data/Air_7/Air_7.imsession</SessionFile>
+        <LabelFile modified="5250758834090569289">/Data/Air_7/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="8" length="12.9261534">air</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Plastic_7" sessionId="94c23c32-02c3-483c-8829-18481316c34a" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834105768120" start="0" length="18.88">/Data/Plastic_7/Microphone.wav</DataFile>
+        <SessionFile>/Data/Plastic_7/Plastic_7.imsession</SessionFile>
+        <LabelFile modified="5250758834105592456">/Data/Plastic_7/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="3" length="7.0005955">plastic</Label>
+          <Label count="1" length="2.5703812">air</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-19--23-19-27-Hair" sessionId="302b13ad-547e-437f-886c-605c71183fdc" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801295167647" start="0" length="30.4">../data_recordings/no_preprocessing/Session-2026-02-19--23-19-27-Hair/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/Session-2026-02-19--23-19-27-Hair/Session-2026-02-19--23-19-27-Hair.imsession</SessionFile>
+        <LabelFile modified="5250758801295106321">../data_recordings/no_preprocessing/Session-2026-02-19--23-19-27-Hair/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="30.208">hair_drying</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Plastic_12" sessionId="c5a31379-499a-4202-93d8-711bc8042164" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834101126397" start="0" length="38.464">/Data/Plastic_12/Microphone.wav</DataFile>
+        <SessionFile>/Data/Plastic_12/Plastic_12.imsession</SessionFile>
+        <LabelFile modified="5250758834100680700">/Data/Plastic_12/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="3" length="27.3461133">plastic</Label>
+          <Label count="3" length="3.4745863">plastic_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-19--11-15-36-Hairdrying" sessionId="5bcf1995-512e-4120-b23e-21225f7d9505" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801294028667" start="0" length="109.12">../data_recordings/no_preprocessing/Session-2026-02-19--11-15-36-Hairdrying/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/Session-2026-02-19--11-15-36-Hairdrying/Session-2026-02-19--11-15-36-Hairdrying.imsession</SessionFile>
+        <LabelFile modified="5250758801293889094">../data_recordings/no_preprocessing/Session-2026-02-19--11-15-36-Hairdrying/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="100.4596825">hair_drying</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="brushing-teeth-electrical-ml-3" sessionId="96b68112-737b-4a4a-b61a-1b3024625282" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801297068354" start="0" length="353.408">../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-3/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-3/brushing-teeth-electrical-ml-3.imsession</SessionFile>
+        <LabelFile modified="5250758801296565061">../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-3/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="272.384">brushing_teeth</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-19--11-11-06-HairDryer" sessionId="7d2e859b-2d32-4776-b825-607d9a950d7e" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801293706362" start="0" length="64.704">../data_recordings/no_preprocessing/Session-2026-02-19--11-11-06-HairDryer/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/Session-2026-02-19--11-11-06-HairDryer/Session-2026-02-19--11-11-06-HairDryer.imsession</SessionFile>
+        <LabelFile modified="5250758801293624247">../data_recordings/no_preprocessing/Session-2026-02-19--11-11-06-HairDryer/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="61.181">hair_drying</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Air_9" sessionId="d3a1137e-7a5b-4c82-b7c7-06a11bc487c1" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834091325283" start="0" length="20.928">/Data/Air_9/Microphone.wav</DataFile>
+        <SessionFile>/Data/Air_9/Air_9.imsession</SessionFile>
+        <LabelFile modified="5250758834091115512">/Data/Air_9/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="8" length="8.8077747">air</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="NoneAir3" sessionId="a2dfe788-393c-47c8-9efe-3c6b9030493c" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834095006845" start="0" length="50.304">/Data/NoneAir3/Microphone.wav</DataFile>
+        <SessionFile>/Data/NoneAir3/NoneAir3.imsession</SessionFile>
+        <LabelFile modified="5250758834094696940">/Data/NoneAir3/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="6" length="11.358991">air</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Air_6" sessionId="aff67a10-824a-4d29-afce-03f8d5931806" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834090519330" start="0" length="28.352">/Data/Air_6/Microphone.wav</DataFile>
+        <SessionFile>/Data/Air_6/Air_6.imsession</SessionFile>
+        <LabelFile modified="5250758834089999060">/Data/Air_6/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="10" length="15.0895875">air</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="None_1" sessionId="582ab100-0c29-4497-9796-cf4beb664804" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="LabelsMissing">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834096942309" start="0" length="126.016">/Data/None_1/Microphone.wav</DataFile>
+        <SessionFile>/Data/None_1/None_1.imsession</SessionFile>
+        <LabelFile modified="5250758834095852742">/Data/None_1/Live-Labeling.label</LabelFile>
+        <Labels />
+        <CustomColumnValues />
+      </Session>
+      <Session name="hair_drying_ml-1" sessionId="47f0cdcf-7723-4b89-b136-eae30f949998" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801298648813" start="0" length="284.544">../data_recordings/no_preprocessing/hair_drying_ml-1/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/hair_drying_ml-1/hair_drying_ml-1.imsession</SessionFile>
+        <LabelFile modified="5250758801298232261">../data_recordings/no_preprocessing/hair_drying_ml-1/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="276.6058125">hair_drying</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="showering_ml-3" sessionId="330ceab7-5b5a-43f7-81cc-3f032da04770" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801304904899" start="0" length="433.92">../data_recordings/no_preprocessing/showering_ml-3/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/showering_ml-3/showering_ml-3.imsession</SessionFile>
+        <LabelFile modified="5250758801304320473">../data_recordings/no_preprocessing/showering_ml-3/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="424.384">showering</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-17--21-48-47-Shower" sessionId="6947855c-51b8-4d1c-a192-b013383bd121" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801293247050" start="0" length="300.032">../data_recordings/no_preprocessing/Session-2026-02-17--21-48-47-Shower/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/Session-2026-02-17--21-48-47-Shower/Session-2026-02-17--21-48-47-Shower.imsession</SessionFile>
+        <LabelFile modified="5250758801292870108">../data_recordings/no_preprocessing/Session-2026-02-17--21-48-47-Shower/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="218.155">showering</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Air_10" sessionId="bdf79600-5876-4cd6-805d-55584fdfc00d" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834088047476" start="0" length="28.352">/Data/Air_10/Microphone.wav</DataFile>
+        <SessionFile>/Data/Air_10/Air_10.imsession</SessionFile>
+        <LabelFile modified="5250758834087817699">/Data/Air_10/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="11" length="15.2478702">air</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-19--11-13-14-Hair Drying" sessionId="f6580c55-dad6-4af3-a3ab-8d3ad3929a3d" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801293868493" start="0" length="103.744">../data_recordings/no_preprocessing/Session-2026-02-19--11-13-14-Hair Drying/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/Session-2026-02-19--11-13-14-Hair Drying/Session-2026-02-19--11-13-14-Hair Drying.imsession</SessionFile>
+        <LabelFile modified="5250758801293726932">../data_recordings/no_preprocessing/Session-2026-02-19--11-13-14-Hair Drying/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="98.2875211">hair_drying</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Wood_14" sessionId="38804f00-cfe7-4cb2-a2d9-c0f116c2d659" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834110003874" start="0" length="30.976">/Data/Wood_14/Microphone.wav</DataFile>
+        <SessionFile>/Data/Wood_14/Wood_14.imsession</SessionFile>
+        <LabelFile modified="5250758834109617629">/Data/Wood_14/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="4" length="20.0359197">wood</Label>
+          <Label count="2" length="1.2331135">wood_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-19--23-16-23-Hair" sessionId="15b27cf7-dd26-42e1-b5ec-cb191d3e75da" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801295065745" start="0" length="156.288">../data_recordings/no_preprocessing/Session-2026-02-19--23-16-23-Hair/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/Session-2026-02-19--23-16-23-Hair/Session-2026-02-19--23-16-23-Hair.imsession</SessionFile>
+        <LabelFile modified="5250758801294849329">../data_recordings/no_preprocessing/Session-2026-02-19--23-16-23-Hair/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="2" length="148.4799999">hair_drying</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="None_2" sessionId="f59c6db2-64e4-402a-a4db-ad254f3867b1" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="LabelsMissing">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834097787777" start="0" length="103.424">/Data/None_2/Microphone.wav</DataFile>
+        <SessionFile>/Data/None_2/None_2.imsession</SessionFile>
+        <LabelFile modified="5250758834097151268">/Data/None_2/Live-Labeling.label</LabelFile>
+        <Labels />
+        <CustomColumnValues />
+      </Session>
+      <Session name="Mixed_2" sessionId="34fb167b-84c6-41ab-a926-66d662f6997c" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834092081585" start="0" length="33.536">/Data/Mixed_2/Microphone.wav</DataFile>
+        <SessionFile>/Data/Mixed_2/Mixed_2.imsession</SessionFile>
+        <LabelFile modified="5250758834091771967">/Data/Mixed_2/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="5" length="3.6827703">air</Label>
+          <Label count="3" length="8.1630408">wood</Label>
+          <Label count="1" length="6.2662809">plastic</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-17--21-42-46-Hair-Drying" sessionId="6b0c3d48-7f89-4d44-bbf1-2bcc9eaf7b27" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801292849775" start="0" length="102.464">../data_recordings/no_preprocessing/Session-2026-02-17--21-42-46-Hair-Drying/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/Session-2026-02-17--21-42-46-Hair-Drying/Session-2026-02-17--21-42-46-Hair-Drying.imsession</SessionFile>
+        <LabelFile modified="5250758801292728667">../data_recordings/no_preprocessing/Session-2026-02-17--21-42-46-Hair-Drying/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="2" length="28.7799821">hair_drying</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="negative-04" sessionId="2ea69714-9e36-4b02-897b-afc7e84502e6" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="LabelsMissing">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801301368778" start="0" length="300.032">../data_recordings/no_preprocessing/negative-04/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/negative-04/negative-04.imsession</SessionFile>
+        <LabelFile modified="5250758801301095682">../data_recordings/no_preprocessing/negative-04/Live-Labeling.label</LabelFile>
+        <Labels />
+        <CustomColumnValues />
+      </Session>
+      <Session name="Wood_2" sessionId="67d5714c-adae-4cfd-ba18-bf2acb359b0e" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834112366192" start="0" length="81.216">/Data/Wood_2/Microphone.wav</DataFile>
+        <SessionFile>/Data/Wood_2/Wood_2.imsession</SessionFile>
+        <LabelFile modified="5250758834111721236">/Data/Wood_2/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="6" length="4.9126935">wood_out</Label>
+          <Label count="9" length="34.6223526">wood</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="None_4" sessionId="e66a5203-e040-411a-9e32-5920e63d0155" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="LabelsMissing">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834099003622" start="0" length="68.864">/Data/None_4/Microphone.wav</DataFile>
+        <SessionFile>/Data/None_4/None_4.imsession</SessionFile>
+        <LabelFile modified="5250758834098417736">/Data/None_4/Live-Labeling.label</LabelFile>
+        <Labels />
+        <CustomColumnValues />
+      </Session>
+    </DataSet>
+    <DataSet id="validation" targetSize="0.19884404990208207" labels="Complete">
+      <Session name="brushing-teeth-electrical-ml-2" sessionId="c8bfceb9-cf3b-4c8a-ba8d-8849f9f0ad90" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801296544813" start="0" length="136.32">../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-2/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-2/brushing-teeth-electrical-ml-2.imsession</SessionFile>
+        <LabelFile modified="5250758801296361883">../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-2/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="125.0896703">brushing_teeth</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Air_2" sessionId="2d786440-60b7-4d64-889f-9424658f2fb9" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834088693433" start="0" length="73.472">/Data/Air_2/Microphone.wav</DataFile>
+        <SessionFile>/Data/Air_2/Air_2.imsession</SessionFile>
+        <LabelFile modified="5250758834088117540">/Data/Air_2/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="9" length="45.8716343">air</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Plastic_19" sessionId="b53143c0-f8dc-4894-b8f4-0efe47a5ffa5" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834103509934" start="0" length="24.832">/Data/Plastic_19/Microphone.wav</DataFile>
+        <SessionFile>/Data/Plastic_19/Plastic_19.imsession</SessionFile>
+        <LabelFile modified="5250758834103319791">/Data/Plastic_19/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="4" length="13.1560075">plastic</Label>
+          <Label count="3" length="1.5959726">plastic_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Plastic_11" sessionId="e42058c5-ea0a-4334-8de2-3684ebe34b6b" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834100600933" start="0" length="37.056">/Data/Plastic_11/Microphone.wav</DataFile>
+        <SessionFile>/Data/Plastic_11/Plastic_11.imsession</SessionFile>
+        <LabelFile modified="5250758834099940522">/Data/Plastic_11/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="4" length="26.5590372">plastic</Label>
+          <Label count="2" length="1.1049196">plastic_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-21--10-27-43-Negative" sessionId="9d24b242-acdf-4835-a7c7-2d1a1d251edf" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="LabelsMissing">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801295883165" start="0" length="85.312">../data_recordings/no_preprocessing/Session-2026-02-21--10-27-43-Negative/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/Session-2026-02-21--10-27-43-Negative/Session-2026-02-21--10-27-43-Negative.imsession</SessionFile>
+        <LabelFile modified="5250758801295784897">../data_recordings/no_preprocessing/Session-2026-02-21--10-27-43-Negative/Live-Labeling.label</LabelFile>
+        <Labels />
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-21--10-32-11-Teeth-Negative" sessionId="ac10061f-f054-4625-87c8-05b33d1132e5" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801296152695" start="0" length="245.376">../data_recordings/no_preprocessing/Session-2026-02-21--10-32-11-Teeth-Negative/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/Session-2026-02-21--10-32-11-Teeth-Negative/Session-2026-02-21--10-32-11-Teeth-Negative.imsession</SessionFile>
+        <LabelFile modified="5250758801295903616">../data_recordings/no_preprocessing/Session-2026-02-21--10-32-11-Teeth-Negative/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="30.0316437">brushing_teeth</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Wood_5" sessionId="c77378d3-ccb2-447d-bb7b-278b330b943d" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834115146127" start="0" length="47.104">/Data/Wood_5/Microphone.wav</DataFile>
+        <SessionFile>/Data/Wood_5/Wood_5.imsession</SessionFile>
+        <LabelFile modified="5250758834114770717">/Data/Wood_5/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="6" length="20.4283493">wood</Label>
+          <Label count="4" length="2.0780529">wood_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="NoneAir2" sessionId="bf475c07-99ae-45ee-9371-dd37d20ae017" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834094591536" start="0" length="43.328">/Data/NoneAir2/Microphone.wav</DataFile>
+        <SessionFile>/Data/NoneAir2/NoneAir2.imsession</SessionFile>
+        <LabelFile modified="5250758834094280971">/Data/NoneAir2/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="3" length="8.7840992">air</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
       <Session name="Plastic_15" sessionId="c79d1cc7-2dc8-42b2-b0a5-09a0badac13c" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400261707387904" start="0" length="31.744">/Data/Plastic_15/Microphone.wav</DataFile>
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834102252301" start="0" length="31.744">/Data/Plastic_15/Microphone.wav</DataFile>
         <SessionFile>/Data/Plastic_15/Plastic_15.imsession</SessionFile>
-        <LabelFile modified="5250400290687387904">/Data/Plastic_15/Live-Labeling.label</LabelFile>
+        <LabelFile modified="5250758834101952723">/Data/Plastic_15/Live-Labeling.label</LabelFile>
         <Labels>
           <Label count="3" length="21.6758341">plastic</Label>
           <Label count="3" length="1.9480281">plastic_out</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
+      <Session name="None_3" sessionId="8ccca4a5-8177-4959-9b11-82d2fb69352a" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="LabelsMissing">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834098327872" start="0" length="84.8">/Data/None_3/Microphone.wav</DataFile>
+        <SessionFile>/Data/None_3/None_3.imsession</SessionFile>
+        <LabelFile modified="5250758834097877933">/Data/None_3/Live-Labeling.label</LabelFile>
+        <Labels />
+        <CustomColumnValues />
+      </Session>
+      <Session name="showering_ml-2" sessionId="668ca7df-6263-47f2-b99f-82be36a19b39" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801304302869" start="0" length="300.032">../data_recordings/no_preprocessing/showering_ml-2/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/showering_ml-2/showering_ml-2.imsession</SessionFile>
+        <LabelFile modified="5250758801303886277">../data_recordings/no_preprocessing/showering_ml-2/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="280.8250612">showering</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="negative-06" sessionId="793fa69a-d629-4598-afe4-f42c25a25e08" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="LabelsMissing">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801302790447" start="0" length="627.712">../data_recordings/no_preprocessing/negative-06/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/negative-06/negative-06.imsession</SessionFile>
+        <LabelFile modified="5250758801302147286">../data_recordings/no_preprocessing/negative-06/Live-Labeling.label</LabelFile>
+        <Labels />
+        <CustomColumnValues />
+      </Session>
+      <Session name="Plastic_6" sessionId="591f37d2-0c36-488b-b8dc-28bae90a9b86" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834105522823" start="0" length="13.12">/Data/Plastic_6/Microphone.wav</DataFile>
+        <SessionFile>/Data/Plastic_6/Plastic_6.imsession</SessionFile>
+        <LabelFile modified="5250758834105452427">/Data/Plastic_6/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="2" length="4.9280412">plastic</Label>
+          <Label count="2" length="0.7386152">plastic_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-17--21-54-47-shower" sessionId="d1b4b6af-bcb3-4089-a0a7-9a9c1205054b" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801293606607" start="0" length="28.928">../data_recordings/no_preprocessing/Session-2026-02-17--21-54-47-shower/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/Session-2026-02-17--21-54-47-shower/Session-2026-02-17--21-54-47-shower.imsession</SessionFile>
+        <LabelFile modified="5250758801293565974">../data_recordings/no_preprocessing/Session-2026-02-17--21-54-47-shower/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="28">showering</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-21--10-25-45-Tooth" sessionId="02f3c5c3-a0d1-4a3c-a3dd-c4f23634dd0f" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801295764558" start="0" length="234.88">../data_recordings/no_preprocessing/Session-2026-02-21--10-25-45-Tooth/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/Session-2026-02-21--10-25-45-Tooth/Session-2026-02-21--10-25-45-Tooth.imsession</SessionFile>
+        <LabelFile modified="5250758801295467282">../data_recordings/no_preprocessing/Session-2026-02-21--10-25-45-Tooth/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="2" length="225.8538694">brushing_teeth</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="NoneAir" sessionId="9eb3db1f-c798-4df3-81bb-fe088b05b037" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834094201137" start="0" length="48.384">/Data/NoneAir/Microphone.wav</DataFile>
+        <SessionFile>/Data/NoneAir/NoneAir.imsession</SessionFile>
+        <LabelFile modified="5250758834093921521">/Data/NoneAir/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="3" length="3.9581282">air</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Plastic_16" sessionId="0d1db1b3-9b11-42cf-bdfc-c9aa0825c00c" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834102652884" start="0" length="29.312">/Data/Plastic_16/Microphone.wav</DataFile>
+        <SessionFile>/Data/Plastic_16/Plastic_16.imsession</SessionFile>
+        <LabelFile modified="5250758834102342344">/Data/Plastic_16/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="3" length="19.5082506">plastic</Label>
+          <Label count="2" length="1.7305706">plastic_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="hair_drying_ml-2" sessionId="f5110bd5-78ac-4dfb-be2b-4fb6621f7cc7" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801299091580" start="0" length="284.096">../data_recordings/no_preprocessing/hair_drying_ml-2/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/hair_drying_ml-2/hair_drying_ml-2.imsession</SessionFile>
+        <LabelFile modified="5250758801298668951">../data_recordings/no_preprocessing/hair_drying_ml-2/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="267.136">hair_drying</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Wood_11" sessionId="54e6e42b-cfc4-44c3-876b-acb76ea7b5c8" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834108967645" start="0" length="64.256">/Data/Wood_11/Microphone.wav</DataFile>
+        <SessionFile>/Data/Wood_11/Wood_11.imsession</SessionFile>
+        <LabelFile modified="5250758834108231316">/Data/Wood_11/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="9" length="38.5738119">wood</Label>
+          <Label count="4" length="2.5500825">wood_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Wood_9" sessionId="3062b98d-2d73-4a2c-a037-1dcb690c5fc3" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834117617997" start="0" length="52.48">/Data/Wood_9/Microphone.wav</DataFile>
+        <SessionFile>/Data/Wood_9/Wood_9.imsession</SessionFile>
+        <LabelFile modified="5250758834116918418">/Data/Wood_9/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="6" length="34.6721204">wood</Label>
+          <Label count="4" length="3.2589921">wood_out</Label>
+          <Label count="1" length="0.1709085">air</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+    </DataSet>
+    <DataSet id="test" targetSize="0.20148435600382403" labels="Complete">
+      <Session name="Plastic_13" sessionId="666e42a7-ffc4-4a72-ad9b-8eacc5bb8388" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834101496362" start="0" length="29.632">/Data/Plastic_13/Microphone.wav</DataFile>
+        <SessionFile>/Data/Plastic_13/Plastic_13.imsession</SessionFile>
+        <LabelFile modified="5250758834101186511">/Data/Plastic_13/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="3" length="18.8327916">plastic</Label>
+          <Label count="4" length="2.4948682">plastic_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Air_4" sessionId="f6c12589-4388-49e8-923c-e218ddd079b8" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834089588802" start="0" length="26.304">/Data/Air_4/Microphone.wav</DataFile>
+        <SessionFile>/Data/Air_4/Air_4.imsession</SessionFile>
+        <LabelFile modified="5250758834089413177">/Data/Air_4/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="5" length="2.4958694">air</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
       <Session name="Wood_4" sessionId="e90b20c9-02d5-432e-b87c-6cc326a5f6a1" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388130487387904" start="0" length="30.912">/Data/Wood_4/Microphone.wav</DataFile>
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834114700779" start="0" length="30.912">/Data/Wood_4/Microphone.wav</DataFile>
         <SessionFile>/Data/Wood_4/Wood_4.imsession</SessionFile>
-        <LabelFile modified="5250400197987387904">/Data/Wood_4/Live-Labeling.label</LabelFile>
+        <LabelFile modified="5250758834114489924">/Data/Wood_4/Live-Labeling.label</LabelFile>
         <Labels>
           <Label count="5" length="10.5590506">wood</Label>
           <Label count="1" length="1.1941498">wood_out</Label>
@@ -1007,61 +1400,67 @@
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="Plastic_10" sessionId="2520e949-a93b-4811-a1a2-d284b5cab0eb" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388862027387904" start="0" length="36.736">/Data/Plastic_10/Microphone.wav</DataFile>
-        <SessionFile>/Data/Plastic_10/Plastic_10.imsession</SessionFile>
-        <LabelFile modified="5250400191207387904">/Data/Plastic_10/Live-Labeling.label</LabelFile>
+      <Session name="Wood_19" sessionId="0289be78-c98d-4b31-a2c6-4f0e287f98ca" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834111580466" start="0" length="21.504">/Data/Wood_19/Microphone.wav</DataFile>
+        <SessionFile>/Data/Wood_19/Wood_19.imsession</SessionFile>
+        <LabelFile modified="5250758834111370246">/Data/Wood_19/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="4" length="24.180287">plastic</Label>
-          <Label count="3" length="0.9908416">plastic_out</Label>
+          <Label count="3" length="11.2666376">wood</Label>
+          <Label count="1" length="0.8228443">wood_out</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="Wood_14" sessionId="38804f00-cfe7-4cb2-a2d9-c0f116c2d659" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400245927387904" start="0" length="30.976">/Data/Wood_14/Microphone.wav</DataFile>
-        <SessionFile>/Data/Wood_14/Wood_14.imsession</SessionFile>
-        <LabelFile modified="5250400287867387904">/Data/Wood_14/Live-Labeling.label</LabelFile>
+      <Session name="Mixed_5" sessionId="5a866ca7-30cd-43f1-a2f8-c2dd0fe9adb8" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834093625313" start="0" length="15.488">/Data/Mixed_5/Microphone.wav</DataFile>
+        <SessionFile>/Data/Mixed_5/Mixed_5.imsession</SessionFile>
+        <LabelFile modified="5250758834093485567">/Data/Mixed_5/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="4" length="20.0359197">wood</Label>
-          <Label count="2" length="1.2331135">wood_out</Label>
+          <Label count="1" length="2.8664283">air</Label>
+          <Label count="1" length="4.52698">wood</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="Air_4" sessionId="f6c12589-4388-49e8-923c-e218ddd079b8" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388143707387904" start="0" length="26.304">/Data/Air_4/Microphone.wav</DataFile>
-        <SessionFile>/Data/Air_4/Air_4.imsession</SessionFile>
-        <LabelFile modified="5250388143707387904">/Data/Air_4/Live-Labeling.label</LabelFile>
+      <Session name="Session-2026-02-17--21-53-09-Hair" sessionId="d6c73329-a1f3-4d58-8bd4-fe704c5dda28" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801293545750" start="0" length="44.672">../data_recordings/no_preprocessing/Session-2026-02-17--21-53-09-Hair/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/Session-2026-02-17--21-53-09-Hair/Session-2026-02-17--21-53-09-Hair.imsession</SessionFile>
+        <LabelFile modified="5250758801293483971">../data_recordings/no_preprocessing/Session-2026-02-17--21-53-09-Hair/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="5" length="2.4958694">air</Label>
+          <Label count="1" length="12.1961981">hair_drying</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="Plastic_5" sessionId="9841d65b-d66f-44df-85ef-7a3269beb08d" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388812987387904" start="0" length="26.112">/Data/Plastic_5/Microphone.wav</DataFile>
-        <SessionFile>/Data/Plastic_5/Plastic_5.imsession</SessionFile>
-        <LabelFile modified="5250400193707387904">/Data/Plastic_5/Live-Labeling.label</LabelFile>
+      <Session name="Wood_18" sessionId="5c5bccb6-9a21-42bd-a0b7-6a4d4373cd66" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834111280251" start="0" length="34.304">/Data/Wood_18/Microphone.wav</DataFile>
+        <SessionFile>/Data/Wood_18/Wood_18.imsession</SessionFile>
+        <LabelFile modified="5250758834110971409">/Data/Wood_18/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="5" length="11.2664711">plastic</Label>
-          <Label count="2" length="2.342606">plastic_out</Label>
+          <Label count="5" length="22.0269094">wood</Label>
+          <Label count="1" length="0.3530092">wood_out</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-    </DataSet>
-    <DataSet id="validation" targetSize="0.19884404990208207" labels="Complete">
-      <Session name="Wood_5" sessionId="c77378d3-ccb2-447d-bb7b-278b330b943d" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388131707387904" start="0" length="47.104">/Data/Wood_5/Microphone.wav</DataFile>
-        <SessionFile>/Data/Wood_5/Wood_5.imsession</SessionFile>
-        <LabelFile modified="5250400198447387904">/Data/Wood_5/Live-Labeling.label</LabelFile>
+      <Session name="Session-2026-02-17--21-52-06-Tooth" sessionId="95900dcc-b9a8-461a-93e0-05202ab332fa" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801293463574" start="0" length="176.448">../data_recordings/no_preprocessing/Session-2026-02-17--21-52-06-Tooth/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/Session-2026-02-17--21-52-06-Tooth/Session-2026-02-17--21-52-06-Tooth.imsession</SessionFile>
+        <LabelFile modified="5250758801293288159">../data_recordings/no_preprocessing/Session-2026-02-17--21-52-06-Tooth/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="6" length="20.4283493">wood</Label>
-          <Label count="4" length="2.0780529">wood_out</Label>
+          <Label count="1" length="53.7436729">hair_drying</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-21--10-21-03-Tooth" sessionId="3a9f42ea-b1a2-4ee5-878b-2521ca5a9e0f" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801295447018" start="0" length="229.696">../data_recordings/no_preprocessing/Session-2026-02-21--10-21-03-Tooth/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/Session-2026-02-21--10-21-03-Tooth/Session-2026-02-21--10-21-03-Tooth.imsession</SessionFile>
+        <LabelFile modified="5250758801295187938">../data_recordings/no_preprocessing/Session-2026-02-21--10-21-03-Tooth/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="60.3818399">brushing_teeth</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
       <Session name="Mixed_3" sessionId="04d2b29a-d478-444e-8149-4bb57371f786" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388845607387904" start="0" length="34.432">/Data/Mixed_3/Microphone.wav</DataFile>
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834092915221" start="0" length="34.432">/Data/Mixed_3/Microphone.wav</DataFile>
         <SessionFile>/Data/Mixed_3/Mixed_3.imsession</SessionFile>
-        <LabelFile modified="5250400189867387904">/Data/Mixed_3/Live-Labeling.label</LabelFile>
+        <LabelFile modified="5250758834092161486">/Data/Mixed_3/Live-Labeling.label</LabelFile>
         <Labels>
           <Label count="1" length="2.1718544">air</Label>
           <Label count="4" length="8.8339142">plastic</Label>
@@ -1071,203 +1470,95 @@
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="Plastic_18" sessionId="93933507-2ee3-4e92-a92d-2ac130ef98d5" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400280527387904" start="0" length="14.528">/Data/Plastic_18/Microphone.wav</DataFile>
-        <SessionFile>/Data/Plastic_18/Plastic_18.imsession</SessionFile>
-        <LabelFile modified="5250400290327387904">/Data/Plastic_18/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="2" length="6.1655296">plastic</Label>
-          <Label count="2" length="1.5262762">plastic_out</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Wood_1" sessionId="302f023a-6d85-4c5e-9635-1704f544e044" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388122227387904" start="0" length="37.568">/Data/Wood_1/Microphone.wav</DataFile>
-        <SessionFile>/Data/Wood_1/Wood_1.imsession</SessionFile>
-        <LabelFile modified="5250400195227387904">/Data/Wood_1/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="5" length="23.3939218">wood</Label>
-          <Label count="2" length="1.2857615">wood_out</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Wood_7" sessionId="b5e270c1-e1fe-4fa6-954e-c4fd6033c7d5" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388818987387904" start="0" length="70.208">/Data/Wood_7/Microphone.wav</DataFile>
-        <SessionFile>/Data/Wood_7/Wood_7.imsession</SessionFile>
-        <LabelFile modified="5250400199227387904">/Data/Wood_7/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="18" length="36.5457344">wood</Label>
-          <Label count="6" length="4.3651459">wood_out</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Air_9" sessionId="d3a1137e-7a5b-4c82-b7c7-06a11bc487c1" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400277407387904" start="0" length="20.928">/Data/Air_9/Microphone.wav</DataFile>
-        <SessionFile>/Data/Air_9/Air_9.imsession</SessionFile>
-        <LabelFile modified="5250400277407387904">/Data/Air_9/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="8" length="8.8077747">air</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Air_3" sessionId="3761aee1-1e9c-4b94-840b-6b3357960bf4" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388118687387904" start="0" length="50.432">/Data/Air_3/Microphone.wav</DataFile>
-        <SessionFile>/Data/Air_3/Air_3.imsession</SessionFile>
-        <LabelFile modified="5250388118687387904">/Data/Air_3/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="1" length="44.8724179">air</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Plastic_13" sessionId="666e42a7-ffc4-4a72-ad9b-8eacc5bb8388" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400259367387904" start="0" length="29.632">/Data/Plastic_13/Microphone.wav</DataFile>
-        <SessionFile>/Data/Plastic_13/Plastic_13.imsession</SessionFile>
-        <LabelFile modified="5250400290987387904">/Data/Plastic_13/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="3" length="18.8327916">plastic</Label>
-          <Label count="4" length="2.4948682">plastic_out</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Plastic_9" sessionId="36acdca0-9102-4ad7-a71e-2afdbca4aa54" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388840067387904" start="0" length="37.824">/Data/Plastic_9/Microphone.wav</DataFile>
-        <SessionFile>/Data/Plastic_9/Plastic_9.imsession</SessionFile>
-        <LabelFile modified="5250400194907387904">/Data/Plastic_9/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="7" length="18.3650305">plastic</Label>
-          <Label count="6" length="2.3939092">plastic_out</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="None_4" sessionId="e66a5203-e040-411a-9e32-5920e63d0155" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="LabelsMissing">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388111007387904" start="0" length="68.864">/Data/None_4/Microphone.wav</DataFile>
-        <SessionFile>/Data/None_4/None_4.imsession</SessionFile>
-        <LabelFile modified="5250388111007387904">/Data/None_4/Live-Labeling.label</LabelFile>
-        <Labels />
-        <CustomColumnValues />
-      </Session>
-    </DataSet>
-    <DataSet id="test" targetSize="0.20148435600382403" labels="Complete">
-      <Session name="Wood_16" sessionId="22fa77cc-1df4-4102-ba90-b3908308434e" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400249567387904" start="0" length="18.048">/Data/Wood_16/Microphone.wav</DataFile>
-        <SessionFile>/Data/Wood_16/Wood_16.imsession</SessionFile>
-        <LabelFile modified="5250400288147387904">/Data/Wood_16/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="2" length="9.874979">wood</Label>
-          <Label count="2" length="0.7488234">wood_out</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Plastic_1" sessionId="978fd1d5-2aa7-4c49-af86-5bc1db87aaaa" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388805347387904" start="0" length="25.6">/Data/Plastic_1/Microphone.wav</DataFile>
-        <SessionFile>/Data/Plastic_1/Plastic_1.imsession</SessionFile>
-        <LabelFile modified="5250400190747387904">/Data/Plastic_1/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="2" length="12.6967418">plastic</Label>
-          <Label count="1" length="0.3879941">plastic_out</Label>
-          <Label count="1" length="0.6954612">air</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Wood_9" sessionId="3062b98d-2d73-4a2c-a037-1dcb690c5fc3" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388833227387904" start="0" length="52.48">/Data/Wood_9/Microphone.wav</DataFile>
-        <SessionFile>/Data/Wood_9/Wood_9.imsession</SessionFile>
-        <LabelFile modified="5250400200147387904">/Data/Wood_9/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="6" length="34.6721204">wood</Label>
-          <Label count="4" length="3.2589921">wood_out</Label>
-          <Label count="1" length="0.1709085">air</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Plastic_11" sessionId="e42058c5-ea0a-4334-8de2-3684ebe34b6b" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388866247387904" start="0" length="37.056">/Data/Plastic_11/Microphone.wav</DataFile>
-        <SessionFile>/Data/Plastic_11/Plastic_11.imsession</SessionFile>
-        <LabelFile modified="5250400191707387904">/Data/Plastic_11/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="4" length="26.5590372">plastic</Label>
-          <Label count="2" length="1.1049195">plastic_out</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Wood_11" sessionId="54e6e42b-cfc4-44c3-876b-acb76ea7b5c8" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388851527387904" start="0" length="64.256">/Data/Wood_11/Microphone.wav</DataFile>
-        <SessionFile>/Data/Wood_11/Wood_11.imsession</SessionFile>
-        <LabelFile modified="5250400196107387904">/Data/Wood_11/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="9" length="38.5738119">wood</Label>
-          <Label count="4" length="2.5500824">wood_out</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Plastic_17" sessionId="beb76655-95e7-4165-88f5-7ae1ddb46e81" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400265847387904" start="0" length="23.168">/Data/Plastic_17/Microphone.wav</DataFile>
-        <SessionFile>/Data/Plastic_17/Plastic_17.imsession</SessionFile>
-        <LabelFile modified="5250400265847387904">/Data/Plastic_17/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="7" length="14.3229163">plastic</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="Plastic_4" sessionId="8fcdbdf9-1cf4-4f61-bcc9-b7e0ebdc23da" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388809387387904" start="0" length="28.672">/Data/Plastic_4/Microphone.wav</DataFile>
-        <SessionFile>/Data/Plastic_4/Plastic_4.imsession</SessionFile>
-        <LabelFile modified="5250400193267387904">/Data/Plastic_4/Live-Labeling.label</LabelFile>
-        <Labels>
-          <Label count="4" length="10.6980867">plastic</Label>
-          <Label count="3" length="2.3426303">plastic_out</Label>
-        </Labels>
-        <CustomColumnValues />
-      </Session>
-      <Session name="None_3" sessionId="8ccca4a5-8177-4959-9b11-82d2fb69352a" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="LabelsMissing">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388110127387904" start="0" length="84.8">/Data/None_3/Microphone.wav</DataFile>
-        <SessionFile>/Data/None_3/None_3.imsession</SessionFile>
-        <LabelFile modified="5250388110127387904">/Data/None_3/Live-Labeling.label</LabelFile>
-        <Labels />
-        <CustomColumnValues />
-      </Session>
       <Session name="Wood_23" sessionId="3d438b52-1870-4963-99c0-fa36c294c6e3" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400271367387904" start="0" length="35.264">/Data/Wood_23/Microphone.wav</DataFile>
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834114009936" start="0" length="35.264">/Data/Wood_23/Microphone.wav</DataFile>
         <SessionFile>/Data/Wood_23/Wood_23.imsession</SessionFile>
-        <LabelFile modified="5250400271367387904">/Data/Wood_23/Live-Labeling.label</LabelFile>
+        <LabelFile modified="5250758834113702534">/Data/Wood_23/Live-Labeling.label</LabelFile>
         <Labels>
           <Label count="9" length="21.8031132">wood</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
+      <Session name="brushing-teeth-electrical-ml-1" sessionId="d1941b58-365d-4363-ab9e-7e3e60eaf300" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801296361883" start="0" length="139.712">../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-1/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-1/brushing-teeth-electrical-ml-1.imsession</SessionFile>
+        <LabelFile modified="5250758801296172990">../data_recordings/no_preprocessing/brushing-teeth-electrical-ml-1/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="129.4973867">brushing_teeth</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Air_5" sessionId="6faa870b-7419-40dd-b5df-241d7e212c8d" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834089949054" start="0" length="32.448">/Data/Air_5/Microphone.wav</DataFile>
+        <SessionFile>/Data/Air_5/Air_5.imsession</SessionFile>
+        <LabelFile modified="5250758834089649149">/Data/Air_5/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="11" length="21.2329884">air</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-19--23-10-19-Shower" sessionId="effaa243-5c6a-4690-a003-5d97487d9981" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801294605607" start="0" length="254.912">../data_recordings/no_preprocessing/Session-2026-02-19--23-10-19-Shower/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/Session-2026-02-19--23-10-19-Shower/Session-2026-02-19--23-10-19-Shower.imsession</SessionFile>
+        <LabelFile modified="5250758801294264160">../data_recordings/no_preprocessing/Session-2026-02-19--23-10-19-Shower/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="254.464">showering</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Plastic_21" sessionId="c263edbb-beb7-43fc-bd89-017c740d1b64" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834104336091" start="0" length="16.576">/Data/Plastic_21/Microphone.wav</DataFile>
+        <SessionFile>/Data/Plastic_21/Plastic_21.imsession</SessionFile>
+        <LabelFile modified="5250758834104196124">/Data/Plastic_21/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="3" length="6.9326808">plastic</Label>
+          <Label count="2" length="2.4425487">plastic_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
       <Session name="NoneAir4" sessionId="bc331820-c9bf-48d6-8794-26664b99d841" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250401037687387904" start="0" length="51.392">/Data/NoneAir4/Microphone.wav</DataFile>
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834095683360" start="0" length="51.392">/Data/NoneAir4/Microphone.wav</DataFile>
         <SessionFile>/Data/NoneAir4/NoneAir4.imsession</SessionFile>
-        <LabelFile modified="5250401037687387904">/Data/NoneAir4/Live-Labeling.label</LabelFile>
+        <LabelFile modified="5250758834095116849">/Data/NoneAir4/Live-Labeling.label</LabelFile>
         <Labels>
           <Label count="14" length="16.7601551">air</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="Wood_20" sessionId="1f04f2bf-ab5a-4d0c-bc64-c09c46f458a0" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400254347387904" start="0" length="22.208">/Data/Wood_20/Microphone.wav</DataFile>
-        <SessionFile>/Data/Wood_20/Wood_20.imsession</SessionFile>
-        <LabelFile modified="5250400288867387904">/Data/Wood_20/Live-Labeling.label</LabelFile>
+      <Session name="Plastic_1" sessionId="978fd1d5-2aa7-4c49-af86-5bc1db87aaaa" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834099393591" start="0" length="25.6">/Data/Plastic_1/Microphone.wav</DataFile>
+        <SessionFile>/Data/Plastic_1/Plastic_1.imsession</SessionFile>
+        <LabelFile modified="5250758834099073609">/Data/Plastic_1/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="3" length="14.4223812">wood</Label>
-          <Label count="2" length="1.2537524">wood_out</Label>
+          <Label count="2" length="12.6967419">plastic</Label>
+          <Label count="1" length="0.3879941">plastic_out</Label>
+          <Label count="1" length="0.6954612">air</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="Plastic_20" sessionId="48cb84c5-1938-4e41-8415-5dca8cb3bf82" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250400282167387904" start="0" length="27.264">/Data/Plastic_20/Microphone.wav</DataFile>
-        <SessionFile>/Data/Plastic_20/Plastic_20.imsession</SessionFile>
-        <LabelFile modified="5250400289567387904">/Data/Plastic_20/Live-Labeling.label</LabelFile>
+      <Session name="Plastic_14" sessionId="f7d0e576-35c7-48f2-8300-afc82d773276" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834101892342" start="0" length="33.728">/Data/Plastic_14/Microphone.wav</DataFile>
+        <SessionFile>/Data/Plastic_14/Plastic_14.imsession</SessionFile>
+        <LabelFile modified="5250758834101556854">/Data/Plastic_14/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="5" length="12.7012535">plastic</Label>
-          <Label count="5" length="2.951846">plastic_out</Label>
+          <Label count="4" length="23.8398541">plastic</Label>
+          <Label count="2" length="0.9355756">plastic_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Air_8" sessionId="5654cf87-7e7f-419a-8c70-b922163cc001" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834091065909" start="0" length="28.672">/Data/Air_8/Microphone.wav</DataFile>
+        <SessionFile>/Data/Air_8/Air_8.imsession</SessionFile>
+        <LabelFile modified="5250758834090785328">/Data/Air_8/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="10" length="12.9071239">air</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
       <Session name="Mixed_1" sessionId="ff6f5ea8-dfe2-4b55-99fd-aee372776ee1" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388841327387904" start="0" length="29.952">/Data/Mixed_1/Microphone.wav</DataFile>
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834091701995" start="0" length="29.952">/Data/Mixed_1/Microphone.wav</DataFile>
         <SessionFile>/Data/Mixed_1/Mixed_1.imsession</SessionFile>
-        <LabelFile modified="5250400188847387904">/Data/Mixed_1/Live-Labeling.label</LabelFile>
+        <LabelFile modified="5250758834091365473">/Data/Mixed_1/Live-Labeling.label</LabelFile>
         <Labels>
           <Label count="2" length="4.7338389">plastic</Label>
           <Label count="1" length="0.7145416">plastic_out</Label>
@@ -1276,22 +1567,53 @@
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="Air_2" sessionId="2d786440-60b7-4d64-889f-9424658f2fb9" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
-        <DataFile shape="[1]" samplerate="16000" modified="5250388117427387904" start="0" length="73.472">/Data/Air_2/Microphone.wav</DataFile>
-        <SessionFile>/Data/Air_2/Air_2.imsession</SessionFile>
-        <LabelFile modified="5250388117427387904">/Data/Air_2/Live-Labeling.label</LabelFile>
+      <Session name="Wood_16" sessionId="22fa77cc-1df4-4102-ba90-b3908308434e" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834110503961" start="0" length="18.048">/Data/Wood_16/Microphone.wav</DataFile>
+        <SessionFile>/Data/Wood_16/Wood_16.imsession</SessionFile>
+        <LabelFile modified="5250758834110403876">/Data/Wood_16/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="9" length="45.8716342">air</Label>
+          <Label count="2" length="9.874979">wood</Label>
+          <Label count="2" length="0.7488234">wood_out</Label>
         </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Wood_3" sessionId="fc7e1a04-4f3a-4c9a-b17a-f409c5d4c43f" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758834114409945" start="0" length="37.632">/Data/Wood_3/Microphone.wav</DataFile>
+        <SessionFile>/Data/Wood_3/Wood_3.imsession</SessionFile>
+        <LabelFile modified="5250758834114079962">/Data/Wood_3/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="0.6941615">air</Label>
+          <Label count="5" length="17.709257">wood</Label>
+          <Label count="3" length="3.3845516">wood_out</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="hair_drying_ml-3" sessionId="75b19b75-0882-4e65-b4dc-64252ff9ba55" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="None">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801300093757" start="0" length="345.6">../data_recordings/no_preprocessing/hair_drying_ml-3/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/hair_drying_ml-3/hair_drying_ml-3.imsession</SessionFile>
+        <LabelFile modified="5250758801299345521">../data_recordings/no_preprocessing/hair_drying_ml-3/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="282.432">hair_drying</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="negative-05" sessionId="21166826-ea56-4c95-b280-de38b190e25f" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Microphone Data" tags="LabelsMissing">
+        <DataFile shape="[1]" samplerate="16000" modified="5250758801302076171" start="0" length="708.352">../data_recordings/no_preprocessing/negative-05/Microphone-Data.wav</DataFile>
+        <SessionFile>../data_recordings/no_preprocessing/negative-05/negative-05.imsession</SessionFile>
+        <LabelFile modified="5250758801301389559">../data_recordings/no_preprocessing/negative-05/Live-Labeling.label</LabelFile>
+        <Labels />
         <CustomColumnValues />
       </Session>
     </DataSet>
   </Database>
   <PredefinedLabels>
+    <Label>brushing_teeth</Label>
+    <Label>hair_drying</Label>
+    <Label>showering</Label>
     <Label>air</Label>
-    <Label>wood</Label>
     <Label>plastic</Label>
     <Label>plastic_out</Label>
+    <Label>wood</Label>
     <Label>wood_out</Label>
   </PredefinedLabels>
 </ImagimobStudio>
